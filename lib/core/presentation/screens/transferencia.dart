@@ -86,7 +86,7 @@ class _TranferenciaState extends State<Tranferencia> {
   },
   child: Column(
     children: [
-      Image.network(
+      Image.asset(
         "assets/images/martin.png",
         width: 40,
         height: 40,
@@ -103,7 +103,7 @@ class _TranferenciaState extends State<Tranferencia> {
 ),
                           Column(
                             children: [
-                              Image.network(
+                              Image.asset(
                                 "assets/images/adrian.png",
                                 width: 40,
                                 height: 40,
@@ -119,7 +119,7 @@ class _TranferenciaState extends State<Tranferencia> {
                           ),
                           Column(
                             children: [
-                              Image.network(
+                              Image.asset(
                                 "assets/images/julia.png",
                                 width: 40,
                                 height: 40,
@@ -135,7 +135,7 @@ class _TranferenciaState extends State<Tranferencia> {
                           ),
                           Column(
                             children: [
-                              Image.network(
+                              Image.asset(
                                 "assets/images/plus.png",
                                 width: 40,
                                 height: 40,
@@ -186,7 +186,7 @@ class _TranferenciaState extends State<Tranferencia> {
                               // Color de fondo de la imagen
                             ),
                             // Imagen a la derecha
-                            child: Image.network(
+                            child: Image.asset(
                               "assets/images/leo.png",
                               width: 40,
                               height: 40,
@@ -245,7 +245,7 @@ class _TranferenciaState extends State<Tranferencia> {
                               // Color de fondo de la imagen
                             ),
                             // Imagen a la derecha
-                            child: Image.network(
+                            child: Image.asset(
                               "assets/images/martin.png",
                               width: 40,
                               height: 40,
@@ -304,7 +304,7 @@ class _TranferenciaState extends State<Tranferencia> {
                               // Color de fondo de la imagen
                             ),
                             // Imagen a la derecha
-                            child: Image.network(
+                            child: Image.asset(
                               "assets/images/adrian.png",
                               width: 40,
                               height: 40,
@@ -362,7 +362,7 @@ class _TranferenciaState extends State<Tranferencia> {
                               // Color de fondo de la imagen
                             ),
                             // Imagen a la derecha
-                            child: Image.network(
+                            child: Image.asset(
                               "assets/images/julia.png",
                               width: 40,
                               height: 40,
@@ -421,7 +421,7 @@ class _TranferenciaState extends State<Tranferencia> {
                               // Color de fondo de la imagen
                             ),
                             // Imagen a la derecha
-                            child: Image.network(
+                            child: Image.asset(
                               "assets/images/jack.png",
                               width: 40,
                               height: 40,

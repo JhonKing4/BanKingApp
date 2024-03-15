@@ -36,7 +36,7 @@ class _Tranferencia2State extends State<Tranferencia2> {
         child: Column(
           children: [
             SizedBox(height: 20),
-            Image.network(
+            Image.asset(
               "assets/images/martin.png",
               width: 60,
               height: 60,
@@ -75,7 +75,7 @@ class _Tranferencia2State extends State<Tranferencia2> {
                     // Color de fondo de la imagen
                   ),
                   // Imagen a la derecha
-                  child: Image.network(
+                  child: Image.asset(
                     "assets/images/visa.png",
                     width: 40,
                     height: 40,
