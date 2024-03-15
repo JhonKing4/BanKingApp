@@ -1,3 +1,4 @@
+import 'package:bankingapp/core/presentation/screens/transferencia.dart';
 import 'package:bankingapp/main.dart';
 import 'package:flutter/material.dart';
 
@@ -7,22 +8,30 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text("Inicio")),
       drawer: NavigationDrawer(),
-      bottomNavigationBar: BottomNavigationBar(items: const [
-        BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: Colors.orange,
-            ),
-            label: "Home"),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.credit_card, color: Colors.orange),
-          label: "Card",
-        ),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.orange), label: "Account"),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.settings, color: Colors.orange), label: "Setting")
-      ]),
+     bottomNavigationBar: BottomNavigationBar(
+  items: const [
+    BottomNavigationBarItem(
+      icon: Icon(
+        Icons.home,
+        color: Colors.orange,
+      ),
+      label: "Home",
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.credit_card, color: Colors.orange),
+      label: "Card",
+    ),
+  ],
+  onTap: (index) {
+    if (index == 1) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Tranferencia()),
+      );
+    }
+  },
+),
+
     );
   }
 }
