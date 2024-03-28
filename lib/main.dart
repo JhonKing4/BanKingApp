@@ -1,7 +1,10 @@
 import 'package:bankingapp/core/presentation/screens/login_page.dart';
+import 'package:bankingapp/core/presentation/screens/transferencia2.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  WidgetsFlutterBinding().ensureSemantics();
+  initializedNotifications();
   runApp(const MyApp());
 }
 
