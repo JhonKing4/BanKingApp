@@ -97,7 +97,7 @@ class _Tranferencia2State extends State<Tranferencia2> {
             ),
             SizedBox(height: 30),
             Text(
-              "S 150.00",
+              "\$ 150.00",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,

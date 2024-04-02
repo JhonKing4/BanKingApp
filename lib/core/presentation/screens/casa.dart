@@ -1,3 +1,4 @@
+import 'package:bankingapp/core/presentation/screens/servicios.dart';
 import 'package:flutter/material.dart';
 
 class CasaView extends StatelessWidget {
@@ -69,11 +70,18 @@ class CasaView extends StatelessWidget {
                             height: 40,
                           ),
                           SizedBox(height: 10),
-                          Text('saldo', style: TextStyle(color: Color.fromARGB(255, 50, 50, 50))),
+                          Text('saldo',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 50, 50, 50))),
                           Text('\$2,231.00',
-                              style: TextStyle(color: const Color.fromARGB(255, 24, 24, 24))),
+                              style: TextStyle(
+                                  color:
+                                      const Color.fromARGB(255, 24, 24, 24))),
                           SizedBox(height: 20),
-                          Text('*** 56478', style: TextStyle(color: const Color.fromARGB(255, 120, 120, 120))),
+                          Text('*** 56478',
+                              style: TextStyle(
+                                  color: const Color.fromARGB(
+                                      255, 120, 120, 120))),
                         ],
                       ),
                       style: ElevatedButton.styleFrom(
@@ -103,7 +111,8 @@ class CasaView extends StatelessWidget {
                           Text('\$5,566.00',
                               style: TextStyle(color: Colors.white)),
                           SizedBox(height: 20),
-                          Text('*** 77649', style: TextStyle(color: Colors.white)),
+                          Text('*** 77649',
+                              style: TextStyle(color: Colors.white)),
                         ],
                       ),
                       style: ElevatedButton.styleFrom(
@@ -132,7 +141,8 @@ class CasaView extends StatelessWidget {
                           Text('saldo', style: TextStyle(color: Colors.white)),
                           Text('\$0.00', style: TextStyle(color: Colors.white)),
                           SizedBox(height: 20),
-                          Text('*** 11223', style: TextStyle(color: Colors.white)),
+                          Text('*** 11223',
+                              style: TextStyle(color: Colors.white)),
                         ],
                       ),
                       style: ElevatedButton.styleFrom(
@@ -153,7 +163,8 @@ class CasaView extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(5.0),
-                  child: Text('FINANZAS', style: TextStyle(color: Colors.white)),
+                  child:
+                      Text('FINANZAS', style: TextStyle(color: Colors.white)),
                 )
               ],
             ),
@@ -161,128 +172,126 @@ class CasaView extends StatelessWidget {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                
                 children: [
                   Container(
-                   width: 120,
-                   height: 110,
-                   child: Padding(
-                  
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                    
-                      onPressed: () {},
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.star_border_outlined,
-                              color: Color.fromARGB(255, 255, 255, 255)),
-                          SizedBox(height: 5),
-                          Text('TRANSFERIR',
-                              style: TextStyle(fontSize: 10, color: Colors.white))
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                        backgroundColor: Color.fromARGB(255, 52, 52, 52),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  ),
-                  
-                  SizedBox(width: 8),
-
-                  Container(
-                     width: 120,
-                   height: 110,
+                    width: 120,
+                    height: 110,
                     child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.money_outlined,
-                              color: Color.fromARGB(255, 255, 255, 255)),
-                          SizedBox(height: 5),
-                          Text('RETIRAR',
-                              style: TextStyle(fontSize: 10, color: Colors.white))
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                        backgroundColor: Color.fromARGB(255, 52, 52, 52),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Icons.star_border_outlined,
+                                color: Color.fromARGB(255, 255, 255, 255)),
+                            SizedBox(height: 5),
+                            Text('TRANSFERIR',
+                                style: TextStyle(
+                                    fontSize: 10, color: Colors.white))
+                          ],
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 10),
+                          backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  ),
-                  
                   SizedBox(width: 8),
-
                   Container(
-                     width: 120,
-                   height: 110,
-                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.gradient_sharp,
-                              color: Color.fromARGB(255, 255, 255, 255)),
-                          SizedBox(height: 5),
-                          Text('MOVIMIENTOS',
-                              style: TextStyle(fontSize: 10, color: Colors.white))
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                        backgroundColor: Color.fromARGB(255, 52, 52, 52),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  ),
-                  
-                  SizedBox(width: 8),
-
-                  Container(
-                     width: 120,
-                   height: 110,
+                    width: 120,
+                    height: 110,
                     child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.person_2_outlined,
-                              color: Color.fromARGB(255, 255, 255, 255)),
-                          SizedBox(height: 5),
-                          Text('CONTACTOS',
-                              style: TextStyle(fontSize: 10, color: Colors.white))
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                        backgroundColor: Color.fromARGB(255, 52, 52, 52),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Icons.money_outlined,
+                                color: Color.fromARGB(255, 255, 255, 255)),
+                            SizedBox(height: 5),
+                            Text('RETIRAR',
+                                style: TextStyle(
+                                    fontSize: 10, color: Colors.white))
+                          ],
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 10),
+                          backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
                         ),
                       ),
                     ),
                   ),
+                  SizedBox(width: 8),
+                  Container(
+                    width: 120,
+                    height: 110,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Icons.gradient_sharp,
+                                color: Color.fromARGB(255, 255, 255, 255)),
+                            SizedBox(height: 5),
+                            Text('MOVIMIENTOS',
+                                style: TextStyle(
+                                    fontSize: 10, color: Colors.white))
+                          ],
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 10),
+                          backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  
+                  SizedBox(width: 8),
+                  Container(
+                    width: 120,
+                    height: 110,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Icons.person_2_outlined,
+                                color: Color.fromARGB(255, 255, 255, 255)),
+                            SizedBox(height: 5),
+                            Text('CONTACTOS',
+                                style: TextStyle(
+                                    fontSize: 10, color: Colors.white))
+                          ],
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 10),
+                          backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -290,10 +299,30 @@ class CasaView extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Text('PAGO DE SERVICIOS',
-                      style: TextStyle(color: Colors.white)),
+                Row(
+                  children: [
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Text('PAGO DE SERVICIOS',
+                              style: TextStyle(color: Colors.white)),
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        IconButton(
+                          icon: const Icon(
+                            Icons.arrow_forward_ios_outlined,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                          },
+                        ),
+                      ],
+                    )
+                  ],
                 )
               ],
             ),
@@ -304,159 +333,163 @@ class CasaView extends StatelessWidget {
                 children: [
                   Container(
                     width: 120,
-                   height: 110,
+                    height: 110,
                     child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/images/Logo_Izzi.png",
-                            height: 20,
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/images/Logo_Izzi.png",
+                              height: 20,
+                            ),
+                            SizedBox(height: 5),
+                            Text('IZZI',
+                                style: TextStyle(
+                                    fontSize: 10, color: Colors.white))
+                          ],
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 10),
+                          backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
-                          SizedBox(height: 5),
-                          Text('IZZI',
-                              style: TextStyle(fontSize: 10, color: Colors.white))
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                        backgroundColor: Color.fromARGB(255, 52, 52, 52),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
                     ),
                   ),
-                  ),
-                  
                   SizedBox(width: 10),
                   Container(
                     width: 120,
-                   height: 110,
+                    height: 110,
                     child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/images/cfe.png",
-                            height: 20,
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/images/cfe.png",
+                              height: 20,
+                            ),
+                            SizedBox(height: 5),
+                            Text('CFE',
+                                style: TextStyle(
+                                    fontSize: 10, color: Colors.white))
+                          ],
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 10),
+                          backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
-                          SizedBox(height: 5),
-                          Text('CFE',
-                              style: TextStyle(fontSize: 10, color: Colors.white))
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                        backgroundColor: Color.fromARGB(255, 52, 52, 52),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
                     ),
                   ),
-                  ),
-                  
                   SizedBox(width: 10),
-
                   Container(
                     width: 120,
-                   height: 110,
+                    height: 110,
                     child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/images/infonavit.png",
-                            height: 20,
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/images/infonavit.png",
+                              height: 20,
+                            ),
+                            SizedBox(height: 5),
+                            Text('INFONAVIT',
+                                style: TextStyle(
+                                    fontSize: 10, color: Colors.white))
+                          ],
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 10),
+                          backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
-                          SizedBox(height: 5),
-                          Text('INFONAVIT',
-                              style: TextStyle(fontSize: 10, color: Colors.white))
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                        backgroundColor: Color.fromARGB(255, 52, 52, 52),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
                     ),
                   ),
-                  ),
-                  
                   SizedBox(width: 10),
                   Container(
-                      width: 120,
-                   height: 110,
+                    width: 120,
+                    height: 110,
                     child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/images/attt.png",
-                            height: 20,
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/images/attt.png",
+                              height: 20,
+                            ),
+                            SizedBox(height: 5),
+                            Text('ATT&T',
+                                style: TextStyle(
+                                    fontSize: 10, color: Colors.white))
+                          ],
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 10),
+                          backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
-                          SizedBox(height: 5),
-                          Text('ATT&T',
-                              style: TextStyle(fontSize: 10, color: Colors.white))
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                        backgroundColor: Color.fromARGB(255, 52, 52, 52),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
                     ),
                   ),
-                  ),
-                  
                   SizedBox(width: 10),
                   Container(
-                     width: 120,
-                   height: 110,
+                    width: 120,
+                    height: 110,
                     child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/images/mercadolobre.png",
-                            height: 20,
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/images/mercadolobre.png",
+                              height: 20,
+                            ),
+                            SizedBox(height: 5),
+                            Text('MERCADO L...',
+                                style: TextStyle(
+                                    fontSize: 10, color: Colors.white))
+                          ],
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 10),
+                          backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
-                          SizedBox(height: 5),
-                          Text('MERCADO L...',
-                              style: TextStyle(fontSize: 10, color: Colors.white))
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                        backgroundColor: Color.fromARGB(255, 52, 52, 52),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
                     ),
                   ),
-                  ),
-                  
                 ],
               ),
             ),

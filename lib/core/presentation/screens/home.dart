@@ -1,3 +1,4 @@
+import 'package:bankingapp/core/presentation/screens/servicios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:bankingapp/core/presentation/screens/casa.dart';
@@ -57,7 +58,7 @@ class HomeView extends StatelessWidget {
             tab = TarjetasList();
             break;
             case 4:
-            tab = TarjetasList();
+            tab = ServiciosPage();
             break;
           default:
             tab = Tranferencia();
