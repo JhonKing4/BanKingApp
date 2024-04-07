@@ -1,4 +1,5 @@
 import 'package:bankingapp/core/presentation/screens/home.dart';
+import 'package:bankingapp/core/presentation/screens/retiro.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -19,13 +20,13 @@ class _MisTarjetasState extends State<MisTarjetas> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: 20),
-             Image.asset(
-                "assets/images/horizontal.png",
-                width: 120,
-                height: 90,
-              ),
+            Image.asset(
+              "assets/images/horizontal.png",
+              width: 120,
+              height: 90,
+            ),
             SizedBox(
-              height: 290.0, // Altura total del carrusel
+              height: 240.0, // Altura total del carrusel
               child: CarouselSlider(
                 options: CarouselOptions(
                   height: 200.0,
@@ -44,10 +45,8 @@ class _MisTarjetasState extends State<MisTarjetas> {
                       borderRadius: BorderRadius.circular(30.0),
                       gradient: LinearGradient(
                         colors: [
-                          Color.fromARGB(
-                              255, 250, 238, 127), 
-                          Color.fromARGB(
-                              255, 254, 187, 32), 
+                          Color.fromARGB(255, 250, 238, 127),
+                          Color.fromARGB(255, 254, 187, 32),
                         ],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
@@ -99,8 +98,8 @@ class _MisTarjetasState extends State<MisTarjetas> {
                       borderRadius: BorderRadius.circular(30.0),
                       gradient: LinearGradient(
                         colors: [
-                          Color.fromARGB(255, 76, 49, 134), 
-                          Color.fromARGB(255, 14, 1, 37), 
+                          Color.fromARGB(255, 76, 49, 134),
+                          Color.fromARGB(255, 14, 1, 37),
                         ],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
@@ -145,15 +144,17 @@ class _MisTarjetasState extends State<MisTarjetas> {
                       ],
                     ),
                   ),
-                 Container(
+                  Container(
                     padding: EdgeInsets.all(20.0),
                     margin: EdgeInsets.all(5.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30.0),
                       gradient: LinearGradient(
                         colors: [
-                          Color.fromARGB(255, 205, 205, 205), // Color naranja más claro
-                          Color.fromARGB(255, 118, 118, 119), // Color naranja más oscuro
+                          Color.fromARGB(
+                              255, 205, 205, 205), // Color naranja más claro
+                          Color.fromARGB(
+                              255, 118, 118, 119), // Color naranja más oscuro
                         ],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
@@ -201,6 +202,29 @@ class _MisTarjetasState extends State<MisTarjetas> {
                 ],
               ),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => RetiroPage()),
+                );
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(Icons.money, color: Color.fromARGB(255, 255, 255, 255)),
+                  SizedBox(height: 5),
+                  Text('RETIRAR EFECTIVO',
+                      style: TextStyle(fontSize: 10, color: Colors.white))
+                ],
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+            ),
             const SizedBox(height: 10),
             Container(
               decoration: BoxDecoration(
@@ -216,7 +240,7 @@ class _MisTarjetasState extends State<MisTarjetas> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            'Ultimos movimientos',
+                            'ULTIMOS MOVIMIENTOS',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),

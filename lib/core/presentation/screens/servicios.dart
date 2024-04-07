@@ -1,3 +1,4 @@
+import 'package:bankingapp/core/presentation/screens/beneficios.dart';
 import 'package:flutter/material.dart';
 
 class ServiciosPage extends StatelessWidget {
@@ -28,7 +29,38 @@ class ServiciosPage extends StatelessWidget {
             const Text('Pago de servicios',style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold
-            ),),
+            ),
+            
+            ),
+               ElevatedButton(
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => BeneficiosPage()),
+            );
+          },
+          style: ButtonStyle(
+            elevation: MaterialStateProperty.all(0),
+            overlayColor: MaterialStateProperty.all(Colors.transparent),
+            backgroundColor: MaterialStateProperty.all(
+                const Color.fromRGBO(242, 254, 141, 1)),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+          ),
+          child: Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
+            child: const Text(
+              "Login",
+              style: TextStyle(
+                color: Color.fromARGB(255, 0, 0, 0),
+              ),
+            ),
+          ),
+        ),
             SizedBox(height: 30,),
             Row(
               children: [
