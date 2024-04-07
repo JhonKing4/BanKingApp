@@ -13,30 +13,31 @@ class HomeView extends StatelessWidget {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
         backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
+        
         items: [
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home_outlined
             ),
-            label: "Inicio",
+            label: "",
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.arrow_circle_up_outlined,
             ),
-            label: 'Transferir',
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.handshake_outlined),
-            label: "Movimientos",
+            label: "",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.credit_card_outlined),
-            label: "Mis tarjetas",
+            label: "",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_bag_outlined),
-            label: "Servicios",
+            label: "",
           ),
         ],
         activeColor: Color.fromARGB(255, 255, 222, 37),

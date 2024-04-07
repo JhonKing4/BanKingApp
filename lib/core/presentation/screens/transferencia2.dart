@@ -2,7 +2,6 @@ import 'package:bankingapp/core/presentation/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-
 //Inicializo mi variable global de notificaciones
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -96,14 +95,52 @@ class _Tranferencia2State extends State<Tranferencia2> {
               ),
             ),
             SizedBox(height: 30),
-            Text(
-              "\$ 150.00",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-              ),
+            Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(width: 90,),
+                        Container(
+                          
+                          width: 30,
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            "\$",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 120, // Ancho deseado del TextField
+                        child: TextField(
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                          ),
+                        ),
+                      ),
+                      
+                    ],
+                  ),
+                ),
+                SizedBox(width: 120,),
+              ],
             ),
-            SizedBox(width: 20),
+
+            SizedBox(height: 20),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -135,9 +172,7 @@ class _Tranferencia2State extends State<Tranferencia2> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                          height:
-                              5), // Espacio entre el texto y la fecha
+                      SizedBox(height: 5), // Espacio entre el texto y la fecha
                       // Fecha a la izquierda
                       Row(
                         children: [
@@ -154,14 +189,11 @@ class _Tranferencia2State extends State<Tranferencia2> {
                     ],
                   ),
                 ),
-                 SizedBox(width: 20),
               ],
             ),
-           
+            SizedBox(height: 40),
             ElevatedButton(
-              
               onPressed: () => _showNotification(),
-              
               style: ButtonStyle(
                 elevation: MaterialStateProperty.all(0),
                 overlayColor: MaterialStateProperty.all(Colors.transparent),
@@ -185,8 +217,9 @@ class _Tranferencia2State extends State<Tranferencia2> {
                 ),
               ),
             ),
-            SizedBox(height: 20), // Espacio entre el botón y el contenedor de botones
-            NumberPadContainer(), // Aquí se agrega el contenedor de botones con números
+            SizedBox(
+                height:
+                    20), // Espacio entre el botón y el contenedor de botones // Aquí se agrega el contenedor de botones con números
           ],
         ),
       ),
@@ -194,80 +227,3 @@ class _Tranferencia2State extends State<Tranferencia2> {
   }
 }
 
-class NumberPadContainer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildNumberButton('1'),
-              SizedBox(height: 30),
-              _buildNumberButton('2'),
-              SizedBox(height: 30),
-              _buildNumberButton('3'),
-            ],
-          ),
-          SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildNumberButton('4'),
-              SizedBox(height: 30),
-              _buildNumberButton('5'),
-              SizedBox(height: 30),
-              _buildNumberButton('6'),
-            ],
-          ),
-          SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildNumberButton('7'),
-              SizedBox(height: 30),
-              _buildNumberButton('8'),
-              SizedBox(height: 30),
-              _buildNumberButton('9'),
-            ],
-          ),
-          SizedBox(height: 20),
-          // Additional row for number 0
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _buildNumberButton('0'),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNumberButton(String number) {
-    return Container(
-      width: 60.0,
-      height: 60.0,
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 78, 78, 78),
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Center(
-        child: Text(
-          number,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 40.0,
-          ),
-        ),
-      ),
-    );
-  }
-}
