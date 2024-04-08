@@ -32,6 +32,16 @@ class _TranferenciaState extends State<Tranferencia> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Image.asset(
+                "assets/images/horizontal.png",
+                width: 120,
+                height: 90,
+              ),
+            const Text('Transferencias',style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold
+            ),),
+            SizedBox(height: 30,),
                 Text(
                   "Balance",
                   style: TextStyle(

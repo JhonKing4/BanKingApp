@@ -2,6 +2,9 @@ import 'package:bankingapp/core/presentation/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+
+
+
 //Inicializo mi variable global de notificaciones
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -33,19 +36,21 @@ Future<void> _showNotification() async {
 
   await flutterLocalNotificationsPlugin.show(
     0,
-    'Tran',
-    'Dinero 1000 pesos',
+    'Retiro de efectivo',
+    'por monto de: \$1,000',
     platformChannelSpecifics,
     payload: 'payload',
   );
 }
 
-class Tranferencia2 extends StatefulWidget {
+
+
+class RetiroPage extends StatefulWidget {
   @override
-  _Tranferencia2State createState() => _Tranferencia2State();
+  _RetiroPage createState() => _RetiroPage();
 }
 
-class _Tranferencia2State extends State<Tranferencia2> {
+class _RetiroPage extends State<RetiroPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,20 +80,8 @@ class _Tranferencia2State extends State<Tranferencia2> {
         child: Column(
           children: [
             SizedBox(height: 20),
-            Image.asset(
-              "assets/images/martin.png",
-              width: 60,
-              height: 60,
-            ),
             Text(
-              "...7865",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-              ),
-            ),
-            Text(
-              "Adrian 🕹️",
+              "MONTO A RETIRAR",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
@@ -102,9 +95,10 @@ class _Tranferencia2State extends State<Tranferencia2> {
                   children: [
                     Row(
                       children: [
-                        SizedBox(width: 90,),
+                        SizedBox(
+                          width: 90,
+                        ),
                         Container(
-                          
                           width: 30,
                           alignment: Alignment.centerRight,
                           child: Text(
@@ -132,11 +126,12 @@ class _Tranferencia2State extends State<Tranferencia2> {
                           ),
                         ),
                       ),
-                      
                     ],
                   ),
                 ),
-                SizedBox(width: 120,),
+                SizedBox(
+                  width: 120,
+                ),
               ],
             ),
 
@@ -165,7 +160,7 @@ class _Tranferencia2State extends State<Tranferencia2> {
                     children: [
                       // Texto en el medio
                       Text(
-                        "VISA ..6755",
+                        "VISA **** 7312",
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,
@@ -178,7 +173,7 @@ class _Tranferencia2State extends State<Tranferencia2> {
                         children: [
                           SizedBox(width: 5),
                           Text(
-                            "S 7,896.00",
+                            "\$ 7,896.00",
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
@@ -193,7 +188,75 @@ class _Tranferencia2State extends State<Tranferencia2> {
             ),
             SizedBox(height: 40),
             ElevatedButton(
-              onPressed: () => _showNotification(),
+              onPressed: () {
+                showModalBottomSheet(
+                  backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
+                  context: context,
+                  builder: (context) {
+                    return Container(
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      child: Column(
+                        children: [
+                          ListTile(
+                            title: Text('RETIRO DE EFECTIVO',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            onTap: () {},
+                          ),
+                          ListTile(
+                            title: Text(
+                                '¿ Esta seguro que desea retirar esta cantidad de: ',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            onTap: () {},
+                          ),
+                          ListTile(
+                            title: Text('VISA **** 7312 ?',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            onTap: () {},
+                          ),
+                          ElevatedButton(
+                            onPressed: () => _showNotification(),
+                            style: ButtonStyle(
+                              elevation: MaterialStateProperty.all(0),
+                              overlayColor:
+                                  MaterialStateProperty.all(Colors.transparent),
+                              backgroundColor: MaterialStateProperty.all(
+                                  const Color.fromRGBO(242, 254, 141, 1)),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                            ),
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 12, horizontal: 0),
+                              child: const Text(
+                                "Aceptar",
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
               style: ButtonStyle(
                 elevation: MaterialStateProperty.all(0),
                 overlayColor: MaterialStateProperty.all(Colors.transparent),
@@ -210,7 +273,7 @@ class _Tranferencia2State extends State<Tranferencia2> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
                 child: const Text(
-                  "Enviar",
+                  "Retirar",
                   style: TextStyle(
                     color: Color.fromARGB(255, 0, 0, 0),
                   ),
@@ -226,4 +289,3 @@ class _Tranferencia2State extends State<Tranferencia2> {
     );
   }
 }
-
