@@ -1,3 +1,5 @@
+import 'package:bankingapp/core/presentation/screens/appbar.dart';
+import 'package:bankingapp/core/presentation/screens/casa.dart';
 import 'package:bankingapp/core/presentation/screens/home.dart';
 import 'package:bankingapp/core/presentation/screens/retiro.dart';
 import 'package:flutter/material.dart';
@@ -15,16 +17,12 @@ class _MisTarjetasState extends State<MisTarjetas> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
+      appBar: CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: 20),
-            Image.asset(
-              "assets/images/horizontal.png",
-              width: 120,
-              height: 90,
-            ),
             SizedBox(
               height: 240.0, // Altura total del carrusel
               child: CarouselSlider(
@@ -45,8 +43,8 @@ class _MisTarjetasState extends State<MisTarjetas> {
                       borderRadius: BorderRadius.circular(30.0),
                       gradient: LinearGradient(
                         colors: [
-                          Color.fromARGB(255, 250, 238, 127),
-                          Color.fromARGB(255, 254, 187, 32),
+                          Color.fromARGB(255, 255, 253, 236),
+                          Color.fromRGBO(255, 239, 92, 1),
                         ],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,

@@ -1,4 +1,6 @@
+import 'package:bankingapp/core/presentation/screens/appbar.dart';
 import 'package:bankingapp/core/presentation/screens/home.dart';
+import 'package:bankingapp/core/presentation/screens/transferencia.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -50,18 +52,7 @@ class _Tranferencia2State extends State<Tranferencia2> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-      appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.more_vert,
-              color: Colors.white,
-            ),
-            onPressed: () {},
-          ),
-        ],
-      ),
+      appBar: CustomAppBar(),
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -74,6 +65,47 @@ class _Tranferencia2State extends State<Tranferencia2> {
         padding: EdgeInsets.all(10),
         child: Column(
           children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Tranferencia(),
+                          ),
+                        );
+                      },
+                      icon: Stack(
+                        children: [
+                          Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color.fromARGB(255, 44, 44, 44), // Color del círculo más claro
+                            ),
+                          ),
+                          Positioned(
+                            left:
+                                7, // Ajusta la posición de la flecha según sea necesario
+                            top:
+                                9, // Ajusta la posición de la flecha según sea necesario
+                            child: Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              color: Color.fromARGB(255, 255, 255, 255), // Color de la flecha
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
             SizedBox(height: 20),
             Image.asset(
               "assets/images/martin.png",
@@ -130,6 +162,7 @@ class _Tranferencia2State extends State<Tranferencia2> {
                             color: Colors.white,
                             fontSize: 24,
                           ),
+                          autofocus: true,
                         ),
                       ),
                       

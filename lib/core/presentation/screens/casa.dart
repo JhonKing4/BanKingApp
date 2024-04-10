@@ -1,4 +1,6 @@
+import 'package:bankingapp/core/presentation/screens/appbar.dart';
 import 'package:bankingapp/core/presentation/screens/servicios.dart';
+import 'package:bankingapp/core/presentation/screens/transferencia.dart';
 import 'package:flutter/material.dart';
 
 class CasaView extends StatelessWidget {
@@ -7,23 +9,12 @@ class CasaView extends StatelessWidget {
     return Scaffold(
       extendBody: true,
       backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-      appBar: AppBar(
-        toolbarHeight: 1,
-        title: const Text("Inicio"),
-        backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-      ),
+      appBar: CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset(
-                "assets/images/horizontal.png",
-                width: 120,
-                height: 90,
-              ),
-            ),
+            SizedBox(height: 40),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -179,24 +170,44 @@ class CasaView extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => Tranferencia()),
+                );
+              },
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Icon(Icons.star_border_outlined,
-                                color: Color.fromARGB(255, 255, 255, 255)),
+                            Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: Color.fromARGB(255, 234, 255,
+                                    142), // Color del fondo rosa claro
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Icon(
+                                Icons.star_border_outlined,
+                                color: const Color.fromARGB(
+                                    255, 32, 32, 32), // Color del icono blanco
+                              ),
+                            ),
                             SizedBox(height: 5),
-                            Text('TRANSFERIR',
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.white))
+                            Text(
+                              'TRANSFERIR',
+                              style:
+                                  TextStyle(fontSize: 10, color: Colors.white),
+                            ),
                           ],
                         ),
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
                               vertical: 20, horizontal: 10),
-                          backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                          backgroundColor: Color.fromARGB(255, 41, 41, 41),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(20.0),
                           ),
                         ),
                       ),
@@ -213,20 +224,35 @@ class CasaView extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Icon(Icons.money_outlined,
-                                color: Color.fromARGB(255, 255, 255, 255)),
+                            Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: Color.fromARGB(255, 142, 191,
+                                    255), // Color del fondo rosa claro
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Icon(
+                                Icons.money_outlined,
+                                color: const Color.fromARGB(
+                                    255, 32, 32, 32), // Color del icono blanco
+                              ),
+                            ),
                             SizedBox(height: 5),
-                            Text('RETIRAR',
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.white))
+                            Text(
+                              'RETIRAR',
+                              style:
+                                  TextStyle(fontSize: 10, color: Colors.white),
+                            ),
                           ],
                         ),
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
                               vertical: 20, horizontal: 10),
-                          backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                          backgroundColor: Color.fromARGB(255, 41, 41, 41),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(20.0),
                           ),
                         ),
                       ),
@@ -243,20 +269,35 @@ class CasaView extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Icon(Icons.gradient_sharp,
-                                color: Color.fromARGB(255, 255, 255, 255)),
+                            Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: Color.fromARGB(255, 176, 142,
+                                    255), // Color del fondo rosa claro
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Icon(
+                                Icons.gradient_sharp,
+                                color: Color.fromARGB(
+                                    255, 32, 32, 32), // Color del icono blanco
+                              ),
+                            ),
                             SizedBox(height: 5),
-                            Text('MOVIMIENTOS',
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.white))
+                            Text(
+                              'MOVIMIENTOS',
+                              style:
+                                  TextStyle(fontSize: 10, color: Colors.white),
+                            ),
                           ],
                         ),
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
                               vertical: 20, horizontal: 10),
-                          backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                          backgroundColor: Color.fromARGB(255, 41, 41, 41),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(20.0),
                           ),
                         ),
                       ),
@@ -273,25 +314,41 @@ class CasaView extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Icon(Icons.person_2_outlined,
-                                color: Color.fromARGB(255, 255, 255, 255)),
+                            Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: Color.fromARGB(255, 255, 175,
+                                    129), // Color del fondo rosa claro
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Icon(
+                                Icons.person_2_outlined,
+                                color: Color.fromARGB(
+                                    255, 32, 32, 32), // Color del icono blanco
+                              ),
+                            ),
                             SizedBox(height: 5),
-                            Text('CONTACTOS',
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.white))
+                            Text(
+                              'TARJETAS',
+                              style:
+                                  TextStyle(fontSize: 10, color: Colors.white),
+                            ),
                           ],
                         ),
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
                               vertical: 20, horizontal: 10),
-                          backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                          backgroundColor: Color.fromARGB(255, 41, 41, 41),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(20.0),
                           ),
                         ),
                       ),
                     ),
                   ),
+
                 ],
               ),
             ),
@@ -310,18 +367,6 @@ class CasaView extends StatelessWidget {
                         )
                       ],
                     ),
-                    Column(
-                      children: [
-                        IconButton(
-                          icon: const Icon(
-                            Icons.arrow_forward_ios_outlined,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                          },
-                        ),
-                      ],
-                    )
                   ],
                 )
               ],
@@ -341,22 +386,40 @@ class CasaView extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              "assets/images/Logo_Izzi.png",
-                              height: 20,
+                            Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: Color.fromARGB(255, 187, 217,
+                                    255), // Color del fondo rosa claro
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    "assets/images/Logo_Izzi.png",
+                                    height: 20,
+                                  ),
+                                ],
+                              ),
                             ),
                             SizedBox(height: 5),
-                            Text('IZZI',
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.white))
+                            Text(
+                              'IZZI',
+                              style:
+                                  TextStyle(fontSize: 10, color: Colors.white),
+                            ),
                           ],
                         ),
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
                               vertical: 20, horizontal: 10),
-                          backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                          backgroundColor: Color.fromARGB(255, 41, 41, 41),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(20.0),
                           ),
                         ),
                       ),
@@ -373,22 +436,40 @@ class CasaView extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              "assets/images/cfe.png",
-                              height: 20,
+                            Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: Color.fromARGB(255, 187, 217,
+                                    255), // Color del fondo rosa claro
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    "assets/images/cfe.png",
+                                    height: 20,
+                                  ),
+                                ],
+                              ),
                             ),
                             SizedBox(height: 5),
-                            Text('CFE',
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.white))
+                            Text(
+                              'CFE',
+                              style:
+                                  TextStyle(fontSize: 10, color: Colors.white),
+                            ),
                           ],
                         ),
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
                               vertical: 20, horizontal: 10),
-                          backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                          backgroundColor: Color.fromARGB(255, 41, 41, 41),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(20.0),
                           ),
                         ),
                       ),
@@ -405,22 +486,40 @@ class CasaView extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              "assets/images/infonavit.png",
-                              height: 20,
+                            Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: Color.fromARGB(255, 187, 217,
+                                    255), // Color del fondo rosa claro
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    "assets/images/infonavit.png",
+                                    height: 20,
+                                  ),
+                                ],
+                              ),
                             ),
                             SizedBox(height: 5),
-                            Text('INFONAVIT',
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.white))
+                            Text(
+                              'INFONAVIT',
+                              style:
+                                  TextStyle(fontSize: 10, color: Colors.white),
+                            ),
                           ],
                         ),
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
                               vertical: 20, horizontal: 10),
-                          backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                          backgroundColor: Color.fromARGB(255, 41, 41, 41),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(20.0),
                           ),
                         ),
                       ),
@@ -437,22 +536,40 @@ class CasaView extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              "assets/images/attt.png",
-                              height: 20,
+                            Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: Color.fromARGB(255, 187, 217,
+                                    255), // Color del fondo rosa claro
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    "assets/images/attt.png",
+                                    height: 20,
+                                  ),
+                                ],
+                              ),
                             ),
                             SizedBox(height: 5),
-                            Text('ATT&T',
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.white))
+                            Text(
+                              'ATT&T',
+                              style:
+                                  TextStyle(fontSize: 10, color: Colors.white),
+                            ),
                           ],
                         ),
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
                               vertical: 20, horizontal: 10),
-                          backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                          backgroundColor: Color.fromARGB(255, 41, 41, 41),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(20.0),
                           ),
                         ),
                       ),
@@ -469,22 +586,40 @@ class CasaView extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              "assets/images/mercadolobre.png",
-                              height: 20,
+                            Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: Color.fromARGB(255, 187, 217,
+                                    255), // Color del fondo rosa claro
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    "assets/images/mercadolobre.png",
+                                    height: 20,
+                                  ),
+                                ],
+                              ),
                             ),
                             SizedBox(height: 5),
-                            Text('MERCADO L...',
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.white))
+                            Text(
+                              'MERCADO L...',
+                              style:
+                                  TextStyle(fontSize: 10, color: Colors.white),
+                            ),
                           ],
                         ),
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
                               vertical: 20, horizontal: 10),
-                          backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                          backgroundColor: Color.fromARGB(255, 41, 41, 41),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(20.0),
                           ),
                         ),
                       ),
@@ -497,6 +632,8 @@ class CasaView extends StatelessWidget {
           ],
         ),
       ),
+      
     );
+    
   }
 }

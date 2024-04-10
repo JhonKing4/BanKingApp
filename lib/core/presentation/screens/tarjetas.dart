@@ -1,3 +1,4 @@
+import 'package:bankingapp/core/presentation/screens/appbar.dart';
 import 'package:bankingapp/core/presentation/screens/login_page.dart';
 import 'package:bankingapp/core/presentation/screens/transferencia2.dart';
 import 'package:flutter/material.dart';
@@ -12,18 +13,7 @@ class _TarjetasList extends State<TarjetasList> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-      appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.more_vert,
-              color: Colors.white,
-            ),
-            onPressed: () {},
-          ),
-        ],
-      ),
+      appBar: CustomAppBar(),
       
       body: SingleChildScrollView(
          padding: EdgeInsets.all(20.0),
@@ -33,11 +23,6 @@ class _TarjetasList extends State<TarjetasList> {
           child:
           Column(
            children: [
-Image.asset(
-                "assets/images/horizontal.png",
-                width: 120,
-                height: 90,
-              ),
  Container(
                     padding: EdgeInsets.all(20.0),
                     margin: EdgeInsets.all(5.0),

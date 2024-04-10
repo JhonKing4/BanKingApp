@@ -1,3 +1,5 @@
+import 'package:bankingapp/core/presentation/screens/appbar.dart';
+import 'package:bankingapp/core/presentation/screens/servicios.dart';
 import 'package:flutter/material.dart';
 
 class BeneficiosPage extends StatelessWidget {
@@ -5,31 +7,60 @@ class BeneficiosPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-      appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.more_vert,
-              color: Colors.white,
-            ),
-            onPressed: () {},
-          ),
-        ],
-      ),
+      appBar: CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.asset(
-                "assets/images/horizontal.png",
-                width: 120,
-                height: 90,
-              ),
-            const Text('BENEFICIOS DE SOCIO BANKING',style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold
-            ),),
-            SizedBox(height: 30,),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ServiciosPage(),
+                          ),
+                        );
+                      },
+                      icon: Stack(
+                        children: [
+                          Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color.fromARGB(255, 44, 44, 44), // Color del círculo más claro
+                            ),
+                          ),
+                          Positioned(
+                            left:
+                                7, // Ajusta la posición de la flecha según sea necesario
+                            top:
+                                9, // Ajusta la posición de la flecha según sea necesario
+                            child: Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              color: Color.fromARGB(255, 255, 255, 255), // Color de la flecha
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            const Text(
+              'BENEFICIOS DE SOCIO BANKING',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 30,
+            ),
             Row(
               children: [
                 Expanded(
@@ -72,7 +103,7 @@ class BeneficiosPage extends StatelessWidget {
                   child: ServicioButton(
                     image: 'assets/images/disney.png',
                     text: 'DISNEY +',
-                     desc: '2 Meses gratis',
+                    desc: '2 Meses gratis',
                   ),
                 ),
                 Expanded(
@@ -110,7 +141,8 @@ class ServicioButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: Color.fromARGB(255, 113, 113, 113), // Puedes cambiar el color de fondo aquí
+          color: Color.fromARGB(
+              255, 113, 113, 113), // Puedes cambiar el color de fondo aquí
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -122,7 +154,6 @@ class ServicioButton extends StatelessWidget {
                 shape: BoxShape.circle,
                 image: DecorationImage(
                   image: AssetImage(image),
-                 
                 ),
               ),
             ),
@@ -133,8 +164,8 @@ class ServicioButton extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-             SizedBox(height: 2),
-              Text(
+            SizedBox(height: 2),
+            Text(
               desc,
               style: TextStyle(
                 color: Colors.white,
