@@ -106,7 +106,7 @@ class _Tranferencia2State extends State<Tranferencia2> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Image.asset(
               "assets/images/martin.png",
               width: 60,
@@ -126,7 +126,7 @@ class _Tranferencia2State extends State<Tranferencia2> {
                 fontSize: 16,
               ),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 10),
             Row(
               children: [
                 Column(
@@ -224,7 +224,7 @@ class _Tranferencia2State extends State<Tranferencia2> {
                 ),
               ],
             ),
-            SizedBox(height: 40),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => _showNotification(),
               style: ButtonStyle(

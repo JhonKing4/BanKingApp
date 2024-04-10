@@ -156,6 +156,7 @@ class _RetiroPage extends State<RetiroPage> {
                             color: Colors.white,
                             fontSize: 24,
                           ),
+                          autofocus: true,
                         ),
                       ),
                     ],
