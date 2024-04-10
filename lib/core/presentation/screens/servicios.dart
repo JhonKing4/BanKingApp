@@ -1,3 +1,4 @@
+import 'package:bankingapp/core/presentation/screens/appbar.dart';
 import 'package:bankingapp/core/presentation/screens/beneficios.dart';
 import 'package:flutter/material.dart';
 
@@ -6,61 +7,41 @@ class ServiciosPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-      appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.more_vert,
-              color: Colors.white,
-            ),
-            onPressed: () {},
-          ),
-        ],
-      ),
+      appBar: CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.asset(
-                "assets/images/horizontal.png",
-                width: 120,
-                height: 90,
-              ),
+            SizedBox(height: 40),
             const Text('Pago de servicios',style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold
             ),
             
             ),
+            SizedBox(height: 10,),
                ElevatedButton(
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => BeneficiosPage()),
-            );
-          },
-          style: ButtonStyle(
-            elevation: MaterialStateProperty.all(0),
-            overlayColor: MaterialStateProperty.all(Colors.transparent),
-            backgroundColor: MaterialStateProperty.all(
-                const Color.fromRGBO(242, 254, 141, 1)),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => BeneficiosPage()),
+                );
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(Icons.verified_user_outlined, color: Color.fromARGB(255, 255, 255, 255)),
+                  SizedBox(height: 5),
+                  Text('Beneficios de la app',
+                      style: TextStyle(fontSize: 10, color: Colors.white))
+                ],
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
               ),
             ),
-          ),
-          child: Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
-            child: const Text(
-              "Login",
-              style: TextStyle(
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),
-            ),
-          ),
-        ),
             SizedBox(height: 30,),
             Row(
               children: [

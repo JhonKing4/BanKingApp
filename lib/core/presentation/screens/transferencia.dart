@@ -1,3 +1,5 @@
+import 'package:bankingapp/core/presentation/screens/appbar.dart';
+import 'package:bankingapp/core/presentation/screens/casa.dart';
 import 'package:bankingapp/core/presentation/screens/login_page.dart';
 import 'package:bankingapp/core/presentation/screens/transferencia2.dart';
 import 'package:flutter/material.dart';
@@ -12,31 +14,15 @@ class _TranferenciaState extends State<Tranferencia> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-      appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.more_vert,
-              color: Colors.white,
-            ),
-            onPressed: () {},
-          ),
-        ],
-      ),
+      appBar: CustomAppBar(),
       body: SingleChildScrollView(
         child: Center(
           child: Container(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(0.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset(
-                "assets/images/horizontal.png",
-                width: 120,
-                height: 90,
-              ),
             const Text('Transferencias',style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold
@@ -50,10 +36,11 @@ class _TranferenciaState extends State<Tranferencia> {
                   ),
                 ),
                 Text(
-                  " S 7,896.00",
+                  " \$ 7,896.00",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
+                    fontWeight: FontWeight.bold
                   ),
                 ),
                 SizedBox(height: 20),
@@ -66,7 +53,7 @@ class _TranferenciaState extends State<Tranferencia> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        const Color.fromARGB(255, 71, 167, 212),
+                        Color.fromARGB(255, 204, 239, 255),
                         Color.fromARGB(255, 162, 234, 229)
                       ],
                       stops: [0.0, 1.0],
