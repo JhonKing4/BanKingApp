@@ -202,7 +202,7 @@ class CasaView extends StatelessWidget {
 
                         },
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                               width: 40,
@@ -214,6 +214,7 @@ class CasaView extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               child: Icon(
+                                
                                 Icons.star_border_outlined,
                                 color: const Color.fromARGB(
                                     255, 32, 32, 32), // Color del icono blanco
@@ -247,7 +248,7 @@ class CasaView extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {},
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                               width: 40,
@@ -292,7 +293,7 @@ class CasaView extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {},
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                               width: 40,
@@ -337,7 +338,7 @@ class CasaView extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {},
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                               width: 40,
@@ -408,7 +409,7 @@ class CasaView extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {},
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                               width: 40,
@@ -457,7 +458,7 @@ class CasaView extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {},
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                               width: 40,
@@ -506,7 +507,7 @@ class CasaView extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {},
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                               width: 40,
@@ -555,7 +556,7 @@ class CasaView extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {},
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                               width: 40,
@@ -604,7 +605,7 @@ class CasaView extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {},
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                               width: 40,
