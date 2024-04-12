@@ -136,46 +136,58 @@ class ServicioButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(15.0),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          color: Color.fromARGB(
-              255, 113, 113, 113), // Puedes cambiar el color de fondo aquí
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 60,
-              height: 80,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: AssetImage(image),
+  return Padding(
+    padding: EdgeInsets.all(20.0),
+    child: Container(
+      
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        color: Color.fromARGB(255, 113, 113, 113), // Puedes cambiar el color de fondo aquí
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(height: 10),
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color.fromARGB(187, 255, 255, 255), // Color de fondo de la imagen
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(4.0), // Ajusta el espacio entre el borde de la imagen y el borde del círculo
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: DecorationImage(
+                    image: AssetImage(image), // Ajusta la forma en que la imagen se ajusta al círculo
+                  ),
                 ),
               ),
             ),
-            SizedBox(height: 5),
-            Text(
-              text,
-              style: TextStyle(
-                color: Colors.white,
-              ),
+          ),
+          SizedBox(height: 5),
+          Text(
+            text,
+            style: TextStyle(
+              color: Colors.white,
             ),
-            SizedBox(height: 2),
-            Text(
-              desc,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 12,
-              ),
+            
+          ),
+          SizedBox(height: 10),
+          Text(
+            desc,
+            style: TextStyle(
+              color: Colors.white,
             ),
-          ],
-        ),
+            
+          ),
+          SizedBox(height: 10),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
+
 }
