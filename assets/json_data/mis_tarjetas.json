@@ -1,0 +1,18 @@
+[
+    {
+
+        "tarjeta_pic": "assets/images/visapng.png",
+        "saldo_tarjeta": 2231.00,
+        "numero_tarjeta": "*** 56478"
+    },
+    {
+        "tarjeta_pic": "assets/images/visapng.png",
+        "saldo_tarjeta": 5566.00,
+        "numero_tarjeta": "*** 77649"
+    },
+    {
+        "tarjeta_pic": "assets/images/visapng.png",
+        "saldo_tarjeta": 0.00,
+        "numero_tarjeta": "*** 11223"
+    }
+]

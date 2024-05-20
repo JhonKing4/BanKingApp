@@ -1,0 +1,50 @@
+[
+    {
+      "servicio_pic": "assets/images/Logo_Izzi.png",
+      "nombre_servicio": "IZZI"
+    },
+    {
+        "servicio_pic": "assets/images/mercadolobre.png",
+        "nombre_servicio": "MERCADO LIBRE"
+    },
+    {
+        "servicio_pic": "assets/images/infonavit.png",
+        "nombre_servicio": "INFONAVIT"
+    },
+    {
+        "servicio_pic": "assets/images/cfe.png",
+        "nombre_servicio": "CFE"
+    },
+    {
+        "servicio_pic": "assets/images/netflix.png",
+        "nombre_servicio": "NETFLIX"
+    },  
+    {
+        "servicio_pic": "assets/images/telmex.png",
+        "nombre_servicio": "TELMEX"
+    },
+    {
+        "servicio_pic": "assets/images/max.png",
+        "nombre_servicio": "MAX"
+    },
+    {
+        "servicio_pic": "assets/images/disney.png",
+        "nombre_servicio": "DISNEY +"
+    },
+    {
+        "servicio_pic": "assets/images/dish.png",
+        "nombre_servicio": "DISH"
+    },
+    {
+        "servicio_pic": "assets/images/totalplay.png",
+        "nombre_servicio": "TOTALPLAY"
+    },
+    {
+        "servicio_pic": "assets/images/axtel.png",
+        "nombre_servicio": "AXTEL"
+    },
+    {
+        "servicio_pic": "assets/images/star.png",
+        "nombre_servicio": "STAR +"
+    }                       
+]
