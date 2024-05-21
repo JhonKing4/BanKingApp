@@ -1,0 +1,37 @@
+[
+    {
+        "id_cuenta": 1,
+        "balance_general": 13370
+    },
+    {
+        "titulo_mavimiento": "Transferencia",
+        "cantidad_movimiento": 5100,
+        "fecha_movimiento": "2024-05-20T12:00:00Z",
+        "descuento": false
+    },
+    {
+        "titulo_mavimiento": "Pago",
+        "cantidad_movimiento": 200,
+        "fecha_movimiento": "2024-05-20T10:30:00Z",
+        "descuento": false
+    },
+    {
+        "titulo_mavimiento": "Netflix",
+        "cantidad_movimiento": 150,
+        "fecha_movimiento": "2024-05-20T09:45:00Z",
+        "descuento": true
+    },
+    {
+        "titulo_mavimiento": "Amazon",
+        "cantidad_movimiento": 3000,
+        "fecha_movimiento": "2024-05-20T06:20:00Z",
+        "descuento": true
+    },
+    {
+        "titulo_mavimiento": "Mercado Libre",
+        "cantidad_movimiento": 150,
+        "fecha_movimiento": "2024-05-20T14:30:00Z",
+        "descuento": false
+    }
+
+]

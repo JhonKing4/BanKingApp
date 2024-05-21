@@ -1,0 +1,32 @@
+[ 
+ {
+    "beneficio_pic":"assets/images/sony.png",
+    "nombre_beneficio": "SONY",
+    "tipo_beneficio":"12 Mese sin intereses"
+ },
+ {
+    "beneficio_pic":"assets/images/sony.png",
+    "nombre_beneficio": "NEW ERA",
+    "tipo_beneficio":"6 Mese sin intereses"
+ },
+ {
+    "beneficio_pic":"assets/images/mcstore.png",
+    "nombre_beneficio": "MACSTORE",
+    "tipo_beneficio":"2 Mese sin intereses"
+ },
+ {
+    "beneficio_pic":"assets/images/sony.png",
+    "nombre_beneficio": "PHILIPS",
+    "tipo_beneficio":"12 Mese sin intereses"
+ }, {
+    "beneficio_pic":"assets/images/disney.png",
+    "nombre_beneficio": "DISNEY +",
+    "tipo_beneficio":"2 Meses gratis"
+ },
+ {
+    "beneficio_pic":"assets/images/sony.png",
+    "nombre_beneficio": "MESES SIN INTERESES",
+    "tipo_beneficio":"Hatas 70% off"
+ }
+ 
+]

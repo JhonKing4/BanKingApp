@@ -72,12 +72,10 @@ class _Tranferencia2State extends State<Tranferencia2> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Tranferencia(),
-                          ),
-                        );
+                        Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => HomeView()),
+            );
                       },
                       icon: Stack(
                         children: [

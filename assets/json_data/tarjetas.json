@@ -1,0 +1,17 @@
+[
+    {
+        "tarjeta_pic": "assets/images/visapng.png",
+        "tarjeta_num": "**** **** **** 1123",
+        "tarjeta_balance": 7896.00
+    },
+    {
+        "tarjeta_pic": "assets/images/visapng.png",
+        "tarjeta_num": "**** **** **** 7764",
+        "tarjeta_balance": 5536.00
+    },
+    {
+        "tarjeta_pic": "assets/images/visapng.png",
+        "tarjeta_num": "**** **** **** 5567",
+        "tarjeta_balance": 0.00
+    }
+]

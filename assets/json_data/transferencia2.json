@@ -1,0 +1,12 @@
+[
+    {
+        "contacto_pic": "assets/images/martin.png",
+        "nombre_contacto": "Adrian", 
+        "numero_tarjeta_contacto": "**** 7865"
+    },
+    {
+        "tarjeta_pic": "assets/images/visa.png",
+        "numero_tarjeta": "**** 7312",
+        "balance_tajreta": 7896.00
+    }
+]
