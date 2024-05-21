@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'transferencia2Model.g.dart';
+
+@JsonSerializable()
 class transferencia2Model{
   String contacto_pic;
   String nombre_contacto;
@@ -18,4 +23,11 @@ class transferencia2Model{
    required this.saldo_tarjeta,
    required this.numero_tarjeta
   });
+
+
+
+factory transferencia2Model.fromJson(Map<String, dynamic> json) => _$transferencia2ModelFromJson(json);
+
+Map<String, dynamic> toJson() => _$transferencia2ModelToJson(this);
+
 }

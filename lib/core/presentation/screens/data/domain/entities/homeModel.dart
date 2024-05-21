@@ -1,5 +1,10 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'homeModel.g.dart';
+
+@JsonSerializable()
 class homeModel{
-  String id_cuenta;
+  int id_cuenta;
   double balance_general;
   String tarjeta_pic;
   double saldo_tarjeta;
@@ -15,4 +20,11 @@ class homeModel{
    required this.saldo_tarjeta,
    required this.numero_tarjeta
   });
+
+
+
+factory homeModel.fromJson(Map<String, dynamic> json) => _$homeModelFromJson(json);
+
+Map<String, dynamic> toJson() => _$homeModelToJson(this);
+
 }

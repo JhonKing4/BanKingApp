@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'transferenciaModelDani.g.dart';
+
+@JsonSerializable()
 class transferenciaModelDani{
   String contacto_pic;
   double balance_general;
@@ -18,4 +23,11 @@ class transferenciaModelDani{
    required this.fecha_movimiento,
    required this.descuento
   });
+
+
+
+factory transferenciaModelDani.fromJson(Map<String, dynamic> json) => _$transferenciaModelDaniFromJson(json);
+
+Map<String, dynamic> toJson() => _$transferenciaModelDaniToJson(this);
+
 }
