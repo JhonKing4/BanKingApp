@@ -1,5 +1,5 @@
 import 'package:bankingapp/core/presentation/screens/data/domain/entities/transferenciaModel.dart';
 
-abstract class transferenciaRepository{
+abstract class TransferenciaRepository{
   Future<transferenciaModel> loadtransferenciaData();
 }

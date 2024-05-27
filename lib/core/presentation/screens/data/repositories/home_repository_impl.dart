@@ -2,11 +2,12 @@
 import 'dart:convert';
 
 
-import 'package:bankingapp/core/presentation/screens/data/domain/Repositories/home_repository.dart';
+
 import 'package:bankingapp/core/presentation/screens/data/domain/entities/homeModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/repositories/home_repository.dart';
 import 'package:flutter/services.dart';
 
-class homeRepositoryImpl implements homeRepository{
+class HomeRepositoryImpl implements HomeRepository{
   @override
   Future<homeModel> loadhomeData() async {
     final response = await rootBundle.loadString('assets/home.json');

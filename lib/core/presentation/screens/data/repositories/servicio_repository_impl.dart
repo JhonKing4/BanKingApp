@@ -2,13 +2,11 @@
 import 'dart:convert';
 
 
-
-
-import 'package:bankingapp/core/presentation/screens/data/domain/Repositories/servicio_repository.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/entities/servicioModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/repositories/servicio_repository.dart';
 import 'package:flutter/services.dart';
 
-class servicioRepositoryImpl implements servicioRepository{
+class ServicioRepositoryImpl implements ServicioRepository{
   @override
   Future<servicioModel> loadservicioData() async {
     final response = await rootBundle.loadString('assets/servicio.json');

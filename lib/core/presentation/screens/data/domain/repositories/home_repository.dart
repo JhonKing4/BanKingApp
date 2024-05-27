@@ -1,5 +1,5 @@
 import 'package:bankingapp/core/presentation/screens/data/domain/entities/homeModel.dart';
 
-abstract class homeRepository{
+abstract class HomeRepository{
   Future<homeModel> loadhomeData();
 }
