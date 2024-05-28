@@ -1,41 +1,58 @@
 import 'package:equatable/equatable.dart';
 
-abstract class TarjetasEvent extends Equatable {
-  const TarjetasEvent();
+abstract class TransferenciaEvent extends Equatable {
+  const TransferenciaEvent();
 
   @override
   List<Object?> get props => [];
 }
 
-class LoadFormDataEvent extends TarjetasEvent {}
+class LoadFormDataEvent extends TransferenciaEvent {}
 
-class TarjetaPChanged extends TarjetasEvent {
-  final String tarjeta_pic;
+class BalanceChanged extends TransferenciaEvent {
+  final double balance;
 
-  const TarjetaPChanged(this.tarjeta_pic);
-
-  @override
-  List<Object?> get props => [tarjeta_pic];
-}
-
-class SaldoChanged extends TarjetasEvent {
-  final String saldo_tarjeta;
-
-  const SaldoChanged(this.saldo_tarjeta);
+  const BalanceChanged(this.balance);
 
   @override
-  List<Object?> get props => [saldo_tarjeta];
+  List<Object?> get props => [balance];
 }
 
-class NumeroTChanged extends TarjetasEvent {
-  final String numero_tarjeta;
+class ContactoChanged extends TransferenciaEvent {
+  final String contacto_pic;
 
-  const NumeroTChanged(this.numero_tarjeta);
+  const ContactoChanged(this.contacto_pic);
 
   @override
-  List<Object?> get props => [numero_tarjeta];
+  List<Object?> get props => [contacto_pic];
+}
+
+class NombreCChanged extends TransferenciaEvent {
+  final String nombre_contacto;
+
+  const NombreCChanged(this.nombre_contacto);
+
+  @override
+  List<Object?> get props => [nombre_contacto];
+}
+
+class UltimaCChanged extends TransferenciaEvent {
+  final String ultima_conexion;
+
+  const UltimaCChanged(this.ultima_conexion);
+
+  @override
+  List<Object?> get props => [ultima_conexion];
+}
+
+class EstadoCChanged extends TransferenciaEvent {
+  final String estado_conexion;
+
+  const EstadoCChanged(this.estado_conexion);
+
+  @override
+  List<Object?> get props => [estado_conexion];
 }
 
 
-
-class FormSubmitted extends TarjetasEvent {}
+class FormSubmitted extends TransferenciaEvent {}

@@ -1,50 +1,60 @@
 
-// import 'package:bankingapp/core/presentation/screens/data/domain/entities/tarjetasModel.dart';
-// import 'package:equatable/equatable.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/transferenciaModel.dart';
+import 'package:equatable/equatable.dart';
 
-// class TarjetasState extends Equatable {
-//   final double balance;
-//   final String contacto_pic;
-//   final String nombre_contacto;
-//   final DateTime ultima_conexion;
-//   final bool estado_conexion;
+class TransferenciaState extends Equatable {
+  final double balance;
+  final String contacto_pic;
+  final String nombre_contacto;
+  final DateTime ultima_conexion;
+  final bool estado_conexion;
 
 
-//   const TarjetasState({
-//     this.balance = 0,
-//     this.contacto_pic = '',
-//     this.nombre_contacto = '',
-//     this.ultima_conexion = const DateTime(2023, 5, 27, 10, 30, 0),
-//     this.estado_conexion = true,
-//   });
+  
 
-//   factory TarjetasState.fromModel(tarjetasModel model) {
-//     return TarjetasState(
-//       balance: model.balance,
-//       contacto_pic: model.contacto_pic,
-//       nombre_contacto: model.nombre_contacto,
-//       ultima_conexion: model.ultima_conexion,
-//       estado_conexion: model.estado_conexion
-//     );
-//   }
+  TransferenciaState({
+    this.balance = 0,
+    this.contacto_pic = '',
+    this.nombre_contacto = '',
+    DateTime? ultima_conexion,
+    this.estado_conexion = true,
+  }) : ultima_conexion = ultima_conexion ?? DateTime.now();
+ 
 
-//   TarjetasState copyWith({
-//     String? balance,
-//     double? contacto_pic, required bool isValid,
-//     String? nombre_contacto,
+  factory TransferenciaState.fromModel(transferenciaModel model) {
+    return TransferenciaState(
+      balance: model.balance,
+      contacto_pic: model.contacto_pic,
+      nombre_contacto: model.nombre_contacto,
+      ultima_conexion: model.ultima_conexion,
+      estado_conexion: model.estado_conexion
+    );
+  }
 
-//   }) {
-//     return TarjetasState(
-//       tarjeta_pic: tarjeta_pic ?? this.tarjeta_pic,
-//       saldo_tarjeta: saldo_tarjeta ?? this.saldo_tarjeta,
-//       numero_tarjeta: numero_tarjeta ?? this.numero_tarjeta
-//     );
-//   }
+  TransferenciaState copyWith({
+    double? balance,
+    String? contacto_pic, required bool isValid,
+    String? nombre_contacto,
+    DateTime?  ultima_conexion,
+    bool? estado_conexion
+    
 
-//   @override
-//   List<Object?> get props => [
-//         tarjeta_pic,
-//         saldo_tarjeta,
-//         numero_tarjeta
-//       ];
-// }
+  }) {
+    return TransferenciaState(
+      balance: balance ?? this.balance,
+      contacto_pic: contacto_pic ?? this.contacto_pic,
+      nombre_contacto: nombre_contacto ?? this.nombre_contacto,
+      ultima_conexion: ultima_conexion ?? this.ultima_conexion,
+      estado_conexion: estado_conexion ?? this.estado_conexion
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+        balance,
+        contacto_pic,
+        nombre_contacto,
+        ultima_conexion,
+        estado_conexion
+      ];
+}
