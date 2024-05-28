@@ -14,22 +14,25 @@
 //     this.balance = 0,
 //     this.contacto_pic = '',
 //     this.nombre_contacto = '',
-//     this.ultima_conexion = ,
+//     this.ultima_conexion = const DateTime(2023, 5, 27, 10, 30, 0),
 //     this.estado_conexion = true,
 //   });
 
 //   factory TarjetasState.fromModel(tarjetasModel model) {
 //     return TarjetasState(
-//       tarjeta_pic: model.tarjeta_pic,
-//       saldo_tarjeta: model.saldo_tarjeta,
-//       numero_tarjeta: model.numero_tarjeta
+//       balance: model.balance,
+//       contacto_pic: model.contacto_pic,
+//       nombre_contacto: model.nombre_contacto,
+//       ultima_conexion: model.ultima_conexion,
+//       estado_conexion: model.estado_conexion
 //     );
 //   }
 
 //   TarjetasState copyWith({
-//     String? tarjeta_pic,
-//     double? saldo_tarjeta, required bool isValid,
-//     String? numero_tarjeta,
+//     String? balance,
+//     double? contacto_pic, required bool isValid,
+//     String? nombre_contacto,
+
 //   }) {
 //     return TarjetasState(
 //       tarjeta_pic: tarjeta_pic ?? this.tarjeta_pic,
