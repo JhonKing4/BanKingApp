@@ -7,7 +7,7 @@ abstract class RetiroEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class LoadFormDataEvent extends RetiroEvent {}
+class LoadRetiroDataEvent extends RetiroEvent {}
 
 class TarjetaPChanged extends RetiroEvent {
   final String tarjeta_pic;

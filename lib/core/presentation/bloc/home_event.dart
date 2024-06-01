@@ -7,7 +7,7 @@ abstract class HomeEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class LoadFormDataEvent extends HomeEvent {}
+class LoadHomeDataEvent extends HomeEvent {}
 
 class IdCuentaChanged extends HomeEvent {
   final int id_cuenta;

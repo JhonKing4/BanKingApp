@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:equatable/equatable.dart';
 
 abstract class TarjetasEvent extends Equatable {
@@ -7,7 +9,7 @@ abstract class TarjetasEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class LoadFormDataEvent extends TarjetasEvent {}
+class LoadTarjetasDataEvent extends TarjetasEvent {}
 
 class TarjetaPChanged extends TarjetasEvent {
   final String tarjeta_pic;
@@ -19,7 +21,7 @@ class TarjetaPChanged extends TarjetasEvent {
 }
 
 class SaldoChanged extends TarjetasEvent {
-  final String saldo_tarjeta;
+  final double saldo_tarjeta;
 
   const SaldoChanged(this.saldo_tarjeta);
 

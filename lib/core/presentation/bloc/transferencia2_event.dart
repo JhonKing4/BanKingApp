@@ -9,7 +9,7 @@ abstract class Transferencia2Event extends Equatable {
   List<Object?> get props => [];
 }
 
-class LoadFormDataEvent extends Transferencia2Event {}
+class LoadTransferencia2DataEvent extends Transferencia2Event {}
 
 class ContactoChanged extends Transferencia2Event {
   final String contacto_pic;

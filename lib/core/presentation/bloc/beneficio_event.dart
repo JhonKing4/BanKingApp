@@ -7,7 +7,7 @@ abstract class BeneficioEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class LoadFormDataEvent extends BeneficioEvent {}
+class LoadBeneficioDataEvent extends BeneficioEvent {}
 
 class PicChanged extends BeneficioEvent {
   final String beneficio_pic;

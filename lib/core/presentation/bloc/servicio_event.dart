@@ -7,7 +7,7 @@ abstract class ServicioEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class LoadFormDataEvent extends ServicioEvent {}
+class LoadServicioDataEvent extends ServicioEvent {}
 
 class ServicioPChanged extends ServicioEvent {
   final String servicio_pic;

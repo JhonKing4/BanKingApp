@@ -7,7 +7,7 @@ abstract class TransferenciaEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class LoadFormDataEvent extends TransferenciaEvent {}
+class LoadTransferenciaDataEvent extends TransferenciaEvent {}
 
 class BalanceChanged extends TransferenciaEvent {
   final double balance;
