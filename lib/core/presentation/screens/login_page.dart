@@ -1,4 +1,5 @@
 import 'package:bankingapp/core/presentation/screens/home.dart';
+import 'package:bankingapp/core/presentation/screens/registro.dart';
 import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
 
@@ -135,6 +136,35 @@ class _LoginPage extends State<LoginPage> {
               "Login",
               style: TextStyle(
                 color: Color.fromARGB(255, 0, 0, 0),
+              ),
+            ),
+          ),
+        ),
+         ElevatedButton(
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => RegisterPage()),
+            );
+          },
+          style: ButtonStyle(
+            elevation: MaterialStateProperty.all(0),
+            overlayColor: MaterialStateProperty.all(Colors.transparent),
+            backgroundColor: MaterialStateProperty.all(
+                Color.fromARGB(0, 37, 37, 37)),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+          ),
+          child: Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+            child: const Text(
+              "Registro",
+              style: TextStyle(
+                color: Color.fromARGB(255, 255, 255, 255),
               ),
             ),
           ),
