@@ -13,8 +13,8 @@ class LoadTarjetasData {
     if (tarjetasModel.numero_tarjeta.isNotEmpty) {
       throw Exception("numero_tarjeta no puede estar vacio");
     }
-    if (tarjetasModel.saldo_tarjeta <= 0) {
-      throw Exception("saldo_tarjeta no puede ser null o ser menor o igual a cero");
+    if (tarjetasModel.saldo_tarjeta < 0) {
+      throw Exception("saldo_tarjeta no puede ser null o ser menor a cero");
     }
     if (!esImagenValida(tarjetasModel.tarjeta_pic)) {
       throw Exception("tarjeta_pic debe ser una imagen valida");

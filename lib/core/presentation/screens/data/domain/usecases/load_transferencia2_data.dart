@@ -39,7 +39,7 @@ class LoadTransferencia2Data {
     return transferencia2Model;
   }
   bool esImagenValida(String url) {
-    final imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+    final imageExtensions = ['jpg', 'jpeg', 'png'];
     final extension = url.split('.').last.toLowerCase();
     return imageExtensions.contains(extension);
   }
