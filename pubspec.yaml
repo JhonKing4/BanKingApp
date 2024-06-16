@@ -71,6 +71,14 @@ flutter:
   assets:
     - assets/images/
     - assets/images/vertical.png
+    - assets/json_data/beneficios.json
+    - assets/json_data/home.json
+    - assets/json_data/mis_tarjetas.json
+    - assets/json_data/retiro.json
+    - assets/json_data/servicios.json
+    - assets/json_data/tarjetas.json
+    - assets/json_data/transferencia.json
+    - assets/json_data/transferencia2.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

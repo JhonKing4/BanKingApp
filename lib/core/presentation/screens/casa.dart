@@ -1,6 +1,9 @@
 import 'package:bankingapp/core/presentation/bloc/home_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/home_event.dart';
 import 'package:bankingapp/core/presentation/bloc/home_state.dart';
 import 'package:bankingapp/core/presentation/screens/appbar.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_home_data.dart';
+import 'package:bankingapp/core/presentation/screens/data/repositories/home_repository_impl.dart';
 import 'package:bankingapp/core/presentation/screens/servicios.dart';
 import 'package:bankingapp/core/presentation/screens/transferencia.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +12,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CasaView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocProvider(
+      // Nos hacia falta el provider que implementa el impl
+      create: (context) =>
+          HomeBloc(LoadHomeData(HomeRepositoryImpl()))
+            ..add(LoadHomeDataEvent()),child:  Scaffold(
       extendBody: true,
       backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
       appBar: CustomAppBar(),
@@ -78,7 +85,8 @@ class CasaView extends StatelessWidget {
             SizedBox(height: 5),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: Row(
+               child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) =>
+              Row(
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -88,7 +96,7 @@ class CasaView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Image.asset(
-                            "assets/images/visapng.png",
+                            state.tarjeta_pic,
                             width: 40,
                             height: 40,
                           ),
@@ -96,12 +104,12 @@ class CasaView extends StatelessWidget {
                           Text('saldo',
                               style: TextStyle(
                                   color: Color.fromARGB(255, 50, 50, 50))),
-                          Text('\$2,231.00',
+                          Text(state.saldo_tarjeta.toString(),
                               style: TextStyle(
                                   color:
                                       const Color.fromARGB(255, 24, 24, 24))),
                           SizedBox(height: 20),
-                          Text('*** 56478',
+                          Text(state.numero_tarjeta,
                               style: TextStyle(
                                   color: const Color.fromARGB(
                                       255, 120, 120, 120))),
@@ -125,16 +133,16 @@ class CasaView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Image.asset(
-                            "assets/images/visapng.png",
+                            state.tarjeta_pic,
                             width: 40,
                             height: 40,
                           ),
                           SizedBox(height: 10),
                           Text('saldo', style: TextStyle(color: Colors.white)),
-                          Text('\$5,566.00',
+                          Text(state.saldo_tarjeta.toString(),
                               style: TextStyle(color: Colors.white)),
                           SizedBox(height: 20),
-                          Text('*** 77649',
+                          Text(state.numero_tarjeta,
                               style: TextStyle(color: Colors.white)),
                         ],
                       ),
@@ -163,7 +171,7 @@ class CasaView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Image.asset(
-                            "assets/images/visapng.png",
+                            state.tarjeta_pic,
                             width: 40,
                             height: 40,
                           ),
@@ -179,6 +187,7 @@ class CasaView extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
             ),
             SizedBox(height: 8),
             Row(
@@ -656,6 +665,7 @@ class CasaView extends StatelessWidget {
           ],
         ),
       ),
+            ),
     );
   }
 }

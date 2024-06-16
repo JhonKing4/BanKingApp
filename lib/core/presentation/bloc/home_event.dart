@@ -54,4 +54,4 @@ class NumeroTChanged extends HomeEvent {
   List<Object?> get props => [numero_tarjeta];
 }
 
-class FormSubmitted extends HomeEvent {}
+class HomeSubmitted extends HomeEvent {}

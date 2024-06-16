@@ -12,9 +12,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(HomeState.fromModel(homeData));
     });
 
-    on<IdCuentaChanged>((event, emit) {
-      emit(state.copyWith(id_cuenta: event.id_cuenta, isValid: _validateForm()));
-    });
     on<BalanceChanged>((event, emit) {
       emit(state.copyWith(balance_general: event.balance_general, isValid: _validateForm()));
     });
@@ -30,7 +27,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   bool _validateForm() {
-    return state.id_cuenta != null &&
+    return 
         state.balance_general != null &&
         state.tarjeta_pic.isNotEmpty &&
         state.saldo_tarjeta != null &&

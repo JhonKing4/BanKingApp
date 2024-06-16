@@ -10,9 +10,6 @@ class LoadHomeData {
   Future<homeModel> call() async {
     final homeData = await repository.loadhomeData();
 
-    if (homeData.id_cuenta == 0) {
-      throw Exception("id_cuenta debe ser diferente de 0.");
-    }
     if (homeData.balance_general == Null || homeData.balance_general < 0) {
       throw Exception("balance_general debe ser mayor que 0 y no debe ser null.");
     }

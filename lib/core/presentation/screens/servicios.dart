@@ -1,14 +1,21 @@
 import 'package:bankingapp/core/presentation/bloc/servicio_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/servicio_event.dart';
 import 'package:bankingapp/core/presentation/bloc/servicio_state.dart';
 import 'package:bankingapp/core/presentation/screens/appbar.dart';
 import 'package:bankingapp/core/presentation/screens/beneficios.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_servicio_data.dart';
+import 'package:bankingapp/core/presentation/screens/data/repositories/servicio_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ServiciosPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocProvider(
+      // Nos hacia falta el provider que implementa el impl
+      create: (context) =>
+          ServicioBloc(LoadServicioData(ServicioRepositoryImpl()))
+            ..add(LoadServicioDataEvent()),child: Scaffold(
       backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
       appBar: CustomAppBar(),
       body: BlocBuilder<ServicioBloc, ServicioState>(builder: (context, state) => SingleChildScrollView(
@@ -138,6 +145,7 @@ class ServiciosPage extends StatelessWidget {
         ),
       ),
       ),
+    ),
     );
   }
 }

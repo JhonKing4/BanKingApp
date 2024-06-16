@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 class ServicioRepositoryImpl implements ServicioRepository{
   @override
   Future<servicioModel> loadservicioData() async {
-    final response = await rootBundle.loadString('assets/servicio.json');
+    final response = await rootBundle.loadString('assets/json_data/servicios.json');
     final data = json.decode(response);
     print(data);
     return servicioModel.fromJson(data);

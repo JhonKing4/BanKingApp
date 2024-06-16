@@ -3,7 +3,6 @@ import 'package:bankingapp/core/presentation/screens/data/domain/entities/homeMo
 import 'package:equatable/equatable.dart';
 
 class HomeState extends Equatable {
-  final int id_cuenta;
   final double balance_general;
   final String tarjeta_pic;
   final double saldo_tarjeta;
@@ -11,7 +10,6 @@ class HomeState extends Equatable {
 
 
   const HomeState({
-    this.id_cuenta = 0,
     this.balance_general = 0,
     this.tarjeta_pic = '',
     this.saldo_tarjeta = 0,
@@ -20,7 +18,6 @@ class HomeState extends Equatable {
 
   factory HomeState.fromModel(homeModel model) {
     return HomeState(
-      id_cuenta: model.id_cuenta,
       balance_general: model.balance_general,
       tarjeta_pic: model.tarjeta_pic,
       saldo_tarjeta: model.saldo_tarjeta,
@@ -36,7 +33,6 @@ class HomeState extends Equatable {
     String? numero_tarjeta
   }) {
     return HomeState(
-      id_cuenta:  id_cuenta ?? this. id_cuenta,
       balance_general: balance_general ?? this.balance_general,
       tarjeta_pic: tarjeta_pic ?? this.tarjeta_pic,
       saldo_tarjeta: saldo_tarjeta ?? this.saldo_tarjeta,
@@ -46,7 +42,6 @@ class HomeState extends Equatable {
 
   @override
   List<Object?> get props => [
-        id_cuenta,
         balance_general,
         tarjeta_pic,
         saldo_tarjeta,

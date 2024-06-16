@@ -4,9 +4,8 @@ import 'package:bankingapp/core/presentation/screens/data/domain/repositories/se
 
 class LoadServicioData {
   final ServicioRepository repository;
-  final double saldoCuenta; // Necesitamos el saldo de la cuenta para la validación del monto_pago
 
-  LoadServicioData(this.repository, this.saldoCuenta);
+  LoadServicioData(this.repository);
 
   Future<servicioModel> call() async {
     final servicioModel = await repository.loadservicioData();
