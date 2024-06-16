@@ -8,7 +8,7 @@ class transferenciaModel{
   double balance;
   String contacto_pic;
   String nombre_contacto;
-  DateTime ultima_conexion;
+  String ultima_conexion;
   bool estado_conexion;
 
 

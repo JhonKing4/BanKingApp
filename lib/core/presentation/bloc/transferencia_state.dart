@@ -6,7 +6,7 @@ class TransferenciaState extends Equatable {
   final double balance;
   final String contacto_pic;
   final String nombre_contacto;
-  final DateTime ultima_conexion;
+  final String ultima_conexion;
   final bool estado_conexion;
 
 
@@ -16,9 +16,9 @@ class TransferenciaState extends Equatable {
     this.balance = 0,
     this.contacto_pic = '',
     this.nombre_contacto = '',
-    DateTime? ultima_conexion,
+    this.ultima_conexion = '',
     this.estado_conexion = true,
-  }) : ultima_conexion = ultima_conexion ?? DateTime.now();
+  });
  
 
   factory TransferenciaState.fromModel(transferenciaModel model) {
@@ -35,7 +35,7 @@ class TransferenciaState extends Equatable {
     double? balance,
     String? contacto_pic, required bool isValid,
     String? nombre_contacto,
-    DateTime?  ultima_conexion,
+    String?  ultima_conexion,
     bool? estado_conexion
     
 

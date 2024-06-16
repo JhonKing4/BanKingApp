@@ -1,35 +1,8 @@
-[
+
     {
-      "balance_general": 7896.00  
-    },
-    {
+      "balance": 7896.00,  
        "contacto_pic": "assets/images/martin.png",
        "nombre_contacto": "Adrian Santome", 
        "ultima_conexion": "15 Oct",
        "estado_conexion": true
-    },
-    {
-        "contacto_pic": "assets/images/adrian.png",
-        "nombre_contacto": "Jhon",
-        "ultima_conexion": "31 Agos",
-       "estado_conexion": true 
-    },
-    {
-        "contacto_pic": "assets/images/julia.png",
-        "nombre_contacto": "Julia Cesar Rivera" ,
-        "ultima_conexion": "12 Nov",
-        "estado_conexion": true
-    },
-    {
-        "contacto_pic": "assets/images/leo.png",
-        "nombre_contacto": "Leopoldo Salgado" ,
-        "ultima_conexion": "29 Marzo",
-        "estado_conexion": true
-    },
-    {
-        "contacto_pic": "assets/images/jack.png",
-        "nombre_contacto": "Jack Sullivan" ,
-        "ultima_conexion": "31 Agos",
-        "estado_conexion": true
     }
-]

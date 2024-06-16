@@ -1,8 +1,9 @@
 import 'package:bankingapp/core/presentation/bloc/transferencia_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/transferencia_event.dart';
 import 'package:bankingapp/core/presentation/bloc/transferencia_state.dart';
 import 'package:bankingapp/core/presentation/screens/appbar.dart';
-import 'package:bankingapp/core/presentation/screens/casa.dart';
-import 'package:bankingapp/core/presentation/screens/login_page.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_transferencia_data.dart';
+import 'package:bankingapp/core/presentation/screens/data/repositories/transferencia_repository_impl.dart';
 import 'package:bankingapp/core/presentation/screens/transferencia2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +16,11 @@ class Tranferencia extends StatefulWidget {
 class _TranferenciaState extends State<Tranferencia> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocProvider(
+      // Nos hacia falta el provider que implementa el impl
+      create: (context) =>
+          TransferenciaBloc(LoadTransferenciaData(TransferenciaRepositoryImpl()))
+            ..add(LoadTransferenciaDataEvent()),child: Scaffold(
       backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
       appBar: CustomAppBar(),
       body: BlocBuilder<TransferenciaBloc, TransferenciaState>(
@@ -483,6 +488,7 @@ class _TranferenciaState extends State<Tranferencia> {
           ),
         ),
       ),
+     ),
     );
   }
 }
