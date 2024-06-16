@@ -1,8 +1,11 @@
+import 'package:bankingapp/core/presentation/bloc/transferencia_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/transferencia_state.dart';
 import 'package:bankingapp/core/presentation/screens/appbar.dart';
 import 'package:bankingapp/core/presentation/screens/casa.dart';
 import 'package:bankingapp/core/presentation/screens/login_page.dart';
 import 'package:bankingapp/core/presentation/screens/transferencia2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Tranferencia extends StatefulWidget {
   @override
@@ -15,7 +18,7 @@ class _TranferenciaState extends State<Tranferencia> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
       appBar: CustomAppBar(),
-      body: SingleChildScrollView(
+      body: BlocBuilder<TransferenciaBloc, TransferenciaState>(builder: (context, state) => SingleChildScrollView(
         child: Center(
           child: Container(
             padding: const EdgeInsets.all(0.0),
@@ -36,7 +39,7 @@ class _TranferenciaState extends State<Tranferencia> {
                   ),
                 ),
                 Text(
-                  " \$ 7,896.00",
+                  state.balance.toString(),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -81,10 +84,10 @@ class _TranferenciaState extends State<Tranferencia> {
       MaterialPageRoute(builder: (context) => Tranferencia2()),
     );
   },
-  child: Column(
+  child:  Column(
     children: [
       Image.asset(
-        "assets/images/martin.png",
+        state.contacto_pic,
         width: 40,
         height: 40,
       ),
@@ -101,7 +104,7 @@ class _TranferenciaState extends State<Tranferencia> {
                           Column(
                             children: [
                               Image.asset(
-                                "assets/images/adrian.png",
+                                state.contacto_pic,
                                 width: 40,
                                 height: 40,
                               ),
@@ -117,7 +120,7 @@ class _TranferenciaState extends State<Tranferencia> {
                           Column(
                             children: [
                               Image.asset(
-                                "assets/images/julia.png",
+                                state.contacto_pic,
                                 width: 40,
                                 height: 40,
                               ),
@@ -133,7 +136,7 @@ class _TranferenciaState extends State<Tranferencia> {
                           Column(
                             children: [
                               Image.asset(
-                                "assets/images/plus.png",
+                                state.contacto_pic,
                                 width: 40,
                                 height: 40,
                               ),
@@ -184,7 +187,7 @@ class _TranferenciaState extends State<Tranferencia> {
                             ),
                             // Imagen a la derecha
                             child: Image.asset(
-                              "assets/images/leo.png",
+                              state.contacto_pic,
                               width: 40,
                               height: 40,
                             ),
@@ -197,7 +200,7 @@ class _TranferenciaState extends State<Tranferencia> {
                               children: [
                                 // Texto en el medio
                                 Text(
-                                  "Leopoldo Salgado ",
+                                  state.nombre_contacto,
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.white,
@@ -243,7 +246,7 @@ class _TranferenciaState extends State<Tranferencia> {
                             ),
                             // Imagen a la derecha
                             child: Image.asset(
-                              "assets/images/martin.png",
+                              state.contacto_pic,
                               width: 40,
                               height: 40,
                             ),
@@ -256,7 +259,7 @@ class _TranferenciaState extends State<Tranferencia> {
                               children: [
                                 // Texto en el medio
                                 Text(
-                                  "Adrian Santome",
+                                  state.nombre_contacto,
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.white,
@@ -276,7 +279,7 @@ class _TranferenciaState extends State<Tranferencia> {
                                     ),
                                     SizedBox(width: 5),
                                     Text(
-                                      "15 Oct",
+                                      state.ultima_conexion.toString(),
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Colors.grey,
@@ -302,7 +305,7 @@ class _TranferenciaState extends State<Tranferencia> {
                             ),
                             // Imagen a la derecha
                             child: Image.asset(
-                              "assets/images/adrian.png",
+                              state.contacto_pic,
                               width: 40,
                               height: 40,
                             ),
@@ -314,7 +317,7 @@ class _TranferenciaState extends State<Tranferencia> {
                               children: [
                                 // Texto en el medio
                                 Text(
-                                  "Jhon Smit",
+                                  state.nombre_contacto,
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.white,
@@ -334,7 +337,7 @@ class _TranferenciaState extends State<Tranferencia> {
                                     ),
                                     SizedBox(width: 5),
                                     Text(
-                                      "31 Agos",
+                                      state.ultima_conexion.toString(),
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Colors.grey,
@@ -360,7 +363,7 @@ class _TranferenciaState extends State<Tranferencia> {
                             ),
                             // Imagen a la derecha
                             child: Image.asset(
-                              "assets/images/julia.png",
+                              state.contacto_pic,
                               width: 40,
                               height: 40,
                             ),
@@ -373,7 +376,7 @@ class _TranferenciaState extends State<Tranferencia> {
                               children: [
                                 // Texto en el medio
                                 Text(
-                                  "Julia Casa Rivera",
+                                  state.nombre_contacto,
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.white,
@@ -393,7 +396,7 @@ class _TranferenciaState extends State<Tranferencia> {
                                     ),
                                     SizedBox(width: 5),
                                     Text(
-                                      "12 Nov",
+                                      state.ultima_conexion.toString(),
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Colors.grey,
@@ -419,7 +422,7 @@ class _TranferenciaState extends State<Tranferencia> {
                             ),
                             // Imagen a la derecha
                             child: Image.asset(
-                              "assets/images/jack.png",
+                              state.contacto_pic,
                               width: 40,
                               height: 40,
                             ),
@@ -431,7 +434,7 @@ class _TranferenciaState extends State<Tranferencia> {
                               children: [
                                 // Texto en el medio
                                 Text(
-                                  "Jack Sullivan",
+                                  state.nombre_contacto,
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.white,
@@ -451,7 +454,7 @@ class _TranferenciaState extends State<Tranferencia> {
                                     ),
                                     SizedBox(width: 5),
                                     Text(
-                                      "31 Agos",
+                                      state.ultima_conexion.toString(),
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Colors.grey,
@@ -471,6 +474,7 @@ class _TranferenciaState extends State<Tranferencia> {
             ),
           ),
         ),
+      ),
       ),
     );
   }

@@ -1,6 +1,9 @@
+import 'package:bankingapp/core/presentation/bloc/servicio_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/servicio_state.dart';
 import 'package:bankingapp/core/presentation/screens/appbar.dart';
 import 'package:bankingapp/core/presentation/screens/beneficios.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ServiciosPage extends StatelessWidget {
   @override
@@ -8,7 +11,7 @@ class ServiciosPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
       appBar: CustomAppBar(),
-      body: SingleChildScrollView(
+      body: BlocBuilder<ServicioBloc, ServicioState>(builder: (context, state) => SingleChildScrollView(
         child: Column(
           children: [
             SizedBox(height: 40),
@@ -47,42 +50,20 @@ class ServiciosPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: ServicioButton(
-                    image: 'assets/images/Logo_Izzi.png',
-                    text: 'IZZI',
+                    image: state.servicio_pic,
+                    text: state.nombre_servicio,
                   ),
                 ),
                 Expanded(
                   child: ServicioButton(
-                    image: 'assets/images/mercadolobre.png',
-                    text: 'MERCAD...',
+                    image: state.servicio_pic,
+                    text: state.nombre_servicio,
                   ),
                 ),
                 Expanded(
                   child: ServicioButton(
-                    image: 'assets/images/infonavit.png',
-                    text: 'INFONAVIT',
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: ServicioButton(
-                    image: 'assets/images/cfe.png',
-                    text: 'CFE',
-                  ),
-                ),
-                Expanded(
-                  child: ServicioButton(
-                    image: 'assets/images/netflix.png',
-                    text: 'NETFLIX',
-                  ),
-                ),
-                Expanded(
-                  child: ServicioButton(
-                    image: 'assets/images/telmex.png',
-                    text: 'TELMEX',
+                    image: state.servicio_pic,
+                    text: state.nombre_servicio,
                   ),
                 ),
               ],
@@ -91,20 +72,20 @@ class ServiciosPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: ServicioButton(
-                    image: 'assets/images/max.png',
-                    text: 'MAX',
+                    image: state.servicio_pic,
+                    text: state.nombre_servicio,
                   ),
                 ),
                 Expanded(
                   child: ServicioButton(
-                    image: 'assets/images/disney.png',
-                    text: 'DISNEY +',
+                    image: state.servicio_pic,
+                    text: state.nombre_servicio,
                   ),
                 ),
                 Expanded(
                   child: ServicioButton(
-                    image: 'assets/images/dish.png',
-                    text: 'DISH',
+                    image: state.servicio_pic,
+                    text: state.nombre_servicio,
                   ),
                 ),
               ],
@@ -113,26 +94,49 @@ class ServiciosPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: ServicioButton(
-                    image: 'assets/images/totalplay.png',
-                    text: 'TOTALPLAY',
+                    image: state.servicio_pic,
+                    text: state.nombre_servicio,
                   ),
                 ),
                 Expanded(
                   child: ServicioButton(
-                    image: 'assets/images/axtel.png',
-                    text: 'AXTEL',
+                    image: state.servicio_pic,
+                    text: state.nombre_servicio,
                   ),
                 ),
                 Expanded(
                   child: ServicioButton(
-                    image: 'assets/images/star.png',
-                    text: 'STAR +',
+                    image: state.servicio_pic,
+                    text: state.nombre_servicio,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: ServicioButton(
+                    image: state.servicio_pic,
+                    text: state.nombre_servicio,
+                  ),
+                ),
+                Expanded(
+                  child: ServicioButton(
+                    image: state.servicio_pic,
+                    text: state.nombre_servicio,
+                  ),
+                ),
+                Expanded(
+                  child: ServicioButton(
+                    image: state.servicio_pic,
+                    text: state.nombre_servicio,
                   ),
                 ),
               ],
             ),
           ],
         ),
+      ),
       ),
     );
   }

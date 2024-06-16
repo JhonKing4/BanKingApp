@@ -1,7 +1,10 @@
+import 'package:bankingapp/core/presentation/bloc/home_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/home_state.dart';
 import 'package:bankingapp/core/presentation/screens/appbar.dart';
 import 'package:bankingapp/core/presentation/screens/servicios.dart';
 import 'package:bankingapp/core/presentation/screens/transferencia.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CasaView extends StatelessWidget {
   @override
@@ -20,7 +23,7 @@ class CasaView extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Column(
+                  child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -37,7 +40,7 @@ class CasaView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '\$7,896.00',
+                                state.balance_general.toString(),
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.white,
@@ -55,11 +58,11 @@ class CasaView extends StatelessWidget {
                                 height: 30,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Color.fromARGB(255, 59, 59, 59), 
+                                  color: Color.fromARGB(255, 59, 59, 59),
                                 ),
                                 child: Icon(
                                   Icons.search_outlined,
-                                  color: Color.fromARGB(255, 255, 255, 255), 
+                                  color: Color.fromARGB(255, 255, 255, 255),
                                 ),
                               ),
                             ],
@@ -67,6 +70,7 @@ class CasaView extends StatelessWidget {
                         ],
                       ),
                     ],
+                  ),
                   ),
                 ),
               ],
@@ -148,7 +152,14 @@ class CasaView extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
                       onPressed: () {},
-                      child: Column(
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.all(45),
+                        backgroundColor: Color.fromARGB(255, 175, 175, 175),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                      child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) => Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Image.asset(
@@ -158,19 +169,12 @@ class CasaView extends StatelessWidget {
                           ),
                           SizedBox(height: 10),
                           Text('saldo', style: TextStyle(color: Colors.white)),
-                          Text('\$0.00', style: TextStyle(color: Colors.white)),
+                          Text(state.saldo_tarjeta.toString(), style: TextStyle(color: Colors.white)),
                           SizedBox(height: 20),
-                          Text('*** 11223',
+                          Text(state.numero_tarjeta,
                               style: TextStyle(color: Colors.white)),
                         ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(45),
-                        backgroundColor: Color.fromARGB(255, 175, 175, 175),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
+                      ),) ,
                     ),
                   ),
                 ],
@@ -198,9 +202,7 @@ class CasaView extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
-                        onPressed: () {
-
-                        },
+                        onPressed: () {},
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -214,7 +216,6 @@ class CasaView extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               child: Icon(
-                                
                                 Icons.star_border_outlined,
                                 color: const Color.fromARGB(
                                     255, 32, 32, 32), // Color del icono blanco
@@ -345,14 +346,12 @@ class CasaView extends StatelessWidget {
                               height: 40,
                               decoration: BoxDecoration(
                                 shape: BoxShape.rectangle,
-                                color: Color.fromARGB(255, 255, 175,
-                                    129), 
+                                color: Color.fromARGB(255, 255, 175, 129),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               child: Icon(
                                 Icons.person_2_outlined,
-                                color: Color.fromARGB(
-                                    255, 32, 32, 32),
+                                color: Color.fromARGB(255, 32, 32, 32),
                               ),
                             ),
                             SizedBox(height: 5),
@@ -416,7 +415,8 @@ class CasaView extends StatelessWidget {
                               height: 40,
                               decoration: BoxDecoration(
                                 shape: BoxShape.rectangle,
-                                color: Color.fromARGB(255, 246, 250, 255), // Color del fondo rosa claro
+                                color: Color.fromARGB(255, 246, 250,
+                                    255), // Color del fondo rosa claro
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               child: Column(
@@ -465,7 +465,8 @@ class CasaView extends StatelessWidget {
                               height: 40,
                               decoration: BoxDecoration(
                                 shape: BoxShape.rectangle,
-                                color: Color.fromARGB(255, 246, 250, 255), // Color del fondo rosa claro
+                                color: Color.fromARGB(255, 246, 250,
+                                    255), // Color del fondo rosa claro
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               child: Column(
@@ -514,7 +515,8 @@ class CasaView extends StatelessWidget {
                               height: 40,
                               decoration: BoxDecoration(
                                 shape: BoxShape.rectangle,
-                                color: Color.fromARGB(255, 246, 250, 255), // Color del fondo rosa claro
+                                color: Color.fromARGB(255, 246, 250,
+                                    255), // Color del fondo rosa claro
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               child: Column(
@@ -563,7 +565,8 @@ class CasaView extends StatelessWidget {
                               height: 40,
                               decoration: BoxDecoration(
                                 shape: BoxShape.rectangle,
-                                color: Color.fromARGB(255, 246, 250, 255), // Color del fondo rosa claro
+                                color: Color.fromARGB(255, 246, 250,
+                                    255), // Color del fondo rosa claro
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               child: Column(
@@ -612,7 +615,8 @@ class CasaView extends StatelessWidget {
                               height: 40,
                               decoration: BoxDecoration(
                                 shape: BoxShape.rectangle,
-                                color: Color.fromARGB(255, 246, 250, 255), // Color del fondo rosa claro
+                                color: Color.fromARGB(255, 246, 250,
+                                    255), // Color del fondo rosa claro
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               child: Column(
