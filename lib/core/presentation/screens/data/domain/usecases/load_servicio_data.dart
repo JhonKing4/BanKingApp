@@ -1,4 +1,3 @@
-
 import 'package:bankingapp/core/presentation/screens/data/domain/entities/servicioModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/repositories/servicio_repository.dart';
 
@@ -7,27 +6,35 @@ class LoadServicioData {
 
   LoadServicioData(this.repository);
 
-  Future<servicioModel> call() async {
-    final servicioModel = await repository.loadservicioData();
+  Future<List<servicioModel>> call() async {
+    try {
+      final List<servicioModel> servicioData = await repository.loadservicioData();
 
-    if (servicioModel.nombre_servicio.isEmpty) {
-      throw Exception("nombre_servicio no puede estar vacio");
+      for (var servicio in servicioData) {
+        if (servicio.nombre_servicio.isEmpty) {
+          throw Exception("nombre_servicio no puede estar vacío");
+        }
+
+        if (!esServicioValido(servicio.nombre_servicio)) {
+          throw Exception("nombre_servicio debe ser un servicio válido");
+        }
+
+        if (servicio.servicio_pic.isNotEmpty && !esImagenValida(servicio.servicio_pic)) {
+          throw Exception("servicio_pic debe ser una imagen válida");
+        }
+      }
+
+      return servicioData;
+    } catch (e) {
+      throw Exception("Error al cargar datos de servicio: $e");
     }
-
-    if (!esServicioValido(servicioModel.nombre_servicio)) {
-      throw Exception("nombre_servicio debe ser un servicio valido");
-    }
-
-    if (servicioModel.servicio_pic.isNotEmpty && !esImagenValida(servicioModel.servicio_pic)) {
-      throw Exception("servicio_pic debe ser una imagen valida");
-    }
-
-    return servicioModel;
   }
 
   bool esServicioValido(String nombreServicio) {
-    const serviciosValidos = ['DISNEY +', 'IZZI', 'MERCADO LIBRE', 'INFONAVIT', 'CFE', 
-    'NETFLIX', 'TELMEX', 'MAX', 'DISH', 'TOTALPLAY','AXTEL', 'STAR +'];
+    const serviciosValidos = [
+      'DISNEY +', 'IZZI', 'MERCADO LIBRE', 'INFONAVIT', 'CFE', 
+      'NETFLIX', 'TELMEX', 'MAX', 'DISH', 'TOTALPLAY', 'AXTEL', 'STAR +'
+    ];
     return serviciosValidos.contains(nombreServicio);
   }
 

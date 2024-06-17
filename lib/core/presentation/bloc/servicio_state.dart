@@ -1,36 +1,35 @@
-
 import 'package:bankingapp/core/presentation/screens/data/domain/entities/servicioModel.dart';
 import 'package:equatable/equatable.dart';
 
 class ServicioState extends Equatable {
-  final String servicio_pic;
-  final String nombre_servicio;
+  final List<servicioModel> servicios;
+  final String errorMessage;
+  final bool isValid;
 
   const ServicioState({
-    this.servicio_pic = '',
-    this.nombre_servicio = '',
+    this.servicios = const [],
+    this.errorMessage = '',
+    this.isValid = true,
   });
 
-  factory ServicioState.fromModel(servicioModel model) {
+  factory ServicioState.fromModel(List<servicioModel> models) {
     return ServicioState(
-      servicio_pic: model.servicio_pic,
-      nombre_servicio: model.nombre_servicio,
+      servicios: models,
     );
   }
 
   ServicioState copyWith({
-    String? servicio_pic,
-    String? nombre_servicio, required bool isValid,
+    List<servicioModel>? servicios,
+    String? errorMessage,
+    bool? isValid,
   }) {
     return ServicioState(
-      servicio_pic: servicio_pic ?? this.servicio_pic,
-      nombre_servicio: nombre_servicio ?? this.nombre_servicio,
+      servicios: servicios ?? this.servicios,
+      errorMessage: errorMessage ?? this.errorMessage,
+      isValid: isValid ?? this.isValid,
     );
   }
 
   @override
-  List<Object?> get props => [
-        servicio_pic,
-        nombre_servicio,
-      ];
+  List<Object?> get props => [servicios, errorMessage, isValid];
 }
