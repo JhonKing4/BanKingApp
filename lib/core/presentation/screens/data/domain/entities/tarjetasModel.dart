@@ -3,23 +3,23 @@ import 'package:json_annotation/json_annotation.dart';
 part 'tarjetasModel.g.dart';
 
 @JsonSerializable()
-class tarjetasModel{
+class tarjetasModel {
   String tarjeta_pic;
-  double saldo_tarjeta;
   String numero_tarjeta;
-
-
+  double saldo_tarjeta;
 
   tarjetasModel({
-
-   required this.tarjeta_pic,
-   required this.saldo_tarjeta,
-   required this.numero_tarjeta
+    required this.tarjeta_pic,
+    required this.numero_tarjeta,
+    required this.saldo_tarjeta
   });
 
+  factory tarjetasModel.fromJson(Map<String, dynamic> json) =>
+      _$tarjetasModelFromJson(json);
 
-factory tarjetasModel.fromJson(Map<String, dynamic> json) => _$tarjetasModelFromJson(json);
+  Map<String, dynamic> toJson() => _$tarjetasModelToJson(this);
 
-Map<String, dynamic> toJson() => _$tarjetasModelToJson(this);
-
+  static List<tarjetasModel> listFromJson(List<dynamic> json) {
+    return json.map((e) => tarjetasModel.fromJson(e)).toList();
+  }
 }

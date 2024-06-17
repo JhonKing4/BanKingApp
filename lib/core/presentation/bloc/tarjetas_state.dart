@@ -3,41 +3,34 @@ import 'package:bankingapp/core/presentation/screens/data/domain/entities/tarjet
 import 'package:equatable/equatable.dart';
 
 class TarjetasState extends Equatable {
-  final String tarjeta_pic;
-  final double saldo_tarjeta;
-  final String numero_tarjeta;
-
+  final List<tarjetasModel> tarjetas;
+  final String errorMessage;
+  final bool isValid;
 
   const TarjetasState({
-    this.tarjeta_pic = '',
-    this.saldo_tarjeta = 0,
-    this.numero_tarjeta = '',
+    this.tarjetas = const [],
+    this.errorMessage = '',
+    this.isValid = true,
   });
 
-  factory TarjetasState.fromModel(tarjetasModel model) {
+  factory TarjetasState.fromModel(List<tarjetasModel> models) {
     return TarjetasState(
-      tarjeta_pic: model.tarjeta_pic,
-      saldo_tarjeta: model.saldo_tarjeta,
-      numero_tarjeta: model.numero_tarjeta
+      tarjetas: models,
     );
   }
 
   TarjetasState copyWith({
-    String? tarjeta_pic,
-    double? saldo_tarjeta, required bool isValid,
-    String? numero_tarjeta,
+    List<tarjetasModel>? servicios,
+    String? errorMessage,
+    bool? isValid,
   }) {
     return TarjetasState(
-      tarjeta_pic: tarjeta_pic ?? this.tarjeta_pic,
-      saldo_tarjeta: saldo_tarjeta ?? this.saldo_tarjeta,
-      numero_tarjeta: numero_tarjeta ?? this.numero_tarjeta
+      tarjetas: servicios ?? this.tarjetas,
+      errorMessage: errorMessage ?? this.errorMessage,
+      isValid: isValid ?? this.isValid,
     );
   }
 
   @override
-  List<Object?> get props => [
-        tarjeta_pic,
-        saldo_tarjeta,
-        numero_tarjeta
-      ];
+  List<Object?> get props => [tarjetas, errorMessage, isValid];
 }
