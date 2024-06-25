@@ -1,4 +1,7 @@
+import 'package:bankingapp/core/presentation/bloc/home_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/home_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -19,17 +22,27 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                   ),
-                  child: GestureDetector(
+                  child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) =>
+              GestureDetector(
                     onTap: () {
                       Scaffold.of(context).openDrawer();
                     },
                     child: ClipOval(
-                      child: Image.asset(
-                        "assets/images/esca.jpg",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                        child: Row(
+                      children: [
+                        Image.asset(
+                          state.usuario_pic,
+                          fit: BoxFit.cover,
+                        ),
+                        Text(
+                          state.usuario_name,
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    )),
                   ),
+                ),
                 ),
               ],
             ),

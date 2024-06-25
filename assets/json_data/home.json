@@ -1,9 +1,5 @@
-
-    {
-        "usuario_pic": "assets/images/esca.jpg",
-        "balance_general": 7896,
-        "tarjeta_pic": "assets/images/visapng.png",
-        "saldo_tarjeta": 2233,
-        "numero_tarjeta": "*** 56478"
-    }
-
+{
+    "usuario_pic": "assets/images/esca.jpg",
+    "usuario_name": "Leonardo",
+    "balance_general": 7896
+}

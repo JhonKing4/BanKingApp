@@ -1,9 +1,14 @@
 import 'package:bankingapp/core/presentation/bloc/home_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/home_event.dart';
 import 'package:bankingapp/core/presentation/bloc/home_state.dart';
+import 'package:bankingapp/core/presentation/bloc/tarjetas_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/tarjetas_event.dart';
+import 'package:bankingapp/core/presentation/bloc/tarjetas_state.dart';
 import 'package:bankingapp/core/presentation/screens/appbar.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_home_data.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_tarjetas_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/home_repository_impl.dart';
+import 'package:bankingapp/core/presentation/screens/data/repositories/tarjetas_repository_impl.dart';
 import 'package:bankingapp/core/presentation/screens/servicios.dart';
 import 'package:bankingapp/core/presentation/screens/transferencia.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +17,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CasaView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      // Nos hacia falta el provider que implementa el impl
-      create: (context) =>
-          HomeBloc(LoadHomeData(HomeRepositoryImpl()))
-            ..add(LoadHomeDataEvent()),child:  Scaffold(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              TarjetasBloc(LoadTarjetaData(TarjetaRepositoryImpl()))
+                ..add(LoadTarjetasDataEvent()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              HomeBloc(LoadHomeData(HomeRepositoryImpl()))
+                ..add(LoadHomeDataEvent()),
+        ),
+      ],
+      child:  Scaffold(
       extendBody: true,
       backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
       appBar: CustomAppBar(),
@@ -47,7 +61,7 @@ class CasaView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                state.balance_general.toString(),
+                                '\$ ${state.balance_general.toString()}',
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.white,
@@ -85,9 +99,11 @@ class CasaView extends StatelessWidget {
             SizedBox(height: 5),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-               child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) =>
+               child: BlocBuilder<TarjetasBloc,TarjetasState>(builder: (context, state) =>
               Row(
-                children: [
+                children: List.generate(state.tarjetas.length, (index) {
+                        final tarjeta = state.tarjetas[index];
+                        return
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
@@ -96,7 +112,7 @@ class CasaView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Image.asset(
-                            state.tarjeta_pic,
+                            tarjeta.tarjeta_pic,
                             width: 40,
                             height: 40,
                           ),
@@ -104,88 +120,28 @@ class CasaView extends StatelessWidget {
                           Text('saldo',
                               style: TextStyle(
                                   color: Color.fromARGB(255, 50, 50, 50))),
-                          Text(state.saldo_tarjeta.toString(),
+                          Text('\$ ${tarjeta.saldo_tarjeta.toString()}',
                               style: TextStyle(
                                   color:
                                       const Color.fromARGB(255, 24, 24, 24))),
                           SizedBox(height: 20),
-                          Text(state.numero_tarjeta,
+                          Text(tarjeta.numero_tarjeta,
                               style: TextStyle(
                                   color: const Color.fromARGB(
                                       255, 120, 120, 120))),
                         ],
                       ),
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(45),
+                        padding: EdgeInsets.all(40),
                         backgroundColor: Color.fromARGB(255, 251, 242, 106),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(width: 8),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image.asset(
-                            state.tarjeta_pic,
-                            width: 40,
-                            height: 40,
-                          ),
-                          SizedBox(height: 10),
-                          Text('saldo', style: TextStyle(color: Colors.white)),
-                          Text(state.saldo_tarjeta.toString(),
-                              style: TextStyle(color: Colors.white)),
-                          SizedBox(height: 20),
-                          Text(state.numero_tarjeta,
-                              style: TextStyle(color: Colors.white)),
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(45),
-                        backgroundColor: Color.fromARGB(255, 159, 45, 235),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(45),
-                        backgroundColor: Color.fromARGB(255, 175, 175, 175),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                      child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) => Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image.asset(
-                            state.tarjeta_pic,
-                            width: 40,
-                            height: 40,
-                          ),
-                          SizedBox(height: 10),
-                          Text('saldo', style: TextStyle(color: Colors.white)),
-                          Text(state.saldo_tarjeta.toString(), style: TextStyle(color: Colors.white)),
-                          SizedBox(height: 20),
-                          Text(state.numero_tarjeta,
-                              style: TextStyle(color: Colors.white)),
-                        ],
-                      ),) ,
-                    ),
-                  ),
-                ],
+                  );
+                }
+                )
               ),
             ),
             ),

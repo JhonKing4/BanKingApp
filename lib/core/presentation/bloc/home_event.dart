@@ -9,13 +9,22 @@ abstract class HomeEvent extends Equatable {
 
 class LoadHomeDataEvent extends HomeEvent {}
 
-class IdCuentaChanged extends HomeEvent {
-  final int id_cuenta;
+class PicChanged extends HomeEvent {
+  final double usuario_pic;
 
-  const IdCuentaChanged(this.id_cuenta);
+  const PicChanged(this.usuario_pic);
 
   @override
-  List<Object?> get props => [id_cuenta];
+  List<Object?> get props => [usuario_pic];
+}
+
+class NameChanged extends HomeEvent {
+  final double usuario_name;
+
+  const NameChanged(this.usuario_name);
+
+  @override
+  List<Object?> get props => [usuario_name];
 }
 
 class BalanceChanged extends HomeEvent {
@@ -27,31 +36,5 @@ class BalanceChanged extends HomeEvent {
   List<Object?> get props => [balance_general];
 }
 
-class TarjetaPChanged extends HomeEvent {
-  final String tarjeta_pic;
-
-  const TarjetaPChanged(this.tarjeta_pic);
-
-  @override
-  List<Object?> get props => [tarjeta_pic];
-}
-
-class SaldoChanged extends HomeEvent {
-  final double saldo_tarjeta;
-
-  const SaldoChanged(this.saldo_tarjeta);
-
-  @override
-  List<Object?> get props => [saldo_tarjeta];
-}
-
-class NumeroTChanged extends HomeEvent {
-  final String numero_tarjeta;
-
-  const NumeroTChanged(this.numero_tarjeta);
-
-  @override
-  List<Object?> get props => [numero_tarjeta];
-}
 
 class HomeSubmitted extends HomeEvent {}

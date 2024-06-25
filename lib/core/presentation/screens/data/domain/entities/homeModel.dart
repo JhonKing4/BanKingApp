@@ -7,24 +7,17 @@ class homeModel {
   @JsonKey(defaultValue: '')
   String usuario_pic;
 
-  @JsonKey(defaultValue: 0.0)
+  @JsonKey(defaultValue: '')
+  String usuario_name;
+
+  @JsonKey(defaultValue: '')
   double balance_general;
 
-  @JsonKey(defaultValue: '')
-  String tarjeta_pic;
-
-  @JsonKey(defaultValue: 0.0)
-  double saldo_tarjeta;
-
-  @JsonKey(defaultValue: '')
-  String numero_tarjeta;
 
   homeModel({
     required this.usuario_pic,
+    required this.usuario_name,
     required this.balance_general,
-    required this.tarjeta_pic,
-    required this.saldo_tarjeta,
-    required this.numero_tarjeta,
   });
 
   factory homeModel.fromJson(Map<String, dynamic> json) => _$homeModelFromJson(json);

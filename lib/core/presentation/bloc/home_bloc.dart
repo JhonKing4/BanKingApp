@@ -11,26 +11,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       final homeData = await loadHomeData();
       emit(HomeState.fromModel(homeData));
     });
-
+    on<PicChanged>((event, emit) {
+      emit(state.copyWith(balance_general: event.usuario_pic, isValid: _validateForm()));
+    });
+     on<NameChanged>((event, emit) {
+      emit(state.copyWith(balance_general: event.usuario_name, isValid: _validateForm()));
+    });
     on<BalanceChanged>((event, emit) {
       emit(state.copyWith(balance_general: event.balance_general, isValid: _validateForm()));
-    });
-    on<TarjetaPChanged>((event, emit) {
-      emit(state.copyWith(tarjeta_pic: event.tarjeta_pic, isValid: _validateForm()));
-    });
-    on<SaldoChanged>((event, emit) {
-      emit(state.copyWith(saldo_tarjeta: event.saldo_tarjeta, isValid: _validateForm()));
-    });
-    on<NumeroTChanged>((event, emit) {
-      emit(state.copyWith(numero_tarjeta: event.numero_tarjeta, isValid: _validateForm()));
     });
   }
 
   bool _validateForm() {
     return 
-        state.balance_general != null &&
-        state.tarjeta_pic.isNotEmpty &&
-        state.saldo_tarjeta != null &&
-        state.numero_tarjeta.isNotEmpty;
+        state.usuario_pic.isNotEmpty &&
+        state.usuario_name.isNotEmpty &&
+        state.balance_general != Null;
   }
 }
