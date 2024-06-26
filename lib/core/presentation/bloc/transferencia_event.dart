@@ -9,15 +9,6 @@ abstract class TransferenciaEvent extends Equatable {
 
 class LoadTransferenciaDataEvent extends TransferenciaEvent {}
 
-class BalanceChanged extends TransferenciaEvent {
-  final double balance;
-
-  const BalanceChanged(this.balance);
-
-  @override
-  List<Object?> get props => [balance];
-}
-
 class ContactoChanged extends TransferenciaEvent {
   final String contacto_pic;
 

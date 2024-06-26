@@ -8,7 +8,7 @@ part of 'transferenciaModel.dart';
 
 transferenciaModel _$transferenciaModelFromJson(Map<String, dynamic> json) =>
     transferenciaModel(
-      balance: (json['balance'] as num).toDouble(),
+
       contacto_pic: json['contacto_pic'] as String,
       nombre_contacto: json['nombre_contacto'] as String,
       ultima_conexion: json['ultima_conexion'] as String,
@@ -17,7 +17,6 @@ transferenciaModel _$transferenciaModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$transferenciaModelToJson(transferenciaModel instance) =>
     <String, dynamic>{
-      'balance': instance.balance,
       'contacto_pic': instance.contacto_pic,
       'nombre_contacto': instance.nombre_contacto,
       'ultima_conexion': instance.ultima_conexion,

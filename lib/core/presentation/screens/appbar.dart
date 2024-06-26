@@ -13,50 +13,47 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Builder(
-            builder: (context) => Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+            builder: (context) => Row(
               children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) =>
-              GestureDetector(
-                    onTap: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                    child: ClipOval(
-                        child: Row(
-                      children: [
-                        Image.asset(
+                GestureDetector(
+                  onTap: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  child: ClipOval(
+                    child: BlocBuilder<HomeBloc, HomeState>(
+                      builder: (context, state) {
+                        return Image.asset(
                           state.usuario_pic,
+                          width: 40,
+                          height: 40,
                           fit: BoxFit.cover,
-                        ),
-                        Text(
-                          state.usuario_name,
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    )),
+                        );
+                      },
+                    ),
                   ),
                 ),
+                SizedBox(width: 10), // Ajuste del espacio entre la imagen y el texto
+                BlocBuilder<HomeBloc, HomeState>(
+                  builder: (context, state) {
+                    return Text(
+                      state.usuario_name,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold),
+                    );
+                  },
                 ),
               ],
             ),
           ),
           Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  "assets/images/horizontal.png",
-                  width: 120,
-                  height: 90,
-                ),
-              ],
+            child: Center(
+              child: Image.asset(
+                "assets/images/horizontal.png",
+                width: 120,
+                height: 90,
+              ),
             ),
           ),
         ],
