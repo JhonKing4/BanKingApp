@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
   @override
   _LoginPage createState() => _LoginPage();
 }

@@ -50,7 +50,7 @@ class HomeView extends StatelessWidget {
             tab = CasaView();
             break;
           case 1:
-            tab = Tranferencia();
+            tab = Transferencia();
             break;
           case 2:
             tab = MisTarjetas();
@@ -62,7 +62,7 @@ class HomeView extends StatelessWidget {
             tab = ServiciosPage();
             break;
           default:
-            tab = Tranferencia();
+            tab = Transferencia();
         }
         return CupertinoTabView(
           builder: (BuildContext context) => tab,

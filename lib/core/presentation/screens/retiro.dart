@@ -48,6 +48,8 @@ Future<void> _showNotification() async {
 
 
 class RetiroPage extends StatefulWidget {
+  const RetiroPage({Key? key}) : super(key: key);
+
   @override
   _RetiroPage createState() => _RetiroPage();
 }

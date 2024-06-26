@@ -17,6 +17,8 @@ class MyApp extends StatelessWidget {
 }
 
 class RegisterPage extends StatefulWidget {
+const RegisterPage({Key? key}) : super(key: key);
+
   @override
   _RegisterPage createState() => _RegisterPage();
 }

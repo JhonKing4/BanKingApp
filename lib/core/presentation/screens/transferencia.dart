@@ -13,12 +13,14 @@ import 'package:bankingapp/core/presentation/screens/transferencia2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Tranferencia extends StatefulWidget {
+class Transferencia extends StatefulWidget {
+  const Transferencia({Key? key}) : super(key: key);
+
   @override
-  _TranferenciaState createState() => _TranferenciaState();
+  _TransferenciaState createState() => _TransferenciaState();
 }
 
-class _TranferenciaState extends State<Tranferencia> {
+class _TransferenciaState extends State<Transferencia> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(

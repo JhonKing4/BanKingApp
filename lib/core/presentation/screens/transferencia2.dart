@@ -43,6 +43,8 @@ Future<void> _showNotification() async {
 }
 
 class Tranferencia2 extends StatefulWidget {
+  const Tranferencia2({Key? key}) : super(key: key);
+
   @override
   _Tranferencia2State createState() => _Tranferencia2State();
 }

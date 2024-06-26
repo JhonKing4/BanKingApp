@@ -1,15 +1,33 @@
+import 'package:bankingapp/core/presentation/screens/beneficios.dart';
 import 'package:bankingapp/core/presentation/screens/login_page.dart';
+import 'package:bankingapp/core/presentation/screens/mis_tarjetas.dart';
+import 'package:bankingapp/core/presentation/screens/registro.dart';
+import 'package:bankingapp/core/presentation/screens/retiro.dart';
+import 'package:bankingapp/core/presentation/screens/servicios.dart';
+import 'package:bankingapp/core/presentation/screens/transferencia.dart';
 import 'package:bankingapp/core/presentation/screens/transferencia2.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   WidgetsFlutterBinding().ensureSemantics();
-  initializedNotifications();
-  runApp(const MyApp());
+  
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+
+    final _router = {
+    //Logica de routeo para las vistas de la app
+    '/': (context) => const LoginPage(),
+    '/beneficios': (context) => const BeneficiosPage(),
+    '/mistarjetas': (context) => const MisTarjetas(),
+    '/transferencia': (context) => const Transferencia(),
+    '/servicios': (context) => const ServiciosPage (),
+    '/retiro': (context) => const RetiroPage(),
+    '/registro': (context) => const RegisterPage()
+  };
 
   @override
   Widget build(BuildContext context) {
