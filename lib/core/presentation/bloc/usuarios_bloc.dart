@@ -1,48 +1,60 @@
-
-import 'package:bankingapp/core/presentation/bloc/usuarios_event.dart';
-import 'package:bankingapp/core/presentation/bloc/usuarios_state.dart';
+// usuario_bloc.dart
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/usuariosModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_usuarios_data.dart' as usecase;
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:bankingapp/core/presentation/bloc/usuarios_event.dart';
+import 'package:bankingapp/core/presentation/bloc/usuarios_state.dart';
 
 class UsuarioBloc extends Bloc<UsuarioEvent, UsuarioState> {
-  final usecase.LoadUsuarioData loadUsuarioData;
+  final usecase.RegisterUser registerUser;
 
-  UsuarioBloc(this.loadUsuarioData) : super(const UsuarioState()) {
-    on<LoadUsuarioDataEvent>((event, emit) async {
-      final UsuarioData = await loadUsuarioData();
-      emit(UsuarioState.fromModel(UsuarioData));
-    });
+  UsuarioBloc(this.registerUser) : super(const UsuarioState());
 
-    on<IdChanged>((event, emit) {
-      emit(state.copyWith(id: event.id, isValid: _validateForm()));
-    });
-    on<NameChanged>((event, emit) {
-      emit(state.copyWith(name: event.name, isValid: _validateForm()));
-    });
-    on<LastNameChanged>((event, emit) {
-      emit(state.copyWith(lastname: event.lastname, isValid: _validateForm()));
-    });
-    on<EmailChanged>((event, emit) {
-      emit(state.copyWith(email: event.email, isValid: _validateForm()));
-    });
-    on<RFCChanged>((event, emit) {
-      emit(state.copyWith(rfc: event.rfc, isValid: _validateForm()));
-    });
-    on<PhoneChanged>((event, emit) {
-      emit(state.copyWith(phone: event.phone, isValid: _validateForm()));
-    });
-    on<PasswordChanged>((event, emit) {
-      emit(state.copyWith(password: event.password, isValid: _validateForm()));
-    });
-    on<IdbankChanged>((event, emit) {
-      emit(state.copyWith(id_bank: event.id_bank, isValid: _validateForm()));
-    });
+  @override
+  Stream<UsuarioState> mapEventToState(UsuarioEvent event) async* {
+    if (event is LoadUsuarioDataEvent) {
+      // Manejar carga de datos iniciales si es necesario
+    } else if (event is NameChanged) {
+      yield state.copyWith(name: event.name, isValid: _validateForm());
+    } else if (event is LastNameChanged) {
+      yield state.copyWith(lastname: event.lastname, isValid: _validateForm());
+    } else if (event is EmailChanged) {
+      yield state.copyWith(email: event.email, isValid: _validateForm());
+    } else if (event is RFCChanged) {
+      yield state.copyWith(rfc: event.rfc, isValid: _validateForm());
+    } else if (event is PhoneChanged) {
+      yield state.copyWith(phone: event.phone, isValid: _validateForm());
+    } else if (event is PasswordChanged) {
+      yield state.copyWith(password: event.password, isValid: _validateForm());
+    } else if (event is SubmitForm) {
+      if (state.isValid) {
+        try {
+          await registerUser.call(
+            UsuariosModel(
+              name: state.name,
+              lastname: state.lastname,
+              email: state.email,
+              rfc: state.rfc,
+              phone: state.phone,
+              password: state.password,
+            ),
+            email: state.email,
+            lastname: state.lastname,
+            name: state.name,
+            password: state.password,
+            phone: state.phone,
+            rfc: state.rfc,
+          );
+          // Manejar registro exitoso
+        } catch (e) {
+          // Manejar error
+        }
+      }
+    }
   }
 
   bool _validateForm() {
-    return state.id > 0 &&
-        state.name.isNotEmpty &&
+    return state.name.isNotEmpty &&
         state.lastname.isNotEmpty &&
         state.email.isNotEmpty &&
         state.rfc.isNotEmpty &&

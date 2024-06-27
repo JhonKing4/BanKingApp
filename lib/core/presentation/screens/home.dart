@@ -18,6 +18,7 @@ class HomeView extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home_outlined
+              
             ),
             label: "",
           ),

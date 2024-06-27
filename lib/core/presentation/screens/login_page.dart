@@ -143,10 +143,7 @@ class _LoginPage extends State<LoginPage> {
         ),
          ElevatedButton(
           onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => RegisterPage()),
-            );
+            Navigator.pushNamed(context, "/registro");
           },
           style: ButtonStyle(
             elevation: MaterialStateProperty.all(0),
