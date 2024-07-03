@@ -37,10 +37,7 @@ class MyApp extends StatelessWidget {
         '/transferencia': (context) => const Transferencia(),
         '/servicios': (context) => const ServiciosPage(),
         '/retiro': (context) => const RetiroPage(),
-        '/registro': (context) => BlocProvider(
-          create: (context) => UsuarioBloc(RegisterUser(RegisterRepositoryImpl(Dio()))),
-          child: const RegisterPage(),
-        ),
+        '/registro': (context) =>  RegisterPage()
       },
     );
   }

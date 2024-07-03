@@ -10,6 +10,7 @@ class UsuariosModel{
   String rfc;
   String phone;
   String password;
+  int id_bank;
 
 
 
@@ -20,6 +21,7 @@ class UsuariosModel{
    required this.rfc,
    required this.phone,
    required this.password,
+   required this.id_bank,
   });
 
 

@@ -14,6 +14,7 @@ UsuariosModel _$UsuariosModelFromJson(Map<String, dynamic> json) =>
       rfc: json['rfc'] as String,
       phone: json['phone'] as String,
       password: json['password'] as String,
+      id_bank: json['id_bank'] as int
     );
 
 Map<String, dynamic> _$UsuariosModelToJson(UsuariosModel instance) =>
