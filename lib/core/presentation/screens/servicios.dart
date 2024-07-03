@@ -33,10 +33,7 @@ class ServiciosPage extends StatelessWidget {
                     SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => BeneficiosPage()),
-                        );
+                        Navigator.pushNamed(context, "/beneficios");
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,

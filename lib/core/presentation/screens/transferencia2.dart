@@ -54,7 +54,6 @@ class _Tranferencia2State extends State<Tranferencia2> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-      appBar: CustomAppBar(),
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -74,10 +73,7 @@ class _Tranferencia2State extends State<Tranferencia2> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => HomeView()),
-            );
+                        Navigator.pushNamed(context, "/transferencia");
                       },
                       icon: Stack(
                         children: [

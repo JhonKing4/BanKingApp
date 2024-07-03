@@ -1,6 +1,8 @@
+import 'package:bankingapp/core/presentation/screens/casa.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_usuarios_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/usuarios_repository_impl.dart';
 import 'package:bankingapp/core/presentation/screens/registro.dart';
+import 'package:bankingapp/core/presentation/screens/transferencia2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
@@ -32,9 +34,11 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const MyHomePage(title: 'Banking-page'), 
+        '/casa': (context) => const CasaView(),
         '/beneficios': (context) => const BeneficiosPage(),
         '/mistarjetas': (context) => const MisTarjetas(),
         '/transferencia': (context) => const Transferencia(),
+        '/transferencia2': (context) => const Tranferencia2(),
         '/servicios': (context) => const ServiciosPage(),
         '/retiro': (context) => const RetiroPage(),
         '/registro': (context) =>  RegisterPage()
@@ -51,18 +55,6 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-      appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.more_vert,
-              color: Colors.white,
-            ),
-            onPressed: () {},
-          ),
-        ],
-      ),
       body: Center(
         child: Container(
           width: 300,

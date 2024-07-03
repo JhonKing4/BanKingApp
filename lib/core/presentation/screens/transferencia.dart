@@ -108,12 +108,7 @@ class _TransferenciaState extends State<Transferencia> {
                                         state.transferencias[index];
                                     return GestureDetector(
                                       onTap: () {
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Tranferencia2()),
-                                        );
+                                        Navigator.pushNamed(context, "/transferencia2");
                                       },
                                       child: Column(
                                         children: [

@@ -204,10 +204,7 @@ class _MisTarjetasState extends State<MisTarjetas> {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => RetiroPage()),
-                );
+                Navigator.pushNamed(context, "/retiro");
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

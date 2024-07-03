@@ -1,65 +1,69 @@
 import 'package:bankingapp/core/presentation/bloc/home_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/home_event.dart';
 import 'package:bankingapp/core/presentation/bloc/home_state.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_home_data.dart';
+import 'package:bankingapp/core/presentation/screens/data/repositories/home_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-   const CustomAppBar({Key? key}) : super(key: key);
-
+  const CustomAppBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-      automaticallyImplyLeading: false,
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Builder(
-            builder: (context) => Row(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                  child: ClipOval(
-                    child: BlocBuilder<HomeBloc, HomeState>(
-                      builder: (context, state) {
-                        return Image.asset(
-                          state.usuario_pic,
-                          width: 40,
-                          height: 40,
-                          fit: BoxFit.cover,
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10), // Ajuste del espacio entre la imagen y el texto
-                BlocBuilder<HomeBloc, HomeState>(
+    return BlocProvider(
+      create: (context) => HomeBloc(LoadHomeData(HomeRepositoryImpl()))
+        ..add(LoadHomeDataEvent()),
+      child: AppBar(
+        backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
+        automaticallyImplyLeading: false,
+        title: Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                Scaffold.of(context).openDrawer();
+              },
+              child: ClipOval(
+                child: BlocBuilder<HomeBloc, HomeState>(
                   builder: (context, state) {
-                    return Text(
-                      state.usuario_name,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold),
+                    return Image.asset(
+                      state.usuario_pic,
+                      width: 30,
+                      height: 30,
+                      fit: BoxFit.cover,
                     );
                   },
                 ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Image.asset(
-                "assets/images/horizontal.png",
-                width: 120,
-                height: 90,
               ),
             ),
-          ),
-        ],
+            const SizedBox(width: 10),
+            Expanded(
+              child: BlocBuilder<HomeBloc, HomeState>(
+                builder: (context, state) {
+                  return Text(
+                    state.usuario_name,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  );
+                },
+              ),
+            ),
+            Expanded(
+              child: Center(
+                child: Image.asset(
+                  "assets/images/horizontal.png",
+                  width: 120,
+                  height: 90,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -68,71 +72,26 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
 
-class HomePage extends StatelessWidget {
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Menú',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Inicio'),
-              onTap: () {
-                // Navegar a la página de inicio
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.account_circle),
-              title: Text('Perfil'),
-              onTap: () {
-                // Navegar a la página de perfil
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Configuraciones'),
-              onTap: () {
-                // Navegar a la página de configuraciones
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.exit_to_app),
-              title: Text('Cerrar Sesión'),
-              onTap: () {
-                // Implementar el cierre de sesión
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
+    return MaterialApp(
+      title: 'Banking',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
-      body: Center(
-        child: Text('Contenido de la página principal'),
+      home: Scaffold(
+        appBar: const CustomAppBar(),
+        body: const Center(child: Text('Content goes here')),
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: HomePage(),
-  ));
 }

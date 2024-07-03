@@ -1,11 +1,34 @@
-import 'package:bankingapp/core/presentation/screens/servicios.dart';
+import 'package:bankingapp/core/presentation/screens/retiro.dart';
+import 'package:bankingapp/core/presentation/screens/transferencia2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:bankingapp/core/presentation/screens/beneficios.dart';
 import 'package:bankingapp/core/presentation/screens/casa.dart';
 import 'package:bankingapp/core/presentation/screens/mis_tarjetas.dart';
 import 'package:bankingapp/core/presentation/screens/tarjetas.dart';
 import 'package:bankingapp/core/presentation/screens/transferencia.dart';
-import 'package:bankingapp/main.dart';
+import 'package:bankingapp/core/presentation/screens/servicios.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Banking',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: HomeView(),
+    );
+  }
+}
 
 class HomeView extends StatelessWidget {
   @override
@@ -13,19 +36,13 @@ class HomeView extends StatelessWidget {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
         backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-        
         items: [
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined
-              
-            ),
+            icon: Icon(Icons.home_outlined),
             label: "",
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.arrow_circle_up_outlined,
-            ),
+            icon: Icon(Icons.arrow_circle_up_outlined),
             label: '',
           ),
           BottomNavigationBarItem(
@@ -45,31 +62,55 @@ class HomeView extends StatelessWidget {
         inactiveColor: Color.fromARGB(255, 255, 255, 255),
       ),
       tabBuilder: (BuildContext context, int index) {
-        Widget tab;
         switch (index) {
           case 0:
-            tab = CasaView();
-            break;
+            return CupertinoTabView(
+              builder: (BuildContext context) => CasaView(),
+              routes: {
+                '/casa': (context) => CasaView(),
+              },
+            );
           case 1:
-            tab = Transferencia();
-            break;
+            return CupertinoTabView(
+              builder: (BuildContext context) => Transferencia(),
+              routes: {
+                '/transferencia': (context) => Transferencia(),
+                '/transferencia2': (context) => Tranferencia2(),
+              },
+            );
           case 2:
-            tab = MisTarjetas();
-            break;
+            return CupertinoTabView(
+              builder: (BuildContext context) => MisTarjetas(),
+              routes: {
+                '/mistarjetas': (context) => MisTarjetas(),
+                '/retiro': (context) => RetiroPage(),
+              },
+            );
           case 3:
-            tab = TarjetasList();
-            break;
-            case 4:
-            tab = ServiciosPage();
-            break;
+            return CupertinoTabView(
+              builder: (BuildContext context) => TarjetasList(),
+              routes: {
+                '/beneficios': (context) => BeneficiosPage(),
+              },
+            );
+          case 4:
+            return CupertinoTabView(
+              builder: (BuildContext context) => ServiciosPage(),
+              routes: {
+                '/beneficios': (context) => BeneficiosPage(),
+              },
+            );
           default:
-            tab = Transferencia();
+            return CupertinoTabView(
+              builder: (BuildContext context) => Transferencia(),
+              routes: {
+                '/beneficios': (context) => BeneficiosPage(),
+              },
+            );
         }
-        return CupertinoTabView(
-          builder: (BuildContext context) => tab,
-        );
       },
     );
   }
 }
 
+// Define todas las demás clases de páginas aquí

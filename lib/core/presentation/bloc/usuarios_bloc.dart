@@ -13,7 +13,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         await submitRegister(event.register);
         emit(RegisterSuccess());
       } catch (e) {
-        emit(RegisterError('Failed to submit Register'));
+        emit(RegisterError('Error al enviar el formualrio'));
       }
     });
   }
