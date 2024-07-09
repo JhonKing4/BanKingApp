@@ -1,6 +1,8 @@
 import 'package:bankingapp/core/presentation/screens/home.dart';
 import 'package:bankingapp/core/presentation/screens/registro.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dio/dio.dart';
 import 'package:local_auth/local_auth.dart';
 
 class LoginPage extends StatefulWidget {
@@ -113,11 +115,67 @@ class _LoginPage extends State<LoginPage> {
           ],
         ),
         ElevatedButton(
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => HomeView()),
-            );
+          onPressed: () async {
+            // Reemplaza la URL con la URL de tu API de login
+            String url = "https://mollusk-safe-openly.ngrok-free.app/login";
+
+            // Reemplaza estos parámetros con los parámetros correctos de tu API
+            Map<String, dynamic> data = {
+              "phoneNumber": _phoneNumber,
+              "password": _password
+            };
+
+            try {
+              Response response = await Dio().post(url, data: data);
+              if (response.statusCode == 200) {
+                // Extrae el token del response, asumiendo que el token está en el campo 'token'
+                String token = response.data['token'];
+
+                // Almacena el token en las SharedPreferences
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                await prefs.setString('authToken', token);
+
+                // Navega a la HomeView
+                Navigator.pushNamed(context, "/casa");
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("Error"),
+                      content: Text(response.statusMessage.toString()),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text("Aceptar"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+            } catch (e) {
+              print("Error en el login: $e");
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("Error"),
+                      content: Text(e.toString()),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text("Aceptar"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+            }
           },
           style: ButtonStyle(
             elevation: MaterialStateProperty.all(0),
@@ -141,15 +199,16 @@ class _LoginPage extends State<LoginPage> {
             ),
           ),
         ),
-         ElevatedButton(
+
+        ElevatedButton(
           onPressed: () {
             Navigator.pushNamed(context, "/registro");
           },
           style: ButtonStyle(
             elevation: MaterialStateProperty.all(0),
             overlayColor: MaterialStateProperty.all(Colors.transparent),
-            backgroundColor: MaterialStateProperty.all(
-                Color.fromARGB(0, 37, 37, 37)),
+            backgroundColor:
+                MaterialStateProperty.all(Color.fromARGB(0, 37, 37, 37)),
             shape: MaterialStateProperty.all(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
@@ -170,8 +229,7 @@ class _LoginPage extends State<LoginPage> {
         IconButton(
           onPressed: () => _auth(),
           icon: const Icon(Icons.fingerprint,
-              color: Color.fromRGBO(242, 254, 141, 1),
-              size: 32),
+              color: Color.fromRGBO(242, 254, 141, 1), size: 32),
         ),
       ],
     );
