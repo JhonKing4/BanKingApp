@@ -19,7 +19,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController rfcController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController idBankController = TextEditingController();
 
   bool isNameValid = true;
   bool isLastnameValid = true;
@@ -27,7 +26,6 @@ class _RegisterPageState extends State<RegisterPage> {
   bool isRfcValid = true;
   bool isPhoneValid = true;
   bool isPasswordValid = true;
-  bool isIdBankValid = true;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +43,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text("Exito"),
+                      title: Text("Éxito"),
                       content: Text("Te has registrado exitosamente"),
                       actions: [
                         TextButton(

@@ -7,15 +7,17 @@ class RegisterRepositoryImpl implements RegisterRepository {
 
   RegisterRepositoryImpl()
       : _dio = Dio(BaseOptions(
-          baseUrl: 'https://mollusk-safe-openly.ngrok-free.app',
-          connectTimeout: const Duration(seconds: 5),
-          receiveTimeout: const Duration(seconds: 3),
+          baseUrl: 'https://apimoviles-production.up.railway.app/',
+          connectTimeout: const Duration(seconds: 50),
+          receiveTimeout: const Duration(seconds: 20),
         ));
 
   @override
   Future<void> submitUser(UsuariosModel register) async {
     try {
-      await _dio.post('/users', data: register.toJson());
+       print(register.toJson());
+      await _dio.post('users', data: register.toJson());
+     
     } on DioError catch (e) {
       if (e.response != null) {
         // Error del servidor

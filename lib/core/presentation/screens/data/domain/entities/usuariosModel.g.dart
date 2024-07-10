@@ -25,4 +25,5 @@ Map<String, dynamic> _$UsuariosModelToJson(UsuariosModel instance) =>
       'rfc': instance.rfc,
       'phone': instance.phone,
       'password': instance.password,
+      'id_bank': instance.id_bank
     };

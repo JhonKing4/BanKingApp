@@ -116,12 +116,9 @@ class _LoginPage extends State<LoginPage> {
         ),
         ElevatedButton(
           onPressed: () async {
-            // Reemplaza la URL con la URL de tu API de login
-            String url = "https://mollusk-safe-openly.ngrok-free.app/login";
-
-            // Reemplaza estos parámetros con los parámetros correctos de tu API
+            String url = "https://apimoviles-production.up.railway.app/auth/login";
             Map<String, dynamic> data = {
-              "phoneNumber": _phoneNumber,
+              "phone": _phoneNumber,
               "password": _password
             };
 
