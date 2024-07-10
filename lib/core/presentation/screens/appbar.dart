@@ -14,56 +14,60 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return BlocProvider(
       create: (context) => HomeBloc(LoadHomeData(HomeRepositoryImpl()))
         ..add(LoadHomeDataEvent()),
-      child: AppBar(
-        backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-        automaticallyImplyLeading: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Scaffold.of(context).openDrawer();
-              },
-              child: ClipOval(
-                child: BlocBuilder<HomeBloc, HomeState>(
-                  builder: (context, state) {
-                    return Image.asset(
-                      state.usuario_pic,
-                      width: 30,
-                      height: 30,
-                      fit: BoxFit.cover,
-                    );
+      child: Builder(
+        builder: (context) {
+          return AppBar(
+            backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
+            automaticallyImplyLeading: false,
+            title: Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Scaffold.of(context).openDrawer();
                   },
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: BlocBuilder<HomeBloc, HomeState>(
-                builder: (context, state) {
-                  return Text(
-                    state.usuario_name,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
+                  child: ClipOval(
+                    child: BlocBuilder<HomeBloc, HomeState>(
+                      builder: (context, state) {
+                        return Image.asset(
+                          state.usuario_pic,
+                          width: 30,
+                          height: 30,
+                          fit: BoxFit.cover,
+                        );
+                      },
                     ),
-                    overflow: TextOverflow.ellipsis,
-                  );
-                },
-              ),
-            ),
-            Expanded(
-              child: Center(
-                child: Image.asset(
-                  "assets/images/horizontal.png",
-                  width: 120,
-                  height: 90,
-                  fit: BoxFit.contain,
+                  ),
                 ),
-              ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, state) {
+                      return Text(
+                        state.usuario_name,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      );
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: Center(
+                    child: Image.asset(
+                      "assets/images/horizontal.png",
+                      width: 120,
+                      height: 90,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -72,26 +76,3 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Banking',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: Scaffold(
-        appBar: const CustomAppBar(),
-        body: const Center(child: Text('Content goes here')),
-      ),
-    );
-  }
-}

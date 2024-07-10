@@ -7,6 +7,7 @@ import 'package:local_auth/local_auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
+
   @override
   _LoginPage createState() => _LoginPage();
 }
@@ -14,8 +15,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPage extends State<LoginPage> {
   bool _isChecked = false;
 
-  String _phoneNumber = "";
-  String _password = "";
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final LocalAuthentication _localAuthentication = LocalAuthentication();
@@ -45,8 +47,8 @@ class _LoginPage extends State<LoginPage> {
         ClipRRect(
             borderRadius: BorderRadius.circular(25),
             child: Image.asset("assets/images/vertical.png")),
-        //Image.network("https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blt8a61c9bc550bfd80/6595f3c89123ba0407bb1649/1863295425_2.jpg?auto=webp&format=pjpg&width=3840&quality=60", width: 200,),
         TextField(
+          controller: _phoneController,
           decoration: InputDecoration(
             hintText: "Phone number",
             hintStyle: TextStyle(
@@ -68,10 +70,10 @@ class _LoginPage extends State<LoginPage> {
             ),
           ),
           style: const TextStyle(color: Color.fromRGBO(255, 223, 0, 1)),
-          controller: TextEditingController(text: _phoneNumber),
         ),
         const SizedBox(height: 10),
         TextField(
+          controller: _passwordController,
           decoration: InputDecoration(
             hintText: "Password",
             hintStyle: TextStyle(
@@ -93,7 +95,6 @@ class _LoginPage extends State<LoginPage> {
             ),
           ),
           style: const TextStyle(color: Color.fromRGBO(255, 223, 0, 1)),
-          controller: TextEditingController(text: _password),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -117,23 +118,22 @@ class _LoginPage extends State<LoginPage> {
         ElevatedButton(
           onPressed: () async {
             String url = "https://apimoviles-production.up.railway.app/auth/login";
+            String phoneNumber = _phoneController.text;
+            String password = _passwordController.text;
+
             Map<String, dynamic> data = {
-              "phone": _phoneNumber,
-              "password": _password
+              "phone": phoneNumber,
+              "password": password
             };
 
             try {
               Response response = await Dio().post(url, data: data);
               if (response.statusCode == 200) {
-                // Extrae el token del response, asumiendo que el token está en el campo 'token'
-                String token = response.data['token'];
-
-                // Almacena el token en las SharedPreferences
+                String token = response.data['access_token'];
+                print("Token recibido: $token");
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 await prefs.setString('authToken', token);
-
-                // Navega a la HomeView
-                Navigator.pushNamed(context, "/casa");
+                Navigator.pushNamed(context, "/home");
               } else {
                 showDialog(
                   context: context,
@@ -156,22 +156,22 @@ class _LoginPage extends State<LoginPage> {
             } catch (e) {
               print("Error en el login: $e");
               showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text("Error"),
-                      content: Text(e.toString()),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text("Aceptar"),
-                        ),
-                      ],
-                    );
-                  },
-                );
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Error"),
+                    content: Text(e.toString()),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("Aceptar"),
+                      ),
+                    ],
+                  );
+                },
+              );
             }
           },
           style: ButtonStyle(
@@ -196,7 +196,6 @@ class _LoginPage extends State<LoginPage> {
             ),
           ),
         ),
-
         ElevatedButton(
           onPressed: () {
             Navigator.pushNamed(context, "/registro");

@@ -1,6 +1,7 @@
 import 'package:bankingapp/core/presentation/screens/casa.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_usuarios_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/usuarios_repository_impl.dart';
+import 'package:bankingapp/core/presentation/screens/home.dart';
 import 'package:bankingapp/core/presentation/screens/registro.dart';
 import 'package:bankingapp/core/presentation/screens/transferencia2.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const MyHomePage(title: 'Banking-page'), 
+        '/home': (context) => HomeView(),
         '/casa': (context) => const CasaView(),
         '/beneficios': (context) => const BeneficiosPage(),
         '/mistarjetas': (context) => const MisTarjetas(),

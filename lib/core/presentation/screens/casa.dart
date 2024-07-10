@@ -11,6 +11,7 @@ import 'package:bankingapp/core/presentation/screens/data/repositories/home_repo
 import 'package:bankingapp/core/presentation/screens/data/repositories/tarjetas_repository_impl.dart';
 import 'package:bankingapp/core/presentation/screens/servicios.dart';
 import 'package:bankingapp/core/presentation/screens/transferencia.dart';
+import 'package:bankingapp/core/presentation/screens/valuenotifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -171,7 +172,10 @@ class CasaView extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          print("Transferencias button pressed " + tabIndexNotifier.value.toString());
+                         tabIndexNotifier.value = 1;
+                        },
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -216,7 +220,9 @@ class CasaView extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          tabIndexNotifier.value = 2;
+                        },
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
