@@ -12,10 +12,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(HomeState.fromModel(homeData));
     });
     on<PicChanged>((event, emit) {
-      emit(state.copyWith(balance_general: event.usuario_pic, isValid: _validateForm()));
+      emit(state.copyWith(usuario_pic: event.usuario_pic, isValid: _validateForm()));
     });
      on<NameChanged>((event, emit) {
-      emit(state.copyWith(balance_general: event.usuario_name, isValid: _validateForm()));
+      emit(state.copyWith(usuario_name: event.usuario_name, isValid: _validateForm()));
     });
     on<BalanceChanged>((event, emit) {
       emit(state.copyWith(balance_general: event.balance_general, isValid: _validateForm()));

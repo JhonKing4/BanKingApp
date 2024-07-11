@@ -10,7 +10,7 @@ abstract class HomeEvent extends Equatable {
 class LoadHomeDataEvent extends HomeEvent {}
 
 class PicChanged extends HomeEvent {
-  final double usuario_pic;
+  final String usuario_pic;
 
   const PicChanged(this.usuario_pic);
 
@@ -19,7 +19,7 @@ class PicChanged extends HomeEvent {
 }
 
 class NameChanged extends HomeEvent {
-  final double usuario_name;
+  final String usuario_name;
 
   const NameChanged(this.usuario_name);
 

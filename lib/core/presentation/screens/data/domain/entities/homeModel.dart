@@ -4,13 +4,8 @@ part 'homeModel.g.dart';
 
 @JsonSerializable()
 class homeModel {
-  @JsonKey(defaultValue: '')
   String usuario_pic;
-
-  @JsonKey(defaultValue: '')
   String usuario_name;
-
-  @JsonKey(defaultValue: '')
   double balance_general;
 
 
