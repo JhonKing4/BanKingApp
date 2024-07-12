@@ -1,5 +1,5 @@
-import 'package:bankingapp/core/presentation/bloc/beneficio_event.dart'; 
-import 'package:bankingapp/core/presentation/bloc/beneficio_state.dart';
+import 'package:bankingapp/core/presentation/bloc/beneficios/beneficio_event.dart'; 
+import 'package:bankingapp/core/presentation/bloc/beneficios/beneficio_state.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_beneficio_data.dart' as usecase;
 import 'package:flutter_bloc/flutter_bloc.dart';
 

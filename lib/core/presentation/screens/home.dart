@@ -1,3 +1,4 @@
+import 'package:bankingapp/core/presentation/screens/perfil.dart';
 import 'package:bankingapp/core/presentation/screens/retiro.dart';
 import 'package:bankingapp/core/presentation/screens/transferencia2.dart';
 import 'package:flutter/material.dart';
@@ -74,6 +75,7 @@ class HomeView extends StatelessWidget {
                     '/casa': (context) => CasaView(),
                     '/transferencia': (context) => Transferencia(),
                     '/mistarjetas': (context) => MisTarjetas(),
+                    '/perfil': (context) => ProfilePage()
                   },
                 );
               case 1:

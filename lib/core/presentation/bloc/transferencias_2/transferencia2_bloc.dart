@@ -1,7 +1,7 @@
 
 
-import 'package:bankingapp/core/presentation/bloc/transferencia2_event.dart';
-import 'package:bankingapp/core/presentation/bloc/transferencia2_state.dart';
+import 'package:bankingapp/core/presentation/bloc/transferencias_2/transferencia2_event.dart';
+import 'package:bankingapp/core/presentation/bloc/transferencias_2/transferencia2_state.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_transferencia2_data.dart' as usecase;
 import 'package:flutter_bloc/flutter_bloc.dart';
 

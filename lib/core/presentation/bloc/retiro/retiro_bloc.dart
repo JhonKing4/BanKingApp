@@ -1,7 +1,7 @@
 
 
-import 'package:bankingapp/core/presentation/bloc/retiro_event.dart';
-import 'package:bankingapp/core/presentation/bloc/retiro_state.dart';
+import 'package:bankingapp/core/presentation/bloc/retiro/retiro_event.dart';
+import 'package:bankingapp/core/presentation/bloc/retiro/retiro_state.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_retiro_data.dart' as usecase;
 import 'package:flutter_bloc/flutter_bloc.dart';
 

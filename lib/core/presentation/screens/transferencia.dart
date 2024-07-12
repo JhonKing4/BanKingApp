@@ -1,9 +1,9 @@
-import 'package:bankingapp/core/presentation/bloc/home_bloc.dart';
-import 'package:bankingapp/core/presentation/bloc/home_event.dart';
-import 'package:bankingapp/core/presentation/bloc/home_state.dart';
-import 'package:bankingapp/core/presentation/bloc/transferencia_bloc.dart';
-import 'package:bankingapp/core/presentation/bloc/transferencia_event.dart';
-import 'package:bankingapp/core/presentation/bloc/transferencia_state.dart';
+import 'package:bankingapp/core/presentation/bloc/home_blocs/home_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/home_blocs/home_event.dart';
+import 'package:bankingapp/core/presentation/bloc/home_blocs/home_state.dart';
+import 'package:bankingapp/core/presentation/bloc/transferencia/transferencia_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/transferencia/transferencia_event.dart';
+import 'package:bankingapp/core/presentation/bloc/transferencia/transferencia_state.dart';
 import 'package:bankingapp/core/presentation/screens/appbar.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_home_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_transferencia_data.dart';

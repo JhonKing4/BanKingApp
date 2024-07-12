@@ -32,7 +32,7 @@ class LoadServicioData {
 
   bool esServicioValido(String nombreServicio) {
     const serviciosValidos = [
-      'DISNEY +', 'IZZI', 'MERCADO LIBRE', 'INFONAVIT', 'CFE', 
+      'DISNEY +', 'IZZI', 'MERCA...BRE', 'INFONAVIT', 'CFE', 
       'NETFLIX', 'TELMEX', 'MAX', 'DISH', 'TOTALPLAY', 'AXTEL', 'STAR +'
     ];
     return serviciosValidos.contains(nombreServicio);

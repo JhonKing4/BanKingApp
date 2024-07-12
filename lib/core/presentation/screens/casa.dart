@@ -1,9 +1,9 @@
-import 'package:bankingapp/core/presentation/bloc/home_bloc.dart';
-import 'package:bankingapp/core/presentation/bloc/home_event.dart';
-import 'package:bankingapp/core/presentation/bloc/home_state.dart';
-import 'package:bankingapp/core/presentation/bloc/tarjetas_bloc.dart';
-import 'package:bankingapp/core/presentation/bloc/tarjetas_event.dart';
-import 'package:bankingapp/core/presentation/bloc/tarjetas_state.dart';
+import 'package:bankingapp/core/presentation/bloc/home_blocs/home_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/home_blocs/home_event.dart';
+import 'package:bankingapp/core/presentation/bloc/home_blocs/home_state.dart';
+import 'package:bankingapp/core/presentation/bloc/tarjetas/tarjetas_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/tarjetas/tarjetas_event.dart';
+import 'package:bankingapp/core/presentation/bloc/tarjetas/tarjetas_state.dart';
 import 'package:bankingapp/core/presentation/screens/appbar.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_home_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_tarjetas_data.dart';
@@ -60,9 +60,7 @@ class CasaView extends StatelessWidget {
                     ],
                   ),
                 ),
-                decoration: BoxDecoration(
-                  color: const Color.fromRGBO(255, 223, 0, 1),
-                ),
+
               ),
               ListTile(
                 leading: Icon(Icons.person, color: Colors.yellow),
@@ -71,7 +69,7 @@ class CasaView extends StatelessWidget {
                   style: TextStyle(color: Colors.yellow),
                 ),
                 onTap: () {
-                  // Navegar a otra pantalla o realizar alguna acción
+                  Navigator.pushReplacementNamed(context, "/perfil");
                 },
               ),
               ListTile(
@@ -82,6 +80,16 @@ class CasaView extends StatelessWidget {
                 ),
                 onTap: () {
                   // Navegar a otra pantalla o realizar alguna acción
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.door_back_door, color: Colors.yellow),
+                title: Text(
+                  'Cerrar sesion',
+                  style: TextStyle(color: Colors.yellow),
+                ),
+                onTap: () {
+                  Navigator.pushReplacementNamed(context, "/");
                 },
               ),
               // Agrega más ListTile según sea necesario

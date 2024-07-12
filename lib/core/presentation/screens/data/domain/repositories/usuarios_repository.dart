@@ -2,4 +2,6 @@ import 'package:bankingapp/core/presentation/screens/data/domain/entities/usuari
 
 abstract class RegisterRepository {
   Future<void> submitUser(UsuariosModel user);
+  Future<String> loginUser(String phone, String password);
+  Future<UsuariosModel> getUserData();
 }

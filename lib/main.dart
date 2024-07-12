@@ -1,19 +1,18 @@
+import 'package:bankingapp/core/presentation/screens/beneficios.dart';
 import 'package:bankingapp/core/presentation/screens/casa.dart';
-import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_usuarios_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/usuarios_repository_impl.dart';
 import 'package:bankingapp/core/presentation/screens/home.dart';
+import 'package:bankingapp/core/presentation/screens/mis_tarjetas.dart';
+import 'package:bankingapp/core/presentation/screens/perfil.dart';
 import 'package:bankingapp/core/presentation/screens/registro.dart';
+import 'package:bankingapp/core/presentation/screens/retiro.dart';
+import 'package:bankingapp/core/presentation/screens/servicios.dart';
+import 'package:bankingapp/core/presentation/screens/transferencia.dart';
 import 'package:bankingapp/core/presentation/screens/transferencia2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dio/dio.dart';
-import 'package:bankingapp/core/presentation/bloc/usuarios_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/login/login_bloc.dart';
 import 'package:bankingapp/core/presentation/screens/login_page.dart';
-import 'package:bankingapp/core/presentation/screens/beneficios.dart';
-import 'package:bankingapp/core/presentation/screens/mis_tarjetas.dart';
-import 'package:bankingapp/core/presentation/screens/transferencia.dart';
-import 'package:bankingapp/core/presentation/screens/servicios.dart';
-import 'package:bankingapp/core/presentation/screens/retiro.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,16 +24,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Banking',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const MyHomePage(title: 'Banking-page'), 
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<UserBloc>(
+          create: (context) => UserBloc(RegisterRepositoryImpl()),
+        ),
+        
+      ],
+      child: MaterialApp(
+        title: 'Banking',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const MyHomePage(title: 'Banking-page'), 
         '/home': (context) => HomeView(),
         '/casa': (context) => const CasaView(),
         '/beneficios': (context) => const BeneficiosPage(),
@@ -43,8 +49,10 @@ class MyApp extends StatelessWidget {
         '/transferencia2': (context) => const Tranferencia2(),
         '/servicios': (context) => const ServiciosPage(),
         '/retiro': (context) => const RetiroPage(),
-        '/registro': (context) =>  RegisterPage()
-      },
+        '/registro': (context) =>  RegisterPage(),
+        '/perfil': (context) => ProfilePage()
+        },
+      ),
     );
   }
 }
@@ -65,8 +73,8 @@ class MyHomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const LoginPage(),
+            children: const [
+              LoginPage(),
             ],
           ),
         ),

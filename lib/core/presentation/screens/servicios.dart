@@ -2,9 +2,9 @@ import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_s
 import 'package:bankingapp/core/presentation/screens/data/repositories/servicio_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bankingapp/core/presentation/bloc/servicio_bloc.dart';
-import 'package:bankingapp/core/presentation/bloc/servicio_event.dart';
-import 'package:bankingapp/core/presentation/bloc/servicio_state.dart';
+import 'package:bankingapp/core/presentation/bloc/servicios/servicio_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/servicios/servicio_event.dart';
+import 'package:bankingapp/core/presentation/bloc/servicios/servicio_state.dart';
 import 'package:bankingapp/core/presentation/screens/appbar.dart';
 import 'package:bankingapp/core/presentation/screens/beneficios.dart';
 

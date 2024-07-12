@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bankingapp/core/presentation/bloc/servicio_event.dart';
-import 'package:bankingapp/core/presentation/bloc/servicio_state.dart';
+import 'package:bankingapp/core/presentation/bloc/servicios/servicio_event.dart';
+import 'package:bankingapp/core/presentation/bloc/servicios/servicio_state.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_servicio_data.dart' as usecase;
 
 class ServicioBloc extends Bloc<ServicioEvent, ServicioState> {

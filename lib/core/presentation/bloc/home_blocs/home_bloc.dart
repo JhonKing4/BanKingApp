@@ -1,5 +1,5 @@
-import 'package:bankingapp/core/presentation/bloc/home_event.dart';
-import 'package:bankingapp/core/presentation/bloc/home_state.dart';
+import 'package:bankingapp/core/presentation/bloc/home_blocs/home_event.dart';
+import 'package:bankingapp/core/presentation/bloc/home_blocs/home_state.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_home_data.dart' as usecase;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
