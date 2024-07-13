@@ -1,12 +1,20 @@
+import 'package:bankingapp/core/presentation/bloc/perfil/perfilUpdate_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/perfil/perfilUpdate_event.dart';
+import 'package:bankingapp/core/presentation/bloc/perfil/perfilUpdate_state.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/usuariosModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/repositories/usuarios_repository.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_perfil_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:provider/provider.dart';
 import 'package:bankingapp/core/presentation/bloc/perfil/perfil_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/perfil/perfil_event.dart';
 import 'package:bankingapp/core/presentation/bloc/perfil/perfil_state.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/usuarios_repository_impl.dart';
 
 class ProfilePage extends StatelessWidget {
+  final TextEditingController idController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController lastnameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -14,6 +22,7 @@ class ProfilePage extends StatelessWidget {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  bool isIdValid = true;
   bool isNameValid = true;
   bool isLastnameValid = true;
   bool isEmailValid = true;
@@ -23,11 +32,19 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => PerfilBloc(
-        LoadPerfilData(
-            RegisterRepositoryImpl()), // Asegúrate de que RegisterRepositoryImpl esté accesible
-      )..add(LoadPerfilDataEvent()),
+    return MultiProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => PerfilBloc(
+            LoadPerfilData(RegisterRepositoryImpl()),
+          )..add(LoadPerfilDataEvent()),
+        ),
+        BlocProvider(
+          create: (context) => PerfilUBloc(
+            RegisterRepositoryImpl(), // Asegúrate de que el repositorio sea el correcto
+          ),
+        ),
+      ],
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
         appBar: AppBar(
@@ -62,23 +79,58 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
         ),
-        body: BlocBuilder<PerfilBloc, PerfilState>(
-          builder: (context, state) {
-            TextEditingController nameController =
-                TextEditingController(text: state.name);
-            TextEditingController lastnameController =
-                TextEditingController(text: state.lastname);
-            TextEditingController emailController =
-                TextEditingController(text: state.email);
-            TextEditingController rfcController =
-                TextEditingController(text: state.rfc);
-            TextEditingController phoneController =
-                TextEditingController(text: state.phone);
-            TextEditingController passwordController =
-                TextEditingController(text: state.password);
-
-            return buildProfileForm(context);
+        body: BlocListener<PerfilUBloc, PerfilUState>(
+          listener: (context, state) {
+            if (state is PerfilUSuccess) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("Éxito"),
+                      content: Text("Te has registrado exitosamente"),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text("Aceptar"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              } else if (state is PerfilUFailure) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("Error"),
+                      content: Text('Ocurrio un error inesperado: ' + state.message),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text("Aceptar"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
           },
+          child: BlocBuilder<PerfilBloc, PerfilState>(
+            builder: (context, state) {
+                idController.text = state.id.toString();
+                nameController.text = state.name;
+                lastnameController.text = state.lastname;
+                emailController.text = state.email;
+                rfcController.text = state.rfc;
+                phoneController.text = state.phone;
+                passwordController.text = state.password;
+                return buildProfileForm(context);
+            },
+          ),
         ),
       ),
     );
@@ -101,6 +153,8 @@ class ProfilePage extends StatelessWidget {
           const SizedBox(height: 20),
 
           // Sección de datos personales
+          buildTextField(context, "ID", idController, false, isIdValid),
+          const SizedBox(height: 10),
           buildTextField(context, "Nombre", nameController, false, isNameValid),
           const SizedBox(height: 10),
           buildTextField(
@@ -126,7 +180,18 @@ class ProfilePage extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   // Acción de guardar
-                  print("Guardar");
+                  final user = UsuariosModel(
+                    id: int.parse(idController.text),
+                    name: nameController.text,
+                    lastname: lastnameController.text,
+                    email: emailController.text,
+                    rfc: rfcController.text,
+                    phone: phoneController.text,
+                    password: passwordController.text,
+                    id_bank: 1
+                  );
+
+                  BlocProvider.of<PerfilUBloc>(context).add(UpdateUserEvent(user));
                 },
                 child: const Text("Guardar"),
               ),

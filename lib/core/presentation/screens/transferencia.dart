@@ -183,8 +183,8 @@ class _TransferenciaState extends State<Transferencia> {
                                 children: [
                                   SizedBox(height: 60),
                                   Container(
-                                    width: 60,
-                                    height: 60,
+                                    width: 40,
+                                    height: 40,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       // Color de fondo de la imagen
@@ -192,8 +192,8 @@ class _TransferenciaState extends State<Transferencia> {
                                     // Imagen a la derecha
                                     child: Image.asset(
                                       tranferencia.contacto_pic,
-                                      width: 40,
-                                      height: 40,
+                                      width: 30,
+                                      height: 30,
                                     ),
                                   ),
                                   SizedBox(
@@ -226,7 +226,7 @@ class _TransferenciaState extends State<Transferencia> {
                                             ),
                                             SizedBox(width: 5),
                                             Text(
-                                              "29 Marzo",
+                                              tranferencia.ultima_conexion,
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 color: Colors.grey,

@@ -2,6 +2,7 @@ import 'package:bankingapp/core/presentation/screens/data/domain/entities/usuari
 import 'package:equatable/equatable.dart';
 
 class PerfilState extends Equatable {
+  final int? id;
   final String name;
   final String lastname;
   final String email;
@@ -11,6 +12,7 @@ class PerfilState extends Equatable {
 
 
   const PerfilState({
+    this.id = 0,
     this.name = '',
     this.lastname = '',
     this.email = '',
@@ -21,6 +23,7 @@ class PerfilState extends Equatable {
 
   factory PerfilState.fromModel(UsuariosModel model) {
     return PerfilState(
+      id: model.id,
       name: model.name,
       lastname: model.lastname,
       email: model.email,
@@ -31,6 +34,7 @@ class PerfilState extends Equatable {
   }
 
   PerfilState copyWith({
+    int? id,
     String? name,
     String? lastname,
     String? email,
@@ -40,6 +44,7 @@ class PerfilState extends Equatable {
     required bool isValid,
   }) {
     return PerfilState(
+      id: id?? this.id,
       name: name?? this.name,
       lastname: lastname ?? this.lastname,
       email: email ?? this.email,
@@ -51,6 +56,7 @@ class PerfilState extends Equatable {
 
   @override
   List<Object?> get props => [
+    id,
     name,
     lastname,
     email,

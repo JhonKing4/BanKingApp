@@ -1,3 +1,4 @@
+import 'package:bankingapp/core/presentation/screens/configuracion.dart';
 import 'package:bankingapp/core/presentation/screens/perfil.dart';
 import 'package:bankingapp/core/presentation/screens/retiro.dart';
 import 'package:bankingapp/core/presentation/screens/transferencia2.dart';
@@ -11,26 +12,6 @@ import 'package:bankingapp/core/presentation/screens/transferencia.dart';
 import 'package:bankingapp/core/presentation/screens/servicios.dart';
 import 'package:bankingapp/core/presentation/screens/valuenotifier.dart';  // Importa el ValueNotifier
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Banking',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: HomeView(),
-    );
-  }
-}
 
 class HomeView extends StatelessWidget {
   @override
@@ -75,7 +56,8 @@ class HomeView extends StatelessWidget {
                     '/casa': (context) => CasaView(),
                     '/transferencia': (context) => Transferencia(),
                     '/mistarjetas': (context) => MisTarjetas(),
-                    '/perfil': (context) => ProfilePage()
+                    '/perfil': (context) => ProfilePage(),
+                    '/config': (context) => Configuracion()
                   },
                 );
               case 1:

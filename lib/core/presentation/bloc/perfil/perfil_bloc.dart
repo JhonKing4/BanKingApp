@@ -11,6 +11,9 @@ class PerfilBloc extends Bloc<PerfilEvent, PerfilState> {
       final perfilData = await loadPerfilData();
       emit(PerfilState.fromModel(perfilData));
     });
+    on<IdChanged>((event, emit) {
+      emit(state.copyWith(id: event.id, isValid: _validateForm()));
+    });
      on<NameChanged>((event, emit) {
       emit(state.copyWith(name: event.name, isValid: _validateForm()));
     });
@@ -33,6 +36,7 @@ class PerfilBloc extends Bloc<PerfilEvent, PerfilState> {
 
   bool _validateForm() {
     return 
+        state.id !=  0 &&
         state.name.isNotEmpty &&
         state.lastname.isNotEmpty &&
         state.email.isNotEmpty &&

@@ -10,4 +10,6 @@ class SubmitRegister {
   Future<void> call(UsuariosModel register) async {
     await repository.submitUser(register);
   }
+
+  
 }

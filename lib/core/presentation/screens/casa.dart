@@ -79,7 +79,7 @@ class CasaView extends StatelessWidget {
                   style: TextStyle(color: Colors.yellow),
                 ),
                 onTap: () {
-                  // Navegar a otra pantalla o realizar alguna acción
+                   Navigator.pushReplacementNamed(context, "/config");
                 },
               ),
               ListTile(

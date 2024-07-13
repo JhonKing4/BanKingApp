@@ -8,6 +8,7 @@ part of 'usuariosModel.dart';
 
 UsuariosModel _$UsuariosModelFromJson(Map<String, dynamic> json) =>
     UsuariosModel(
+      id: json['id'] as int?,
       name: json['name'] as String,
       lastname: json['lastname'] as String,
       email: json['email'] as String,
@@ -19,6 +20,7 @@ UsuariosModel _$UsuariosModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$UsuariosModelToJson(UsuariosModel instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'lastname': instance.lastname,
       'email': instance.email,

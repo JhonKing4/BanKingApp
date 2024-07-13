@@ -9,6 +9,16 @@ abstract class PerfilEvent extends Equatable {
 
 class LoadPerfilDataEvent extends PerfilEvent {}
 
+
+class IdChanged extends PerfilEvent {
+  final int id;
+
+  const IdChanged(this.id);
+
+  @override
+  List<Object?> get props => [id];
+}
+
 class NameChanged extends PerfilEvent {
   final String name;
 

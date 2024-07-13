@@ -65,55 +65,92 @@ class RegisterRepositoryImpl implements RegisterRepository {
       throw Exception('Failed to login');
     }
   }
-@override
-Future<UsuariosModel> getUserData() async {
-  try {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('authToken');
 
-    if (token == null) {
-      throw Exception('Token not found');
-    }
+  @override
+  Future<UsuariosModel> getUserData() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('authToken');
 
-    final response = await _dio.get('users', options: Options(
-      headers: {
-        'Authorization': 'Bearer $token',
-      },
-    ));
-
-    if (response.statusCode == 200) {
-      dynamic responseData = response.data;
-
-      if (responseData is String) {
-        // Intenta parsear la respuesta como JSON
-        try {
-          Map<String, dynamic> jsonMap = jsonDecode(responseData);
-          responseData = jsonMap;
-        } catch (e) {
-          throw Exception('Failed to parse response data as JSON');
-        }
+      if (token == null) {
+        throw Exception('Token not found');
       }
 
-      print('Consulta correcta, datos del usuario: $responseData');
+      final response = await _dio.get('users', options: Options(
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      ));
 
-      // Parsea los datos a UsuariosModel
-      UsuariosModel userData = UsuariosModel.fromJson(responseData);
-      return userData;
-    } else {
-      throw Exception('Failed to fetch user data: ${response.statusMessage}');
+      if (response.statusCode == 200) {
+        dynamic responseData = response.data;
+
+        if (responseData is String) {
+          // Intenta parsear la respuesta como JSON
+          try {
+            Map<String, dynamic> jsonMap = jsonDecode(responseData);
+            responseData = jsonMap;
+          } catch (e) {
+            throw Exception('Failed to parse response data as JSON');
+          }
+        }
+
+        print('Consulta correcta, datos del usuario: $responseData');
+
+        // Parsea los datos a UsuariosModel
+        UsuariosModel userData = UsuariosModel.fromJson(responseData);
+        return userData;
+      } else {
+        throw Exception('Failed to fetch user data: ${response.statusMessage}');
+      }
+    } on DioError catch (e) {
+      if (e.response != null) {
+        print('Error de servidor: ${e.response?.statusCode} - ${e.response?.data}');
+      } else {
+        print('Error de conexión: $e');
+      }
+      throw Exception('Failed to fetch user data');
+    } catch (e) {
+      print('Error inesperado: $e');
+      throw Exception('Failed to fetch user data');
     }
-  } on DioError catch (e) {
-    if (e.response != null) {
-      print('Error de servidor: ${e.response?.statusCode} - ${e.response?.data}');
-    } else {
-      print('Error de conexión: $e');
-    }
-    throw Exception('Failed to fetch user data');
-  } catch (e) {
-    print('Error inesperado: $e');
-    throw Exception('Failed to fetch user data');
   }
-}
 
+  @override
+  Future<void> updateUser(UsuariosModel user) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('authToken');
 
+      if (token == null) {
+        throw Exception('Token not found');
+      }
+
+      print('users/'+user.id.toString());
+      final response = await _dio.patch('users/${user.id}', 
+        data: user.toJson(),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        print('Usuario actualizado correctamente: ${response.data}');
+      } else {
+        throw Exception('Failed to update user: ${response.statusMessage}');
+      }
+    } on DioError catch (e) {
+      if (e.response != null) {
+        print('Error de servidor: ${e.response?.statusCode} - ${e.response?.data}');
+      } else {
+        print('Error de conexión: $e');
+      }
+      throw Exception('Failed to update user');
+    } catch (e) {
+      print('Error inesperado: $e');
+      throw Exception('Failed to update user');
+    }
+  }
 }
