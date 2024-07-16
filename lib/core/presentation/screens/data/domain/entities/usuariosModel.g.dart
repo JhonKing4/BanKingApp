@@ -8,14 +8,14 @@ part of 'usuariosModel.dart';
 
 UsuariosModel _$UsuariosModelFromJson(Map<String, dynamic> json) =>
     UsuariosModel(
-      id: json['id'] as int?,
-      name: json['name'] as String,
-      lastname: json['lastname'] as String,
-      email: json['email'] as String,
-      rfc: json['rfc'] as String,
-      phone: json['phone'] as String,
-      password: json['password'] as String,
-      id_bank: json['id_bank'] as int
+       id: json['id'] ?? 0,
+      name: json['name'] as String ?? '',
+      lastname: json['lastname']  as String  ?? '',
+      email: json['email'] as String  ?? '',
+      rfc: json['rfc'] as String  ?? '',
+      phone: json['phone'] as String  ?? '',
+      password: json['password'] as String  ?? '',
+      id_bank: json['id_bank'] ?? 0,
     );
 
 Map<String, dynamic> _$UsuariosModelToJson(UsuariosModel instance) =>
