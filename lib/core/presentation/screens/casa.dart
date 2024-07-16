@@ -63,30 +63,30 @@ class CasaView extends StatelessWidget {
 
               ),
               ListTile(
-                leading: Icon(Icons.person, color: Colors.yellow),
+                leading: Icon(Icons.person, color: const Color.fromARGB(255, 255, 255, 255)),
                 title: Text(
                   'Mi perfil',
-                  style: TextStyle(color: Colors.yellow),
+                  style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255), fontWeight: FontWeight.bold),
                 ),
                 onTap: () {
                   Navigator.pushReplacementNamed(context, "/perfil");
                 },
               ),
               ListTile(
-                leading: Icon(Icons.settings, color: Colors.yellow),
+                leading: Icon(Icons.settings, color: Color.fromARGB(255, 255, 255, 255)),
                 title: Text(
                   'Configuracion',
-                  style: TextStyle(color: Colors.yellow),
+                  style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255), fontWeight: FontWeight.bold),
                 ),
                 onTap: () {
                    Navigator.pushReplacementNamed(context, "/config");
                 },
               ),
               ListTile(
-                leading: Icon(Icons.door_back_door, color: Colors.yellow),
+                leading: Icon(Icons.door_back_door, color: const Color.fromARGB(255, 255, 255, 255)),
                 title: Text(
                   'Cerrar sesion',
-                  style: TextStyle(color: Colors.yellow),
+                  style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255), fontWeight: FontWeight.bold),
                 ),
                 onTap: () {
                   Navigator.pushReplacementNamed(context, "/");

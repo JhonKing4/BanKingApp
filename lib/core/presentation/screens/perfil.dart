@@ -13,19 +13,6 @@ import 'package:bankingapp/core/presentation/bloc/perfil/perfil_event.dart';
 import 'package:bankingapp/core/presentation/bloc/perfil/perfil_state.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/usuarios_repository_impl.dart';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bankingapp/core/presentation/bloc/perfil/perfilUpdate_bloc.dart';
-import 'package:bankingapp/core/presentation/bloc/perfil/perfilUpdate_event.dart';
-import 'package:bankingapp/core/presentation/bloc/perfil/perfilUpdate_state.dart';
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/usuariosModel.dart';
-import 'package:bankingapp/core/presentation/screens/data/domain/repositories/usuarios_repository.dart';
-import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_perfil_data.dart';
-import 'package:bankingapp/core/presentation/bloc/perfil/perfil_bloc.dart';
-import 'package:bankingapp/core/presentation/bloc/perfil/perfil_event.dart';
-import 'package:bankingapp/core/presentation/bloc/perfil/perfil_state.dart';
-import 'package:bankingapp/core/presentation/screens/data/repositories/usuarios_repository_impl.dart';
-
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -168,56 +155,86 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget buildProfileForm(BuildContext context, int userId) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Imagen de perfil
-          Center(
-            child: CircleAvatar(
-              radius: 50,
-              backgroundImage:
-                  AssetImage("assets/images/esca.jpg"), // Cambia por tu imagen
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: CircleAvatar(
+                radius: 40,
+                backgroundImage: AssetImage("assets/images/esca.jpg"),
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          Column(
-            children: [
-              Text('Mis datos:',
-                  style: TextStyle(color: Color.fromARGB(255, 255, 208, 1),fontSize: 18,fontWeight: FontWeight.bold))
-            ],
-          ),
-          // Sección de datos personales
-          buildEditableTextField(context, "Nombre", nameController, isEditing),
-          const SizedBox(height: 10),
-          buildEditableTextField(
-              context, "Apellido", lastnameController, isEditing),
-          const SizedBox(height: 10),
-          buildEditableTextField(context, "Email", emailController, isEditing,
-              keyboardType: TextInputType.emailAddress),
-          const SizedBox(height: 10),
-          buildEditableTextField(context, "RFC", rfcController, isEditing),
-          const SizedBox(height: 10),
-          buildEditableTextField(
-              context, "Teléfono", phoneController, isEditing,
-              keyboardType: TextInputType.phone),
-          const SizedBox(height: 10),
-          buildEditableTextField(
-              context, "Contraseña", passwordController, isEditing,
-              obscureText: true),
-
-          const SizedBox(height: 20),
-
-          // Botones de acción
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton(
-                onPressed: isEditing
-                    ? () {
-                        // Acción de guardar
-                        final user = UsuariosModel(
+            const SizedBox(height: 20),
+            Text(
+              'Mis datos:',
+              style: TextStyle(
+                color: Color.fromARGB(255, 229, 201, 74),
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10),
+            buildEditableTextField(
+              context,
+              "Nombre",
+              nameController,
+              isEditing,
+              icon: Icons.person,
+            ),
+            const SizedBox(height: 10),
+            buildEditableTextField(
+              context,
+              "Apellido",
+              lastnameController,
+              isEditing,
+              icon: Icons.person_outline,
+            ),
+            const SizedBox(height: 10),
+            buildEditableTextField(
+              context,
+              "Email",
+              emailController,
+              isEditing,
+              icon: Icons.email,
+              keyboardType: TextInputType.emailAddress,
+            ),
+            const SizedBox(height: 10),
+            buildEditableTextField(
+              context,
+              "RFC",
+              rfcController,
+              isEditing,
+              icon: Icons.badge,
+            ),
+            const SizedBox(height: 10),
+            buildEditableTextField(
+              context,
+              "Teléfono",
+              phoneController,
+              isEditing,
+              icon: Icons.phone,
+              keyboardType: TextInputType.phone,
+            ),
+            const SizedBox(height: 10),
+            buildEditableTextField(
+              context,
+              "Contraseña",
+              passwordController,
+              isEditing,
+              icon: Icons.lock,
+              obscureText: true,
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: isEditing
+                      ? () {
+                          final user = UsuariosModel(
                             id: userId,
                             name: nameController.text,
                             lastname: lastnameController.text,
@@ -225,76 +242,84 @@ class _ProfilePageState extends State<ProfilePage> {
                             rfc: rfcController.text,
                             phone: phoneController.text,
                             password: passwordController.text,
-                            id_bank: 1);
-
-                        BlocProvider.of<PerfilUBloc>(context)
-                            .add(UpdateUserEvent(user));
-                      }
-                    : null,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromRGBO(242, 254, 141, 1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                            id_bank: 1,
+                          );
+                          BlocProvider.of<PerfilUBloc>(context)
+                              .add(UpdateUserEvent(user));
+                        }
+                      : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromRGBO(242, 254, 141, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                   ),
+                  child: Text(isEditing ? "Guardar" : "Editar"),
                 ),
-                child: Text(isEditing ? "Guardar" : "Editar"),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    isEditing = !isEditing; // Alternar modo de edición
-                  });
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromRGBO(254, 154, 141, 1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      isEditing = !isEditing;
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromRGBO(254, 154, 141, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                   ),
+                  child: Text(isEditing ? "Cancelar" : "Editar"),
                 ),
-                child: Text(isEditing ? "Cancelar" : "Editar"),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget buildEditableTextField(BuildContext context, String hintText,
-      TextEditingController controller, bool isEditing,
-      {bool obscureText = false, TextInputType? keyboardType}) {
-    return TextFormField(
-      controller: controller,
-      readOnly:
-          !isEditing, // Hacer el campo de solo lectura si no está en modo de edición
-      obscureText: obscureText,
-      keyboardType: keyboardType,
-      style: const TextStyle(color: Colors.white, fontSize: 16.0),
-      decoration: InputDecoration(
-        hintText: hintText,
-        filled: true,
-        fillColor: const Color.fromRGBO(30, 33, 33, 1),
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: isEditing
-                ? Colors.yellow
-                : Colors
-                    .transparent, // Borde amarillo cuando está en modo de edición
-            width: 2.0,
+  Widget buildEditableTextField(
+    BuildContext context,
+    String hintText,
+    TextEditingController controller,
+    bool isEditing, {
+    bool obscureText = false,
+    TextInputType? keyboardType,
+    IconData? icon,
+  }) {
+    return Row(
+      children: [
+        Icon(icon, color: Colors.white),
+        const SizedBox(width: 10),
+        Expanded(
+          child: TextFormField(
+            controller: controller,
+            readOnly: !isEditing, // Hacer el campo de solo lectura si no está en modo de edición
+            obscureText: obscureText,
+            keyboardType: keyboardType,
+            style: const TextStyle(color: Colors.white, fontSize: 16.0),
+            decoration: InputDecoration(
+              hintText: hintText,
+              hintStyle: TextStyle(color: Colors.white),
+              filled: true,
+              fillColor: const Color.fromRGBO(30, 33, 33, 1),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: isEditing ? Colors.yellow : Colors.transparent, // Borde amarillo cuando está en modo de edición
+                  width: 2.0,
+                ),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: isEditing ? Colors.yellow : Colors.transparent, // Borde amarillo cuando está en modo de edición
+                  width: 2.0,
+                ),
+              ),
+            ),
           ),
         ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: isEditing
-                ? Colors.yellow
-                : Colors
-                    .transparent, // Borde amarillo cuando está en modo de edición
-            width: 2.0,
-          ),
-        ),
-      ),
+      ],
     );
   }
 }
