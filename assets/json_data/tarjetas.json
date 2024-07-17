@@ -1,17 +1,17 @@
 [
     {
         "tarjeta_pic": "assets/images/visapng.png",
-        "tarjeta_num": "**** **** **** 1123",
-        "tarjeta_balance": 7896.00
+        "numero_tarjeta": "**** **** **** 1123",
+        "saldo_tarjeta": 7896.00
     },
     {
         "tarjeta_pic": "assets/images/visapng.png",
-        "tarjeta_num": "**** **** **** 7764",
-        "tarjeta_balance": 5536.00
+        "numero_tarjeta": "**** **** **** 7764",
+        "saldo_tarjeta": 5536.00
     },
     {
         "tarjeta_pic": "assets/images/visapng.png",
-        "tarjeta_num": "**** **** **** 5567",
-        "tarjeta_balance": 0.00
+        "numero_tarjeta": "**** **** **** 5567",
+        "saldo_tarjeta": 0.00
     }
 ]

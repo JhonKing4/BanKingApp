@@ -7,17 +7,13 @@ part of 'homeModel.dart';
 // **************************************************************************
 
 homeModel _$homeModelFromJson(Map<String, dynamic> json) => homeModel(
-      id_cuenta: (json['id_cuenta'] as num).toInt(),
-      balance_general: (json['balance_general'] as num).toDouble(),
-      tarjeta_pic: json['tarjeta_pic'] as String,
-      saldo_tarjeta: (json['saldo_tarjeta'] as num).toDouble(),
-      numero_tarjeta: json['numero_tarjeta'] as String,
+      usuario_pic: json['usuario_pic'] as String? ?? '',
+      usuario_name: json['usuario_name'] as String? ?? '',
+      balance_general: json['balance_general'] as double? ?? 0,
     );
 
 Map<String, dynamic> _$homeModelToJson(homeModel instance) => <String, dynamic>{
-      'id_cuenta': instance.id_cuenta,
+      'usuario_pic': instance.usuario_pic,
+      'usuario_name': instance.usuario_name,
       'balance_general': instance.balance_general,
-      'tarjeta_pic': instance.tarjeta_pic,
-      'saldo_tarjeta': instance.saldo_tarjeta,
-      'numero_tarjeta': instance.numero_tarjeta,
     };

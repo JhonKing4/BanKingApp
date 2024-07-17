@@ -36,6 +36,8 @@ dependencies:
   provider: ^6.0.0
   local_auth: 2.0.1
   carousel_slider: ^4.0.0
+  dio: ^5.0.3
+  shared_preferences: ^2.0.15
   
 
   # The following adds the Cupertino Icons font to your application.
@@ -70,7 +72,16 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/images/esca.jpg
     - assets/images/vertical.png
+    - assets/json_data/beneficios.json
+    - assets/json_data/home.json
+    - assets/json_data/mis_tarjetas.json
+    - assets/json_data/retiro.json
+    - assets/json_data/servicios.json
+    - assets/json_data/tarjetas.json
+    - assets/json_data/transferencia.json
+    - assets/json_data/transferencia2.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -3,6 +3,9 @@ import 'package:bankingapp/core/presentation/screens/servicios.dart';
 import 'package:flutter/material.dart';
 
 class BeneficiosPage extends StatelessWidget {
+  const BeneficiosPage({Key? key}) : super(key: key);
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

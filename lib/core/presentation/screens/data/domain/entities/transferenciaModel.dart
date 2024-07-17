@@ -5,17 +5,15 @@ part 'transferenciaModel.g.dart';
 
 @JsonSerializable()
 class transferenciaModel{
-  double balance;
   String contacto_pic;
   String nombre_contacto;
-  DateTime ultima_conexion;
+  String ultima_conexion;
   bool estado_conexion;
 
 
 
   transferenciaModel({
 
-   required this.balance,
    required this.contacto_pic,
    required this.nombre_contacto,
    required this.ultima_conexion,
@@ -23,8 +21,13 @@ class transferenciaModel{
   });
 
 
-factory transferenciaModel.fromJson(Map<String, dynamic> json) => _$transferenciaModelFromJson(json);
+ factory transferenciaModel.fromJson(Map<String, dynamic> json) =>
+      _$transferenciaModelFromJson(json);
 
-Map<String, dynamic> toJson() => _$transferenciaModelToJson(this);
+  Map<String, dynamic> toJson() => _$transferenciaModelToJson(this);
+
+  static List<transferenciaModel> listFromJson(List<dynamic> json) {
+    return json.map((e) => transferenciaModel.fromJson(e)).toList();
+  }
 
 }

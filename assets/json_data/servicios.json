@@ -5,7 +5,7 @@
     },
     {
         "servicio_pic": "assets/images/mercadolobre.png",
-        "nombre_servicio": "MERCADO LIBRE"
+        "nombre_servicio": "MERCA...BRE"
     },
     {
         "servicio_pic": "assets/images/infonavit.png",
@@ -31,7 +31,7 @@
         "servicio_pic": "assets/images/disney.png",
         "nombre_servicio": "DISNEY +"
     },
-    {
+    { 
         "servicio_pic": "assets/images/dish.png",
         "nombre_servicio": "DISH"
     },

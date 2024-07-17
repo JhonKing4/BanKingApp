@@ -1,473 +1,253 @@
+import 'package:bankingapp/core/presentation/bloc/home_blocs/home_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/home_blocs/home_event.dart';
+import 'package:bankingapp/core/presentation/bloc/home_blocs/home_state.dart';
+import 'package:bankingapp/core/presentation/bloc/transferencia/transferencia_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/transferencia/transferencia_event.dart';
+import 'package:bankingapp/core/presentation/bloc/transferencia/transferencia_state.dart';
 import 'package:bankingapp/core/presentation/screens/appbar.dart';
-import 'package:bankingapp/core/presentation/screens/casa.dart';
-import 'package:bankingapp/core/presentation/screens/login_page.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_home_data.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_transferencia_data.dart';
+import 'package:bankingapp/core/presentation/screens/data/repositories/home_repository_impl.dart';
+import 'package:bankingapp/core/presentation/screens/data/repositories/transferencia_repository_impl.dart';
 import 'package:bankingapp/core/presentation/screens/transferencia2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Tranferencia extends StatefulWidget {
+class Transferencia extends StatefulWidget {
+  const Transferencia({Key? key}) : super(key: key);
+
   @override
-  _TranferenciaState createState() => _TranferenciaState();
+  _TransferenciaState createState() => _TransferenciaState();
 }
 
-class _TranferenciaState extends State<Tranferencia> {
+class _TransferenciaState extends State<Transferencia> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-      appBar: CustomAppBar(),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Container(
-            padding: const EdgeInsets.all(0.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-            const Text('Transferencias',style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold
-            ),),
-            SizedBox(height: 30,),
-                Text(
-                  "Balance",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                  ),
-                ),
-                Text(
-                  " \$ 7,896.00",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
-                SizedBox(height: 20),
-                Container(
-                  width: 360,
-                  height: 110,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color.fromARGB(255, 204, 239, 255),
-                        Color.fromARGB(255, 162, 234, 229)
-                      ],
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp,
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Transferir a",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                         GestureDetector(
-  onTap: () {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => Tranferencia2()),
-    );
-  },
-  child: Column(
-    children: [
-      Image.asset(
-        "assets/images/martin.png",
-        width: 40,
-        height: 40,
-      ),
-      Text(
-        "Adrian",
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 12,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              TransferenciaBloc(LoadTransferenciaData(TransferenciaRepositoryImpl()))
+                ..add(LoadTransferenciaDataEvent()),
         ),
-      ),
-    ],
-  ),
-),
-                          Column(
-                            children: [
-                              Image.asset(
-                                "assets/images/adrian.png",
-                                width: 40,
-                                height: 40,
-                              ),
-                              Text(
-                                "Jhon",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Image.asset(
-                                "assets/images/julia.png",
-                                width: 40,
-                                height: 40,
-                              ),
-                              Text(
-                                "Julia",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Image.asset(
-                                "assets/images/plus.png",
-                                width: 40,
-                                height: 40,
-                              ),
-                              Text(
-                                "Agregar",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 40),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 37, 39, 39),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
+        BlocProvider(
+          create: (context) =>
+              HomeBloc(LoadHomeData(HomeRepositoryImpl()))
+                ..add(LoadHomeDataEvent()),
+        ),
+      ],
+      child: Scaffold(
+        backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
+        appBar: CustomAppBar(),
+        body: BlocBuilder<TransferenciaBloc, TransferenciaState>(
+          builder: (context, state) => SingleChildScrollView(
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.all(0.0),
+                child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state2) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Transferencias',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
                     ),
-                  ),
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Text(
-                        "Contactos",
-                        style: TextStyle(
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      "Balance",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
+                    ),
+                    Text(
+                      state2.balance_general.toString(),
+                      style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 20),
+                    Container(
+                      width: 360,
+                      height: 110,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color.fromARGB(255, 204, 239, 255),
+                            Color.fromARGB(255, 162, 234, 229)
+                          ],
+                          stops: [0.0, 1.0],
+                          tileMode: TileMode.clamp,
                         ),
                       ),
-                      SizedBox(height: 20), // Espacio entre las filas
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              // Color de fondo de la imagen
-                            ),
-                            // Imagen a la derecha
-                            child: Image.asset(
-                              "assets/images/leo.png",
-                              width: 40,
-                              height: 40,
+                          Text(
+                            "Transferir a",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
                             ),
                           ),
-                          SizedBox(
-                              width: 10), // Espacio entre la imagen y el texto
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                          SizedBox(height: 10),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                // Texto en el medio
-                                Text(
-                                  "Leopoldo Salgado ",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(
-                                    height:
-                                        5), // Espacio entre el texto y la fecha
-                                // Fecha a la izquierda
                                 Row(
+                                  children: List.generate(
+                                      state.transferencias.take(3).length, (index) {
+                                    final tranferencia =
+                                        state.transferencias[index];
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushNamed(context, "/transferencia2");
+                                      },
+                                      child: Column(
+                                        children: [
+                                          Image.asset(
+                                            tranferencia.contacto_pic,
+                                            width: 40,
+                                            height: 40,
+                                          ),
+                                          Text(
+                                            tranferencia.nombre_contacto,
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      
+                                    );
+                                    
+                                  }),
+                                  
+                                ),
+                                SizedBox(height: 10),
+                                Column(
                                   children: [
-                                    Icon(
-                                      Icons.verified,
-                                      color: Colors.green,
-                                      size: 16,
+                                    Image.asset(
+                                      'assets/images/plus.png',
+                                      width: 40,
+                                      height: 40,
                                     ),
-                                    SizedBox(width: 5),
                                     Text(
-                                      "29 Marzo",
+                                      "Agregar",
                                       style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey,
+                                        color: Colors.black,
+                                        fontSize: 12,
                                       ),
                                     ),
                                   ],
-                                ),
-                              ],
-                            ),
-                          ),
+                                )
+                              ]),
                         ],
                       ),
-                      SizedBox(height: 20), // Espacio entre las filas
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                    ),
+                    SizedBox(height: 40),
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 37, 39, 39),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+                      ),
+                      padding: EdgeInsets.all(10),
+                      child: Column(
                         children: [
-                          Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              // Color de fondo de la imagen
-                            ),
-                            // Imagen a la derecha
-                            child: Image.asset(
-                              "assets/images/martin.png",
-                              width: 40,
-                              height: 40,
+                          Text(
+                            "Contactos",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
                             ),
                           ),
-                          SizedBox(
-                              width: 10), // Espacio entre la imagen y el texto
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Texto en el medio
-                                Text(
-                                  "Adrian Santome",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                          SizedBox(height: 20),
+                          Column(
+                            children: List.generate(state.transferencias.length,
+                                (index) {
+                              final tranferencia = state.transferencias[index];
+                              return Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(height: 60),
+                                  Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      // Color de fondo de la imagen
+                                    ),
+                                    // Imagen a la derecha
+                                    child: Image.asset(
+                                      tranferencia.contacto_pic,
+                                      width: 30,
+                                      height: 30,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                    height:
-                                        5), // Espacio entre el texto y la fecha
-                                // Fecha a la izquierda
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.verified,
-                                      color: Colors.green,
-                                      size: 16,
+                                  SizedBox(
+                                      width:
+                                          10), // Espacio entre la imagen y el texto
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        // Texto en el medio
+                                        Text(
+                                          tranferencia.nombre_contacto,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                            height:
+                                                5), // Espacio entre el texto y la fecha
+                                        // Fecha a la izquierda
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.verified,
+                                              color: Colors.green,
+                                              size: 16,
+                                            ),
+                                            SizedBox(width: 5),
+                                            Text(
+                                              tranferencia.ultima_conexion,
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      "15 Oct",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
+                                  ),
+                                ],
+                              );
+                            }),
+                          ) // Espacio entre las filas
                         ],
                       ),
-                      SizedBox(height: 20), // Espacio entre las filas
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              // Color de fondo de la imagen
-                            ),
-                            // Imagen a la derecha
-                            child: Image.asset(
-                              "assets/images/adrian.png",
-                              width: 40,
-                              height: 40,
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Texto en el medio
-                                Text(
-                                  "Jhon Smit",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(
-                                    height:
-                                        5), // Espacio entre el texto y la fecha
-                                // Fecha a la izquierda
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.verified,
-                                      color: Colors.green,
-                                      size: 16,
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      "31 Agos",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ), // Espacio entre la imagen y el texto
-                        ],
-                      ),
-                      SizedBox(height: 20), // Espacio entre las filas
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              // Color de fondo de la imagen
-                            ),
-                            // Imagen a la derecha
-                            child: Image.asset(
-                              "assets/images/julia.png",
-                              width: 40,
-                              height: 40,
-                            ),
-                          ),
-                          SizedBox(
-                              width: 10), // Espacio entre la imagen y el texto
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Texto en el medio
-                                Text(
-                                  "Julia Casa Rivera",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(
-                                    height:
-                                        5), // Espacio entre el texto y la fecha
-                                // Fecha a la izquierda
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.verified,
-                                      color: Colors.green,
-                                      size: 16,
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      "12 Nov",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 20),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              // Color de fondo de la imagen
-                            ),
-                            // Imagen a la derecha
-                            child: Image.asset(
-                              "assets/images/jack.png",
-                              width: 40,
-                              height: 40,
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Texto en el medio
-                                Text(
-                                  "Jack Sullivan",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(
-                                    height:
-                                        5), // Espacio entre el texto y la fecha
-                                // Fecha a la izquierda
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.verified,
-                                      color: Colors.green,
-                                      size: 16,
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      "31 Agos",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ), // Espacio entre la imagen y el texto
-                        ],
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
+                ),
+              ),
             ),
           ),
         ),

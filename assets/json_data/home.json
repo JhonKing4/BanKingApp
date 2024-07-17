@@ -1,22 +1,5 @@
-[
-    {
-        "usuario_pic": "assets/images/esca.jpg",
-        "balance_general": 7896.00
-    },
-    {
-
-        "tarjeta_pic": "assets/images/visapng.png",
-        "saldo_tarjeta": 2231.00,
-        "numero_tarjeta": "*** 56478"
-    },
-    {
-        "tarjeta_pic": "assets/images/visapng.png",
-        "saldo_tarjeta": 5566.00,
-        "numero_tarjeta": "*** 77649"
-    },
-    {
-        "tarjeta_pic": "assets/images/visapng.png",
-        "saldo_tarjeta": 0.00,
-        "numero_tarjeta": "*** 11223"
-    }
-]
+{
+    "usuario_pic": "assets/images/esca.jpg",
+    "usuario_name": "Leonardo",
+    "balance_general": 7896.54
+}

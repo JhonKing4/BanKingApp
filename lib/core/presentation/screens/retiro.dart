@@ -48,6 +48,8 @@ Future<void> _showNotification() async {
 
 
 class RetiroPage extends StatefulWidget {
+  const RetiroPage({Key? key}) : super(key: key);
+
   @override
   _RetiroPage createState() => _RetiroPage();
 }
@@ -57,7 +59,6 @@ class _RetiroPage extends State<RetiroPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-      appBar: CustomAppBar(),
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -77,12 +78,7 @@ class _RetiroPage extends State<RetiroPage> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MisTarjetas(),
-                          ),
-                        );
+                        Navigator.pushNamed(context, "/mistarjetas");
                       },
                       icon: Stack(
                         children: [

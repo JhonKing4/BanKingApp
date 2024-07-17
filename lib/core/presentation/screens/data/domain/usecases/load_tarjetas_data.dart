@@ -2,24 +2,30 @@
 import 'package:bankingapp/core/presentation/screens/data/domain/entities/tarjetasModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/repositories/tarjetas_repository.dart';
 
-class LoadTarjetasData{
-  final TarjetasRepository repository;
+class LoadTarjetaData {
+  final TarjetaRepository repository;
 
-  LoadTarjetasData(this.repository);
+  LoadTarjetaData(this.repository);
 
-  Future<tarjetasModel> call() async {
-    final tarjetasModel = await repository.loadtarjetasData();
+  Future<List<tarjetasModel>> call() async {
+    final tarjetaData = await repository.loadTarjetaData();
 
-    if(tarjetasModel.tarjeta_pic.isEmpty){
-      throw Exception("tarjeta_pic cannot be empty");
+    for (var tarjeta in tarjetaData) {
+      if (tarjeta.numero_tarjeta.isEmpty) {
+        throw Exception("tarjeta_num no puede estar vacío");
+      }
+
+      if (!esImagenValida(tarjeta.tarjeta_pic)) {
+        throw Exception("tarjeta_pic debe ser una imagen válida");
+      }
     }
-    if(tarjetasModel.saldo_tarjeta <= 0){
-      throw Exception("saldo_tarjeta cannot be empty");
-    }
-    if(tarjetasModel.numero_tarjeta.isEmpty){
-      throw Exception("numero_tarjetao cannot be empty");
-    }
 
-    return tarjetasModel;
+    return tarjetaData;
+  }
+
+  bool esImagenValida(String url) {
+    final extensionesValidas = ['jpg', 'jpeg', 'png'];
+    final extension = url.split('.').last.toLowerCase();
+    return extensionesValidas.contains(extension);
   }
 }
