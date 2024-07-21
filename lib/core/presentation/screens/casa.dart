@@ -36,66 +36,7 @@ class CasaView extends StatelessWidget {
         extendBody: true,
         backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
         appBar: CustomAppBar(),
-        drawer: Drawer(
-          backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                child: BlocBuilder<HomeBloc, HomeState>(
-                  builder: (context, state) => Column(
-                    children: [
-                      ClipOval(
-                        child: BlocBuilder<HomeBloc, HomeState>(
-                          builder: (context, state) {
-                            return Image.asset(
-                              state.usuario_pic,
-                              width: 120,
-                              height: 120,
-                              fit: BoxFit.cover,
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-              ),
-              ListTile(
-                leading: Icon(Icons.person, color: const Color.fromARGB(255, 255, 255, 255)),
-                title: Text(
-                  'Mi perfil',
-                  style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255), fontWeight: FontWeight.bold),
-                ),
-                onTap: () {
-                  Navigator.pushReplacementNamed(context, "/perfil");
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.settings, color: Color.fromARGB(255, 255, 255, 255)),
-                title: Text(
-                  'Configuracion',
-                  style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255), fontWeight: FontWeight.bold),
-                ),
-                onTap: () {
-                   Navigator.pushReplacementNamed(context, "/config");
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.door_back_door, color: const Color.fromARGB(255, 255, 255, 255)),
-                title: Text(
-                  'Cerrar sesion',
-                  style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255), fontWeight: FontWeight.bold),
-                ),
-                onTap: () {
-                  Navigator.pushReplacementNamed(context, "/");
-                },
-              ),
-              // Agrega más ListTile según sea necesario
-            ],
-          ),
-        ),
+        drawer: CustomDrawer(),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

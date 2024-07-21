@@ -22,17 +22,14 @@ class RegisterRepositoryImpl implements RegisterRepository {
       await _dio.post('users', data: register.toJson());
     } on DioError catch (e) {
       if (e.response != null) {
-        // Error del servidor
-        print('Server error: ${e.response?.statusCode} - ${e.response?.data}');
+        print('Error de servidor: ${e.response?.statusCode} - ${e.response?.data}');
       } else {
-        // Error de conexión
-        print('Connection error: $e');
+        print('Error de conexion: $e');
       }
-      throw Exception('Failed to submit Register');
+      throw Exception('Error al hacer el registro');
     } catch (e) {
-      // Otros errores
-      print('Unexpected error: $e');
-      throw Exception('Failed to submit Register');
+      print('Error inesperado: $e');
+      throw Exception('Error al hacer el registro');
     }
   }
 
@@ -51,18 +48,18 @@ class RegisterRepositoryImpl implements RegisterRepository {
         await prefs.setString('authToken', token);
         return token;
       } else {
-        throw Exception('Failed to login: ${response.statusMessage}');
+        throw Exception('Error al hacer login: ${response.statusMessage}');
       }
     } on DioError catch (e) {
       if (e.response != null) {
-        print('Server error: ${e.response?.statusCode} - ${e.response?.data}');
+        print('Error de servidor: ${e.response?.statusCode} - ${e.response?.data}');
       } else {
-        print('Connection error: $e');
+        print('Error de conexion: $e');
       }
-      throw Exception('Failed to login');
+      throw Exception('Error al hacer login');
     } catch (e) {
-      print('Unexpected error: $e');
-      throw Exception('Failed to login');
+      print('Error inesperado: $e');
+      throw Exception('Error al hacer login');
     }
   }
 
@@ -86,28 +83,24 @@ Future<UsuariosModel> getUserData() async {
       dynamic responseData = response.data;
 
       if (responseData is String) {
-        // Intenta parsear la respuesta como JSON
         try {
           Map<String, dynamic> jsonMap = jsonDecode(responseData);
           responseData = jsonMap;
         } catch (e) {
-          throw Exception('Failed to parse response data as JSON');
+          throw Exception('Error al convertir el JSON');
         }
       }
 
       print('Consulta correcta, datos del usuario: $responseData');
-
-      // Acceder al campo `data` en la respuesta
       final userDataJson = responseData['data'];
       if (userDataJson == null) {
-        throw Exception('Data field is missing in the response');
+        throw Exception('La petición no trajo la informacion del usuario');
       }
 
-      // Parsea los datos a UsuariosModel
       UsuariosModel userData = UsuariosModel.fromJson(userDataJson);
       return userData;
     } else {
-      throw Exception('Failed to fetch user data: ${response.statusMessage}');
+      throw Exception('Error al trar los datos de usuario: ${response.statusMessage}');
     }
   } on DioError catch (e) {
     if (e.response != null) {
@@ -115,10 +108,10 @@ Future<UsuariosModel> getUserData() async {
     } else {
       print('Error de conexión: $e');
     }
-    throw Exception('Failed to fetch user data');
+    throw Exception('Error al trar los datos de usuario');
   } catch (e) {
     print('Error inesperado: $e');
-    throw Exception('Failed to fetch user data');
+    throw Exception('Error al trar los datos de usuario');
   }
 }
 
@@ -130,7 +123,7 @@ Future<UsuariosModel> getUserData() async {
       String? token = prefs.getString('authToken');
 
       if (token == null) {
-        throw Exception('Token not found');
+        throw Exception('El token no existe');
       }
 
       final response = await _dio.patch('users', 
@@ -145,7 +138,7 @@ Future<UsuariosModel> getUserData() async {
       if (response.statusCode == 200) {
         print('Usuario actualizado correctamente: ${response.data}');
       } else {
-        throw Exception('Failed to update user: ${response.statusMessage}');
+        throw Exception('Error al actualizar los datos del usuario: ${response.statusMessage}');
       }
     } on DioError catch (e) {
       if (e.response != null) {
@@ -153,10 +146,10 @@ Future<UsuariosModel> getUserData() async {
       } else {
         print('Error de conexión: $e');
       }
-      throw Exception('Failed to update user');
+      throw Exception('Error al actualizar los datos del usuario');
     } catch (e) {
       print('Error inesperado: $e');
-      throw Exception('Failed to update user');
+      throw Exception('Error al actualizar los datos del usuario');
     }
   }
 }
