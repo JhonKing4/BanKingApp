@@ -1,15 +1,16 @@
+import 'package:bankingapp/core/presentation/screens/servicios/servios_pago.dart';
+import 'package:flutter/material.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/servicioModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_servicio_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/servicio_repository_impl.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/servicios/servicio_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/servicios/servicio_event.dart';
 import 'package:bankingapp/core/presentation/bloc/servicios/servicio_state.dart';
-import 'package:bankingapp/core/presentation/screens/appbar.dart';
-import 'package:bankingapp/core/presentation/screens/beneficios.dart';
+import 'package:bankingapp/core/presentation/screens/widgets/appbar.dart';
 
 class ServiciosPage extends StatelessWidget {
- const ServiciosPage({Key? key}) : super(key: key);
+  const ServiciosPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +59,7 @@ class ServiciosPage extends StatelessWidget {
                       children: List.generate(state.servicios.length, (index) {
                         final servicio = state.servicios[index];
                         return ServicioButton(
-                          image: servicio.servicio_pic,
-                          text: servicio.nombre_servicio,
+                          servicio: servicio,
                         );
                       }),
                     ),
@@ -86,59 +86,76 @@ class ServiciosPage extends StatelessWidget {
 }
 
 class ServicioButton extends StatelessWidget {
-  final String image;
-  final String text;
+  final servicioModel servicio;
 
   const ServicioButton({
     Key? key,
-    required this.image,
-    required this.text,
+    required this.servicio,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(10.0),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          color: Color.fromARGB(255, 113, 113, 113), // Puedes cambiar el color de fondo aquí
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: 10),
-            Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(20),
-                color: Color.fromARGB(137, 222, 255, 251), // Color de fondo de la imagen
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(4.0), // Ajusta el espacio entre el borde de la imagen y el borde del círculo
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    image: DecorationImage(
-                      image: AssetImage(image), // Ajusta la forma en que la imagen se ajusta al círculo
+    return GestureDetector(
+      onTap: () {
+        showModalBottomSheet(
+          context: context,
+          backgroundColor: Colors.transparent,
+          isScrollControlled: true,
+          builder: (context) => DraggableScrollableSheet(
+            initialChildSize: 0.5,
+            maxChildSize: 0.75,
+            minChildSize: 0.25,
+            builder: (context, scrollController) {
+              return ServicioModal(servicio: servicio);
+            },
+          ),
+        );
+      },
+      child: Padding(
+        padding: EdgeInsets.all(10.0),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            color: Color.fromARGB(255, 113, 113, 113),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 10),
+              Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(20),
+                  color: Color.fromARGB(137, 222, 255, 251),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/vertical.png'),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 5),
-            Text(
-              text,
-              style: TextStyle(
-                color: Colors.white,
+              SizedBox(height: 5),
+              Text(
+                servicio.name,
+                style: TextStyle(
+                  color: Colors.white,
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-          ],
+              SizedBox(height: 10),
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
+

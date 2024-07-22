@@ -2,7 +2,7 @@
 import 'package:bankingapp/core/presentation/bloc/tarjetas/tarjetas_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/tarjetas/tarjetas_event.dart';
 import 'package:bankingapp/core/presentation/bloc/tarjetas/tarjetas_state.dart';
-import 'package:bankingapp/core/presentation/screens/appbar.dart';
+import 'package:bankingapp/core/presentation/screens/widgets/appbar.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_tarjetas_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/tarjetas_repository_impl.dart';
 import 'package:flutter/material.dart';

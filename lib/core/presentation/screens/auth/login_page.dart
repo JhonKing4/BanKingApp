@@ -5,7 +5,7 @@ import 'package:bankingapp/core/presentation/screens/data/repositories/usuarios_
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_auth/local_auth.dart';
-import 'home.dart';
+import '../widgets/home.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);

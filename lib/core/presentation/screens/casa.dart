@@ -4,14 +4,14 @@ import 'package:bankingapp/core/presentation/bloc/home_blocs/home_state.dart';
 import 'package:bankingapp/core/presentation/bloc/tarjetas/tarjetas_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/tarjetas/tarjetas_event.dart';
 import 'package:bankingapp/core/presentation/bloc/tarjetas/tarjetas_state.dart';
-import 'package:bankingapp/core/presentation/screens/appbar.dart';
+import 'package:bankingapp/core/presentation/screens/widgets/appbar.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_home_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_tarjetas_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/home_repository_impl.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/tarjetas_repository_impl.dart';
-import 'package:bankingapp/core/presentation/screens/servicios.dart';
-import 'package:bankingapp/core/presentation/screens/transferencia.dart';
-import 'package:bankingapp/core/presentation/screens/valuenotifier.dart';
+import 'package:bankingapp/core/presentation/screens/servicios/servicios.dart';
+import 'package:bankingapp/core/presentation/screens/transferencias/transferencia.dart';
+import 'package:bankingapp/core/presentation/screens/widgets/valuenotifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

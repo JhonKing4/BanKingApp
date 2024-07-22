@@ -4,12 +4,12 @@ import 'package:bankingapp/core/presentation/bloc/home_blocs/home_state.dart';
 import 'package:bankingapp/core/presentation/bloc/transferencia/transferencia_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/transferencia/transferencia_event.dart';
 import 'package:bankingapp/core/presentation/bloc/transferencia/transferencia_state.dart';
-import 'package:bankingapp/core/presentation/screens/appbar.dart';
+import 'package:bankingapp/core/presentation/screens/widgets/appbar.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_home_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_transferencia_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/home_repository_impl.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/transferencia_repository_impl.dart';
-import 'package:bankingapp/core/presentation/screens/transferencia2.dart';
+import 'package:bankingapp/core/presentation/screens/transferencias/transferencia2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

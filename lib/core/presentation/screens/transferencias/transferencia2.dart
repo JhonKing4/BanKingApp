@@ -1,6 +1,6 @@
-import 'package:bankingapp/core/presentation/screens/appbar.dart';
-import 'package:bankingapp/core/presentation/screens/home.dart';
-import 'package:bankingapp/core/presentation/screens/transferencia.dart';
+import 'package:bankingapp/core/presentation/screens/widgets/appbar.dart';
+import 'package:bankingapp/core/presentation/screens/widgets/home.dart';
+import 'package:bankingapp/core/presentation/screens/transferencias/transferencia.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 

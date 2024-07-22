@@ -8,12 +8,14 @@ part of 'servicioModel.dart';
 
 servicioModel _$servicioModelFromJson(Map<String, dynamic> json) =>
     servicioModel(
-      servicio_pic: json['servicio_pic'] as String,
-      nombre_servicio: json['nombre_servicio'] as String,
+      id: json['id'] as int?,
+      name: json['name'] as String,
+      status: json['status'] as bool,
     );
 
 Map<String, dynamic> _$servicioModelToJson(servicioModel instance) =>
     <String, dynamic>{
-      'servicio_pic': instance.servicio_pic,
-      'nombre_servicio': instance.nombre_servicio,
+      'id': instance.id,
+      'name': instance.name,
+      'status': instance.status,
     };

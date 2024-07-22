@@ -1,16 +1,16 @@
 import 'package:bankingapp/core/presentation/screens/configuracion.dart';
-import 'package:bankingapp/core/presentation/screens/perfil.dart';
+import 'package:bankingapp/core/presentation/screens/auth/perfil.dart';
 import 'package:bankingapp/core/presentation/screens/retiro.dart';
-import 'package:bankingapp/core/presentation/screens/transferencia2.dart';
+import 'package:bankingapp/core/presentation/screens/transferencias/transferencia2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:bankingapp/core/presentation/screens/beneficios.dart';
+import 'package:bankingapp/core/presentation/screens/servicios/beneficios.dart';
 import 'package:bankingapp/core/presentation/screens/casa.dart';
 import 'package:bankingapp/core/presentation/screens/mis_tarjetas.dart';
 import 'package:bankingapp/core/presentation/screens/tarjetas.dart';
-import 'package:bankingapp/core/presentation/screens/transferencia.dart';
-import 'package:bankingapp/core/presentation/screens/servicios.dart';
-import 'package:bankingapp/core/presentation/screens/valuenotifier.dart';
+import 'package:bankingapp/core/presentation/screens/transferencias/transferencia.dart';
+import 'package:bankingapp/core/presentation/screens/servicios/servicios.dart';
+import 'package:bankingapp/core/presentation/screens/widgets/valuenotifier.dart';
 
 class HomeView extends StatefulWidget {
   @override

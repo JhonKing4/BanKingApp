@@ -1,5 +1,5 @@
-import 'package:bankingapp/core/presentation/screens/appbar.dart';
-import 'package:bankingapp/core/presentation/screens/servicios.dart';
+import 'package:bankingapp/core/presentation/screens/widgets/appbar.dart';
+import 'package:bankingapp/core/presentation/screens/servicios/servicios.dart';
 import 'package:flutter/material.dart';
 
 class BeneficiosPage extends StatelessWidget {

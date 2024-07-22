@@ -24,15 +24,13 @@ class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController rfcController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
 
   bool isNameValid = true;
   bool isLastnameValid = true;
   bool isEmailValid = true;
   bool isRfcValid = true;
   bool isPhoneValid = true;
-  bool isPasswordValid = true;
-  bool isEditing = false; // Estado para controlar el modo de edición
+  bool isEditing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         BlocProvider(
           create: (context) => PerfilUBloc(
-            RegisterRepositoryImpl(), // Asegúrate de que el repositorio sea el correcto
+            RegisterRepositoryImpl(),
           ),
         ),
       ],
@@ -86,7 +84,6 @@ class _ProfilePageState extends State<ProfilePage> {
         body: BlocListener<PerfilUBloc, PerfilUState>(
           listener: (context, state) {
             if (state is PerfilUSuccess) {
-              // Mostrar el diálogo de éxito
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -105,21 +102,17 @@ class _ProfilePageState extends State<ProfilePage> {
                 },
               );
 
-              // Recargar los datos del perfil después de actualizar
               BlocProvider.of<PerfilBloc>(context).add(LoadPerfilDataEvent());
               setState(() {
-                isEditing =
-                    false; // Desactivar el modo de edición después de guardar
+                isEditing = false;
               });
             } else if (state is PerfilUFailure) {
-              // Mostrar el diálogo de error
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: Text("Error"),
-                    content:
-                        Text('Ocurrió un error inesperado: ' + state.message),
+                    content: Text('Ocurrió un error inesperado: ' + state.message),
                     actions: [
                       TextButton(
                         onPressed: () {
@@ -135,18 +128,13 @@ class _ProfilePageState extends State<ProfilePage> {
           },
           child: BlocBuilder<PerfilBloc, PerfilState>(
             builder: (context, state) {
-              // Actualizar los controladores de texto con los nuevos datos del estado
               nameController.text = state.name ?? '';
               lastnameController.text = state.lastname ?? '';
               emailController.text = state.email ?? '';
               rfcController.text = state.rfc ?? '';
               phoneController.text = state.phone ?? '';
-              passwordController.text = state.password ?? '';
 
-              return buildProfileForm(
-                  context,
-                  state.id ??
-                      0); // Proporcionar un valor predeterminado para id si es null
+              return buildProfileForm(context, state.id ?? 0);
             },
           ),
         ),
@@ -219,14 +207,6 @@ class _ProfilePageState extends State<ProfilePage> {
               keyboardType: TextInputType.phone,
             ),
             const SizedBox(height: 10),
-            buildEditableTextField(
-              context,
-              "Contraseña",
-              passwordController,
-              isEditing,
-              icon: Icons.lock,
-              obscureText: true,
-            ),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -241,11 +221,10 @@ class _ProfilePageState extends State<ProfilePage> {
                             email: emailController.text,
                             rfc: rfcController.text,
                             phone: phoneController.text,
-                            password: passwordController.text,
+                            password: "pass",
                             id_bank: 1,
                           );
-                          BlocProvider.of<PerfilUBloc>(context)
-                              .add(UpdateUserEvent(user));
+                          BlocProvider.of<PerfilUBloc>(context).add(UpdateUserEvent(user));
                         }
                       : null,
                   style: ElevatedButton.styleFrom(
@@ -289,12 +268,12 @@ class _ProfilePageState extends State<ProfilePage> {
   }) {
     return Row(
       children: [
-        Icon(icon, color: Colors.white),
+        Icon(isEditing ? Icons.edit : icon, color: Colors.white),
         const SizedBox(width: 10),
         Expanded(
           child: TextFormField(
             controller: controller,
-            readOnly: !isEditing, // Hacer el campo de solo lectura si no está en modo de edición
+            readOnly: !isEditing,
             obscureText: obscureText,
             keyboardType: keyboardType,
             style: const TextStyle(color: Colors.white, fontSize: 16.0),
@@ -306,13 +285,13 @@ class _ProfilePageState extends State<ProfilePage> {
               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
-                  color: isEditing ? Colors.yellow : Colors.transparent, // Borde amarillo cuando está en modo de edición
+                  color: isEditing ? Colors.yellow : Colors.transparent,
                   width: 2.0,
                 ),
               ),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
-                  color: isEditing ? Colors.yellow : Colors.transparent, // Borde amarillo cuando está en modo de edición
+                  color: isEditing ? Colors.yellow : Colors.transparent,
                   width: 2.0,
                 ),
               ),

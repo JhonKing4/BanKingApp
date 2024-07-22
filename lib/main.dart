@@ -1,18 +1,18 @@
-import 'package:bankingapp/core/presentation/screens/beneficios.dart';
+import 'package:bankingapp/core/presentation/screens/servicios/beneficios.dart';
 import 'package:bankingapp/core/presentation/screens/casa.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/usuarios_repository_impl.dart';
-import 'package:bankingapp/core/presentation/screens/home.dart';
+import 'package:bankingapp/core/presentation/screens/widgets/home.dart';
 import 'package:bankingapp/core/presentation/screens/mis_tarjetas.dart';
-import 'package:bankingapp/core/presentation/screens/perfil.dart';
-import 'package:bankingapp/core/presentation/screens/registro.dart';
+import 'package:bankingapp/core/presentation/screens/auth/perfil.dart';
+import 'package:bankingapp/core/presentation/screens/auth/registro.dart';
 import 'package:bankingapp/core/presentation/screens/retiro.dart';
-import 'package:bankingapp/core/presentation/screens/servicios.dart';
-import 'package:bankingapp/core/presentation/screens/transferencia.dart';
-import 'package:bankingapp/core/presentation/screens/transferencia2.dart';
+import 'package:bankingapp/core/presentation/screens/servicios/servicios.dart';
+import 'package:bankingapp/core/presentation/screens/transferencias/transferencia.dart';
+import 'package:bankingapp/core/presentation/screens/transferencias/transferencia2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/login/login_bloc.dart';
-import 'package:bankingapp/core/presentation/screens/login_page.dart';
+import 'package:bankingapp/core/presentation/screens/auth/login_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
