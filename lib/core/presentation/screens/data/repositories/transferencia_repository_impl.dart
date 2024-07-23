@@ -1,7 +1,7 @@
 
 import 'dart:convert';
 
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/transferenciaModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_transferencias/transferenciaModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/repositories/transferencia_repository.dart';
 import 'package:flutter/services.dart';
 

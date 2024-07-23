@@ -2,7 +2,7 @@
 
 
 
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/transferencia2Model.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_transferencias/transferencia2Model.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/repositories/transferencia2_repository.dart';
 
 class LoadTransferencia2Data {

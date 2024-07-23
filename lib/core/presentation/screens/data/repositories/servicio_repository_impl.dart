@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/servicioModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_servicios/servicioModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/repositories/servicio_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';

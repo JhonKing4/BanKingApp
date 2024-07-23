@@ -1,7 +1,7 @@
 
 import 'dart:convert';
 
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/beneficioModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_Beneficios/beneficioModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/repositories/beneficio_repository.dart';
 import 'package:flutter/services.dart';
 

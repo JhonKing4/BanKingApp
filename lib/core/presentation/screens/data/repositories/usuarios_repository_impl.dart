@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/usuariosModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_usuarios/usuariosModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/repositories/usuarios_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -70,7 +70,7 @@ Future<UsuariosModel> getUserData() async {
     String? token = prefs.getString('authToken');
 
     if (token == null) {
-      throw Exception('Token not found');
+      throw Exception('Token no encontrado');
     }
 
     final response = await _dio.get('users', options: Options(

@@ -1,5 +1,5 @@
 
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/tarjetasModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_tarjetas/tarjetasModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/repositories/tarjetas_repository.dart';
 
 class LoadTarjetaData {

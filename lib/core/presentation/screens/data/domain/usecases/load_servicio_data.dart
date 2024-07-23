@@ -1,4 +1,4 @@
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/servicioModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_servicios/servicioModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/repositories/servicio_repository.dart';
 
 class LoadServicioData {

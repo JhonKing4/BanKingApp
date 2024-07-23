@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/homeModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_home/homeModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/repositories/home_repository.dart';
 import 'package:flutter/services.dart';
 

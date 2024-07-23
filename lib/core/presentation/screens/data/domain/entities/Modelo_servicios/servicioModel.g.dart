@@ -8,7 +8,7 @@ part of 'servicioModel.dart';
 
 servicioModel _$servicioModelFromJson(Map<String, dynamic> json) =>
     servicioModel(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String,
       status: json['status'] as bool,
     );

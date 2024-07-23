@@ -1,6 +1,6 @@
 
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/homeModel.dart';
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/usuariosModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_home/homeModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_usuarios/usuariosModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/repositories/home_repository.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/repositories/usuarios_repository.dart';
 

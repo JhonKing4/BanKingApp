@@ -8,7 +8,6 @@ part of 'transferenciaModel.dart';
 
 transferenciaModel _$transferenciaModelFromJson(Map<String, dynamic> json) =>
     transferenciaModel(
-
       contacto_pic: json['contacto_pic'] as String,
       nombre_contacto: json['nombre_contacto'] as String,
       ultima_conexion: json['ultima_conexion'] as String,

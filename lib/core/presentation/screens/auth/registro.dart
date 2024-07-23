@@ -1,7 +1,7 @@
 import 'package:bankingapp/core/presentation/bloc/registro/usuarios_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/registro/usuarios_event.dart';
 import 'package:bankingapp/core/presentation/bloc/registro/usuarios_state.dart';
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/usuariosModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_usuarios/usuariosModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_usuarios_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/usuarios_repository_impl.dart';
 import 'package:flutter/material.dart';

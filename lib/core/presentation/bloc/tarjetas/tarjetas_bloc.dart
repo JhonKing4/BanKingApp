@@ -1,6 +1,6 @@
 import 'package:bankingapp/core/presentation/bloc/tarjetas/tarjetas_event.dart';
 import 'package:bankingapp/core/presentation/bloc/tarjetas/tarjetas_state.dart';
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/tarjetasModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_tarjetas/tarjetasModel.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_tarjetas_data.dart' as usecase;
 
