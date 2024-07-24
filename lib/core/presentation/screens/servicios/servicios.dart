@@ -1,3 +1,14 @@
+import 'package:bankingapp/core/presentation/bloc/Account/account_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/Account/account_event.dart';
+import 'package:bankingapp/core/presentation/bloc/Account/account_state.dart';
+import 'package:bankingapp/core/presentation/bloc/home_blocs/home_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/home_blocs/home_event.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_accounts/accountModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_usuarios/usuariosModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_account_data.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_home_data.dart';
+import 'package:bankingapp/core/presentation/screens/data/repositories/account_repository_impl.dart';
+import 'package:bankingapp/core/presentation/screens/data/repositories/home_repository_impl.dart';
 import 'package:bankingapp/core/presentation/screens/servicios/servios_pago.dart';
 import 'package:flutter/material.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_servicios/servicioModel.dart';
@@ -14,62 +25,100 @@ class ServiciosPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ServicioBloc(LoadServicioData(ServicioRepositoryImpl()))
-        ..add(LoadServicioDataEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ServicioBloc>(
+          create: (context) => ServicioBloc(
+            LoadServicioData(ServicioRepositoryImpl()),
+          )..add(LoadServicioDataEvent()),
+        ),
+        BlocProvider<AccountBloc>(
+          create: (context) => AccountBloc(
+            LoadAccountData(AccountRepositoryImpl()),
+          )..add(LoadAccountDataEvent()),
+        ),
+         BlocProvider(
+          create: (context) => HomeBloc(LoadHomeData(HomeRepositoryImpl()))
+            ..add(LoadHomeDataEvent()),
+        ),
+      ],
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
         appBar: CustomAppBar(),
         body: BlocBuilder<ServicioBloc, ServicioState>(
-          builder: (context, state) {
-            if (state.servicios.isNotEmpty) {
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(height: 40),
-                    const Text(
-                      'Pago de servicios',
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, "/beneficios");
-                      },
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.verified_user_outlined, color: Color.fromARGB(255, 255, 255, 255)),
-                          SizedBox(height: 5),
-                          Text('Beneficios de la app', style: TextStyle(fontSize: 10, color: Colors.white)),
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 52, 52, 52),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+          builder: (context, servicioState) {
+            if (servicioState.servicios.isNotEmpty) {
+              return BlocBuilder<AccountBloc, AccountState>(
+                builder: (context, accountState) {
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(height: 40),
+                        const Text(
+                          'Pago de servicios',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
+                        SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, "/beneficios");
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.verified_user_outlined,
+                                color: Colors.white,
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                'Beneficios de la app',
+                                style: TextStyle(
+                                    fontSize: 10, color: Colors.white),
+                              ),
+                            ],
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 30),
+                        GridView.count(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          crossAxisCount: 3,
+                          children: List.generate(
+                              servicioState.servicios.length, (index) {
+                            final servicio = servicioState.servicios[index];
+                            return ServicioButton(
+                              servicio: servicio,
+                              account: AccountModel(
+                                id: accountState.id,
+                                id_user: accountState.id_user,
+                                balance: accountState.balance,
+                                status: accountState.status,
+                                card: accountState.card,
+                                user: accountState.user ??
+                                    UsuariosModel.defaultUser(), // Manejar null
+                              ),
+                            );
+                          }),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 30),
-                    GridView.count(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      crossAxisCount: 3,
-                      children: List.generate(state.servicios.length, (index) {
-                        final servicio = state.servicios[index];
-                        return ServicioButton(
-                          servicio: servicio,
-                        );
-                      }),
-                    ),
-                  ],
-                ),
+                  );
+                },
               );
-            } else if (state.errorMessage.isNotEmpty) {
+            } else if (servicioState.errorMessage.isNotEmpty) {
               return Center(
                 child: Text(
-                  'Error: ${state.errorMessage}',
+                  'Error: ${servicioState.errorMessage}',
                   style: TextStyle(color: Colors.red),
                 ),
               );
@@ -87,10 +136,12 @@ class ServiciosPage extends StatelessWidget {
 
 class ServicioButton extends StatelessWidget {
   final servicioModel servicio;
+  final AccountModel account;
 
   const ServicioButton({
     Key? key,
     required this.servicio,
+    required this.account,
   }) : super(key: key);
 
   @override
@@ -106,7 +157,10 @@ class ServicioButton extends StatelessWidget {
             maxChildSize: 0.75,
             minChildSize: 0.25,
             builder: (context, scrollController) {
-              return ServicioModal(servicio: servicio);
+              return ServicioModal(
+                servicio: servicio,
+                account: account,
+              );
             },
           ),
         );
@@ -157,5 +211,3 @@ class ServicioButton extends StatelessWidget {
     );
   }
 }
-
-

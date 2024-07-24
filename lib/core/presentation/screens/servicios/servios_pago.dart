@@ -1,6 +1,7 @@
 import 'package:bankingapp/core/presentation/bloc/servicios/pagoServicio_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/servicios/pagoServicio_event.dart';
 import 'package:bankingapp/core/presentation/bloc/servicios/pagoServicio_state.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_accounts/accountModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_servicios/pagoServicioModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_servicios/servicioModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_usuarios/usuariosModel.dart';
@@ -12,8 +13,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ServicioModal extends StatefulWidget {
   final servicioModel servicio;
+  final AccountModel account;
 
-  const ServicioModal({Key? key, required this.servicio}) : super(key: key);
+  const ServicioModal({Key? key, required this.servicio,required this.account}) : super(key: key);
 
   @override
   _ServicioModalState createState() => _ServicioModalState();
@@ -99,7 +101,7 @@ class _ServicioModalState extends State<ServicioModal> {
       ),
       child: Container(
         color: const Color.fromRGBO(30, 33, 33, 1),
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,7 +122,7 @@ class _ServicioModalState extends State<ServicioModal> {
                     style: TextStyle(fontSize: 12, color: Colors.white),
                   ),
                   Text(
-                    '\$ 7896.54',
+                    widget.account.balance.toString(),
                     style: TextStyle(
                         fontSize: 14,
                         color: Color.fromARGB(255, 219, 199, 17),
@@ -159,8 +161,8 @@ class _ServicioModalState extends State<ServicioModal> {
                     if (isAmountValid) {
                       final pago = PagoServicioModel(
                         id_service: widget.servicio.id.toString(),
-                        id_users: "14",
-                        id_account: "7",
+                        id_users: widget.account.id_user.toString(),
+                        id_account: widget.account.card[0].id_account.toString(),
                         amount: amountController.text.toString(),
                         reference: "9983778277",
                       );

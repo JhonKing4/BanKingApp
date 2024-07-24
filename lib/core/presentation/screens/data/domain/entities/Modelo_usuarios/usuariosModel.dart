@@ -31,4 +31,6 @@ factory UsuariosModel.fromJson(Map<String, dynamic> json) => _$UsuariosModelFrom
 
 Map<String, dynamic> toJson() => _$UsuariosModelToJson(this);
 
+  static defaultUser() {}
+
 }

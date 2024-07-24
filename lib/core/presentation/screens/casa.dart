@@ -1,9 +1,22 @@
+import 'package:bankingapp/core/presentation/bloc/Account/account_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/Account/account_event.dart';
+import 'package:bankingapp/core/presentation/bloc/Account/account_state.dart';
 import 'package:bankingapp/core/presentation/bloc/home_blocs/home_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/home_blocs/home_event.dart';
 import 'package:bankingapp/core/presentation/bloc/home_blocs/home_state.dart';
+import 'package:bankingapp/core/presentation/bloc/servicios/servicio_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/servicios/servicio_event.dart';
+import 'package:bankingapp/core/presentation/bloc/servicios/servicio_state.dart';
 import 'package:bankingapp/core/presentation/bloc/tarjetas/tarjetas_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/tarjetas/tarjetas_event.dart';
 import 'package:bankingapp/core/presentation/bloc/tarjetas/tarjetas_state.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_accounts/accountModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_usuarios/usuariosModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_account_data.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_servicio_data.dart';
+import 'package:bankingapp/core/presentation/screens/data/repositories/account_repository_impl.dart';
+import 'package:bankingapp/core/presentation/screens/data/repositories/servicio_repository_impl.dart';
+import 'package:bankingapp/core/presentation/screens/servicios/servios_pago.dart';
 import 'package:bankingapp/core/presentation/screens/widgets/appbar.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_home_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_tarjetas_data.dart';
@@ -31,6 +44,16 @@ class CasaView extends StatelessWidget {
           create: (context) => HomeBloc(LoadHomeData(HomeRepositoryImpl()))
             ..add(LoadHomeDataEvent()),
         ),
+        BlocProvider(
+          create: (context) =>
+              ServicioBloc(LoadServicioData(ServicioRepositoryImpl()))
+                ..add(LoadServicioDataEvent()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              AccountBloc(LoadAccountData(AccountRepositoryImpl()))
+                ..add(LoadAccountDataEvent()),
+        )
       ],
       child: Scaffold(
         extendBody: true,
@@ -47,7 +70,7 @@ class CasaView extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: BlocBuilder<HomeBloc, HomeState>(
+                    child: BlocBuilder<AccountBloc, AccountState>(
                       builder: (context, state) => Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -65,7 +88,7 @@ class CasaView extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    '\$ ${state.balance_general.toString()}',
+                                    '\$ ${state.balance.toString()}',
                                     style: TextStyle(
                                       fontSize: 20,
                                       color: Colors.white,
@@ -103,10 +126,10 @@ class CasaView extends StatelessWidget {
               SizedBox(height: 5),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: BlocBuilder<TarjetasBloc, TarjetasState>(
+                child: BlocBuilder<AccountBloc, AccountState>(
                   builder: (context, state) => Row(
-                      children: List.generate(state.tarjetas.length, (index) {
-                    final tarjeta = state.tarjetas[index];
+                      children: List.generate(state.card.length, (index) {
+                    final tarjeta = state.card[index];
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
@@ -115,7 +138,7 @@ class CasaView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Image.asset(
-                              tarjeta.tarjeta_pic,
+                              'assets/images/visapng.png',
                               width: 40,
                               height: 40,
                             ),
@@ -123,12 +146,12 @@ class CasaView extends StatelessWidget {
                             Text('saldo',
                                 style: TextStyle(
                                     color: Color.fromARGB(255, 50, 50, 50))),
-                            Text('\$ ${tarjeta.saldo_tarjeta.toString()}',
+                            Text('\$ ${state.balance.toString()}',
                                 style: TextStyle(
                                     color:
                                         const Color.fromARGB(255, 24, 24, 24))),
                             SizedBox(height: 20),
-                            Text(tarjeta.numero_tarjeta,
+                            Text(tarjeta.card.toString(),
                                 style: TextStyle(
                                     color: const Color.fromARGB(
                                         255, 120, 120, 120))),
@@ -368,263 +391,119 @@ class CasaView extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 5),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    Container(
-                      width: 120,
-                      height: 120,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  color: Color.fromARGB(255, 246, 250,
-                                      255), // Color del fondo rosa claro
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      "assets/images/Logo_Izzi.png",
-                                      height: 20,
+              BlocBuilder<ServicioBloc, ServicioState>(
+                builder: (context, servicioState) {
+                  if (servicioState.servicios.isNotEmpty) {
+                    return BlocBuilder<AccountBloc, AccountState>(
+                      builder: (context, accountState) {
+                        return SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: List.generate(
+                                servicioState.servicios.length, (index) {
+                              final servicio = servicioState.servicios[index];
+                              return Container(
+                                width: 120,
+                                height: 120,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        backgroundColor: Colors.transparent,
+                                        isScrollControlled: true,
+                                        builder: (context) =>
+                                            DraggableScrollableSheet(
+                                          initialChildSize: 0.5,
+                                          maxChildSize: 0.75,
+                                          minChildSize: 0.25,
+                                          builder: (context, scrollController) {
+                                            return ServicioModal(
+                                              servicio: servicio,
+                                              account: AccountModel(
+                                                id: accountState.id,
+                                                id_user: accountState.id_user,
+                                                balance: accountState.balance,
+                                                status: accountState.status,
+                                                card: accountState.card,
+                                                user: accountState.user ??
+                                                    UsuariosModel
+                                                        .defaultUser(), // Manejar null
+                                              ), // Usar accountState aquí
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: 40,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.rectangle,
+                                            color: Color.fromARGB(
+                                                255, 246, 250, 255),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Image.asset(
+                                                "assets/images/Logo_Izzi.png",
+                                                height: 20,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 5),
+                                        Text(
+                                          servicio.name,
+                                          style: TextStyle(
+                                              fontSize: 10,
+                                              color: Colors.white),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                'IZZI',
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.white),
-                              ),
-                            ],
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 10),
-                            backgroundColor: Color.fromARGB(255, 41, 41, 41),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Container(
-                      width: 120,
-                      height: 120,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  color: Color.fromARGB(255, 246, 250,
-                                      255), // Color del fondo rosa claro
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      "assets/images/cfe.png",
-                                      height: 20,
+                                    style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 20, horizontal: 10),
+                                      backgroundColor:
+                                          Color.fromARGB(255, 41, 41, 41),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                      ),
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                'CFE',
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.white),
-                              ),
-                            ],
+                              );
+                            }),
                           ),
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 10),
-                            backgroundColor: Color.fromARGB(255, 41, 41, 41),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                          ),
-                        ),
+                        );
+                      },
+                    );
+                  } else if (servicioState.errorMessage.isNotEmpty) {
+                    return Center(
+                      child: Text(
+                        'Error: ${servicioState.errorMessage}',
+                        style: TextStyle(color: Colors.red),
                       ),
-                    ),
-                    SizedBox(width: 10),
-                    Container(
-                      width: 120,
-                      height: 120,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  color: Color.fromARGB(255, 246, 250,
-                                      255), // Color del fondo rosa claro
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      "assets/images/infonavit.png",
-                                      height: 20,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                'INFONAVIT',
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.white),
-                              ),
-                            ],
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 10),
-                            backgroundColor: Color.fromARGB(255, 41, 41, 41),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Container(
-                      width: 120,
-                      height: 120,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  color: Color.fromARGB(255, 246, 250,
-                                      255), // Color del fondo rosa claro
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      "assets/images/attt.png",
-                                      height: 20,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                'ATT&T',
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.white),
-                              ),
-                            ],
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 10),
-                            backgroundColor: Color.fromARGB(255, 41, 41, 41),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Container(
-                      width: 120,
-                      height: 120,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  color: Color.fromARGB(255, 246, 250,
-                                      255), // Color del fondo rosa claro
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      "assets/images/mercadolobre.png",
-                                      height: 20,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                'MERCADO L...',
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.white),
-                              ),
-                            ],
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 10),
-                            backgroundColor: Color.fromARGB(255, 41, 41, 41),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 30),
+                    );
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              )
             ],
           ),
         ),

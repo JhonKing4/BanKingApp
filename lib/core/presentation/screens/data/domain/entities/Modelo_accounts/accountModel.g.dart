@@ -8,7 +8,7 @@ part of 'accountModel.dart';
 
 AccountModel _$AccountModelFromJson(Map<String, dynamic> json) => AccountModel(
       id: (json['id'] as num?)?.toInt(),
-      id_user: (json['id_user'] as num?)?.toInt(),
+      id_user: (json['id_user'] as num).toInt(),
       balance: (json['balance'] as num).toDouble(),
       status: (json['status'] as num).toInt(),
       card: (json['card'] as List<dynamic>)

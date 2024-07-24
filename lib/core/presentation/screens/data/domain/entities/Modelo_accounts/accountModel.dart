@@ -7,11 +7,11 @@ part 'accountModel.g.dart';
 @JsonSerializable()
 class AccountModel {
   int? id;
-  int? id_user;
+  int id_user;
   double balance;
   int status;
   List<CardModel> card;
-  UsuariosModel user;
+  UsuariosModel? user;
 
   AccountModel({
     required this.id,
