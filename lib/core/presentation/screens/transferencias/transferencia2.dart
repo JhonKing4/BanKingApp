@@ -1,10 +1,6 @@
-import 'package:bankingapp/core/presentation/screens/widgets/appbar.dart';
-import 'package:bankingapp/core/presentation/screens/widgets/home.dart';
-import 'package:bankingapp/core/presentation/screens/transferencias/transferencia.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-//Inicializo mi variable global de notificaciones
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
@@ -43,7 +39,18 @@ Future<void> _showNotification() async {
 }
 
 class Tranferencia2 extends StatefulWidget {
-  const Tranferencia2({Key? key}) : super(key: key);
+  final String id;
+  final String idUser;
+  final String nickname;
+  final String account;
+
+  const Tranferencia2({
+    Key? key,
+    required this.id,
+    required this.idUser,
+    required this.nickname,
+    required this.account,
+  }) : super(key: key);
 
   @override
   _Tranferencia2State createState() => _Tranferencia2State();
@@ -82,17 +89,15 @@ class _Tranferencia2State extends State<Tranferencia2> {
                             height: 40,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Color.fromARGB(255, 44, 44, 44), // Color del círculo más claro
+                              color: Color.fromARGB(255, 44, 44, 44),
                             ),
                           ),
                           Positioned(
-                            left:
-                                7, // Ajusta la posición de la flecha según sea necesario
-                            top:
-                                9, // Ajusta la posición de la flecha según sea necesario
+                            left: 7,
+                            top: 9,
                             child: Icon(
                               Icons.arrow_back_ios_new_rounded,
-                              color: Color.fromARGB(255, 255, 255, 255), // Color de la flecha
+                              color: Color.fromARGB(255, 255, 255, 255),
                             ),
                           ),
                         ],
@@ -104,19 +109,19 @@ class _Tranferencia2State extends State<Tranferencia2> {
             ),
             SizedBox(height: 10),
             Image.asset(
-              "assets/images/martin.png",
+              "assets/images/users.png",
               width: 60,
               height: 60,
             ),
             Text(
-              "...7865",
+              widget.account, // Use widget.account here
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
               ),
             ),
             Text(
-              "Adrian 🕹️",
+              widget.nickname, // Use widget.nickname here
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
@@ -130,9 +135,8 @@ class _Tranferencia2State extends State<Tranferencia2> {
                   children: [
                     Row(
                       children: [
-                        SizedBox(width: 90,),
+                        SizedBox(width: 90),
                         Container(
-                          
                           width: 30,
                           alignment: Alignment.centerRight,
                           child: Text(
@@ -151,7 +155,7 @@ class _Tranferencia2State extends State<Tranferencia2> {
                   child: Column(
                     children: [
                       Container(
-                        width: 120, // Ancho deseado del TextField
+                        width: 120,
                         child: TextField(
                           keyboardType: TextInputType.number,
                           style: TextStyle(
@@ -161,14 +165,12 @@ class _Tranferencia2State extends State<Tranferencia2> {
                           autofocus: true,
                         ),
                       ),
-                      
                     ],
                   ),
                 ),
-                SizedBox(width: 120,),
+                SizedBox(width: 120),
               ],
             ),
-
             SizedBox(height: 20),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -178,9 +180,7 @@ class _Tranferencia2State extends State<Tranferencia2> {
                   height: 60,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    // Color de fondo de la imagen
                   ),
-                  // Imagen a la derecha
                   child: Image.asset(
                     "assets/images/visa.png",
                     width: 40,
@@ -192,7 +192,6 @@ class _Tranferencia2State extends State<Tranferencia2> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Texto en el medio
                       Text(
                         "VISA ..6755",
                         style: TextStyle(
@@ -201,8 +200,7 @@ class _Tranferencia2State extends State<Tranferencia2> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 5), // Espacio entre el texto y la fecha
-                      // Fecha a la izquierda
+                      SizedBox(height: 5),
                       Row(
                         children: [
                           SizedBox(width: 5),
@@ -222,7 +220,82 @@ class _Tranferencia2State extends State<Tranferencia2> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => _showNotification(),
+              onPressed: () {    showModalBottomSheet(
+                  backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
+                  context: context,
+                  builder: (context) {
+                    return Container(
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      child: Column(
+                        children: [
+                          ListTile(
+                            title: Text('TRANSFERENCIA',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            onTap: () {},
+                          ),
+                          ListTile(
+                            title: Text(
+                                '¿ Esta seguro que deseas transferir esta cantidad de la cuenta: ',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            onTap: () {},
+                          ),
+                          ListTile(
+                            title: Text('VISA **** 7312 ?',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            onTap: () {},
+                          ),
+                            ListTile(
+                            title: Text('A la cuenta de ${widget.account}',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            onTap: () {},
+                          ),
+                          ElevatedButton(
+                            onPressed: () => _showNotification(),
+                            style: ButtonStyle(
+                              elevation: MaterialStateProperty.all(0),
+                              overlayColor:
+                                  MaterialStateProperty.all(Colors.transparent),
+                              backgroundColor: MaterialStateProperty.all(
+                                  const Color.fromRGBO(242, 254, 141, 1)),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                            ),
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 12, horizontal: 0),
+                              child: const Text(
+                                "Aceptar",
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );},
               style: ButtonStyle(
                 elevation: MaterialStateProperty.all(0),
                 overlayColor: MaterialStateProperty.all(Colors.transparent),
@@ -246,13 +319,10 @@ class _Tranferencia2State extends State<Tranferencia2> {
                 ),
               ),
             ),
-            SizedBox(
-                height:
-                    20), // Espacio entre el botón y el contenedor de botones // Aquí se agrega el contenedor de botones con números
+            SizedBox(height: 20),
           ],
         ),
       ),
     );
   }
 }
-

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bankingapp/config/api_config.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_usuarios/usuariosModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/repositories/usuarios_repository.dart';
 import 'package:dio/dio.dart';
@@ -10,7 +11,7 @@ class RegisterRepositoryImpl implements RegisterRepository {
 
   RegisterRepositoryImpl()
       : _dio = Dio(BaseOptions(
-          baseUrl: 'https://apimoviles-production.up.railway.app/',
+          baseUrl: ApiConfig.Url,
           connectTimeout: const Duration(seconds: 50),
           receiveTimeout: const Duration(seconds: 20),
         ));

@@ -1,17 +1,18 @@
-import 'package:bankingapp/core/presentation/bloc/home_blocs/home_bloc.dart';
-import 'package:bankingapp/core/presentation/bloc/home_blocs/home_event.dart';
-import 'package:bankingapp/core/presentation/bloc/home_blocs/home_state.dart';
-import 'package:bankingapp/core/presentation/bloc/transferencia/transferencia_bloc.dart';
-import 'package:bankingapp/core/presentation/bloc/transferencia/transferencia_event.dart';
-import 'package:bankingapp/core/presentation/bloc/transferencia/transferencia_state.dart';
-import 'package:bankingapp/core/presentation/screens/widgets/appbar.dart';
-import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_home_data.dart';
-import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_transferencia_data.dart';
-import 'package:bankingapp/core/presentation/screens/data/repositories/home_repository_impl.dart';
-import 'package:bankingapp/core/presentation/screens/data/repositories/transferencia_repository_impl.dart';
-import 'package:bankingapp/core/presentation/screens/transferencias/transferencia2.dart';
+import 'package:bankingapp/core/presentation/bloc/Contacts/contact_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/Contacts/contact_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/home_blocs/home_bloc.dart';
+import 'package:bankingapp/core/presentation/screens/transferencias/transferencia2.dart';
+import 'package:bankingapp/core/presentation/screens/widgets/appbar.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_contacts/contactsModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_contact_data.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_home_data.dart';
+import 'package:bankingapp/core/presentation/screens/data/repositories/contacts_repository_impl.dart';
+import 'package:bankingapp/core/presentation/screens/data/repositories/home_repository_impl.dart';
+import 'package:bankingapp/core/presentation/bloc/Contacts/contact_state.dart';
+import 'package:bankingapp/core/presentation/bloc/home_blocs/home_event.dart';
+import 'package:bankingapp/core/presentation/bloc/home_blocs/home_state.dart';
 
 class Transferencia extends StatefulWidget {
   const Transferencia({Key? key}) : super(key: key);
@@ -27,230 +28,286 @@ class _TransferenciaState extends State<Transferencia> {
       providers: [
         BlocProvider(
           create: (context) =>
-              TransferenciaBloc(LoadTransferenciaData(TransferenciaRepositoryImpl()))
-                ..add(LoadTransferenciaDataEvent()),
+              ContactsBloc(LoadContactsData(ContactRepositoryImpl()))
+                ..add(LoadContactsDataEvent()),
         ),
         BlocProvider(
-          create: (context) =>
-              HomeBloc(LoadHomeData(HomeRepositoryImpl()))
-                ..add(LoadHomeDataEvent()),
+          create: (context) => HomeBloc(LoadHomeData(HomeRepositoryImpl()))
+            ..add(LoadHomeDataEvent()),
         ),
       ],
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
         appBar: CustomAppBar(),
-        body: BlocBuilder<TransferenciaBloc, TransferenciaState>(
-          builder: (context, state) => SingleChildScrollView(
+        body: BlocBuilder<ContactsBloc, ContactsState>(
+          builder: (context, contactsState) => SingleChildScrollView(
             child: Center(
               child: Container(
                 padding: const EdgeInsets.all(0.0),
-                child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state2) => Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Transferencias',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Text(
-                      "Balance",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
+                child: BlocBuilder<HomeBloc, HomeState>(
+                  builder: (context, homeState) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Transferencias',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
                       ),
-                    ),
-                    Text(
-                      state2.balance_general.toString(),
-                      style: TextStyle(
+                      SizedBox(height: 30),
+                      Text(
+                        "Balance",
+                        style: TextStyle(
                           color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 20),
-                    Container(
-                      width: 360,
-                      height: 110,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Color.fromARGB(255, 204, 239, 255),
-                            Color.fromARGB(255, 162, 234, 229)
-                          ],
-                          stops: [0.0, 1.0],
-                          tileMode: TileMode.clamp,
+                          fontSize: 14,
                         ),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Transferir a",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
+                      Text(
+                        homeState.balance_general.toString(),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 20),
+                      TransferenciaWidget(
+                        contacts: contactsState.contacts,
+                        balance: homeState.balance_general.toString(),
+                      ),
+                      SizedBox(height: 40),
+                      ContactsWidget(
+                        contacts: contactsState.contacts,
+                        onContactTap: (contact) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Tranferencia2(
+                                id: contact.id.toString(),
+                                idUser: contact.id_user.toString(),
+                                nickname: contact.nickname,
+                                account: contact.account,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 10),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Row(
-                                  children: List.generate(
-                                      state.transferencias.take(3).length, (index) {
-                                    final tranferencia =
-                                        state.transferencias[index];
-                                    return GestureDetector(
-                                      onTap: () {
-                                        Navigator.pushNamed(context, "/transferencia2");
-                                      },
-                                      child: Column(
-                                        children: [
-                                          Image.asset(
-                                            tranferencia.contacto_pic,
-                                            width: 40,
-                                            height: 40,
-                                          ),
-                                          Text(
-                                            tranferencia.nombre_contacto,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      
-                                    );
-                                    
-                                  }),
-                                  
-                                ),
-                                SizedBox(height: 10),
-                                Column(
-                                  children: [
-                                    Image.asset(
-                                      'assets/images/plus.png',
-                                      width: 40,
-                                      height: 40,
-                                    ),
-                                    Text(
-                                      "Agregar",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ]),
-                        ],
+                          );
+                        },
                       ),
-                    ),
-                    SizedBox(height: 40),
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 37, 39, 39),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                        ),
-                      ),
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          Text(
-                            "Contactos",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Column(
-                            children: List.generate(state.transferencias.length,
-                                (index) {
-                              final tranferencia = state.transferencias[index];
-                              return Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(height: 60),
-                                  Container(
-                                    width: 40,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      // Color de fondo de la imagen
-                                    ),
-                                    // Imagen a la derecha
-                                    child: Image.asset(
-                                      tranferencia.contacto_pic,
-                                      width: 30,
-                                      height: 30,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                      width:
-                                          10), // Espacio entre la imagen y el texto
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        // Texto en el medio
-                                        Text(
-                                          tranferencia.nombre_contacto,
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                            height:
-                                                5), // Espacio entre el texto y la fecha
-                                        // Fecha a la izquierda
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.verified,
-                                              color: Colors.green,
-                                              size: 16,
-                                            ),
-                                            SizedBox(width: 5),
-                                            Text(
-                                              tranferencia.ultima_conexion,
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.grey,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              );
-                            }),
-                          ) // Espacio entre las filas
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class TransferenciaWidget extends StatelessWidget {
+  final List<ContactsModel> contacts;
+  final String balance;
+
+  const TransferenciaWidget({
+    Key? key,
+    required this.contacts,
+    required this.balance,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 360,
+      height: 110,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color.fromARGB(255, 204, 239, 255),
+            Color.fromARGB(255, 162, 234, 229)
+          ],
+          stops: [0.0, 1.0],
+          tileMode: TileMode.clamp,
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "Transferir a",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 16,
+            ),
+          ),
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: List.generate(contacts.take(3).length, (index) {
+                    final contact = contacts[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Tranferencia2(
+                              id: contact.id.toString(),
+                              idUser: contact.id_user.toString(),
+                              nickname: contact.nickname,
+                              account: contact.account,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/images/users.png',
+                            width: 40,
+                            height: 40,
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            contact.nickname,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+                ),
+              ),
+              SizedBox(
+                  width: 10),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/plus.png',
+                    width: 40,
+                    height: 40,
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    "Agregar",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(width: 30),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ContactsWidget extends StatelessWidget {
+  final List<ContactsModel> contacts;
+  final void Function(ContactsModel) onContactTap;
+
+  const ContactsWidget({
+    Key? key,
+    required this.contacts,
+    required this.onContactTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Color.fromARGB(255, 37, 39, 39),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      padding: EdgeInsets.all(10),
+      child: Column(
+        children: [
+          Text(
+            "Contactos",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+            ),
+          ),
+          SizedBox(height: 20),
+          Column(
+            children: List.generate(contacts.length, (index) {
+              final contact = contacts[index];
+              return GestureDetector(
+                onTap: () => onContactTap(contact),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 60),
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Image.asset(
+                        'assets/images/users.png',
+                        width: 30,
+                        height: 30,
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            contact.nickname,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.verified,
+                                color: Colors.green,
+                                size: 16,
+                              ),
+                              SizedBox(width: 5),
+                              Text(
+                                contact.account,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
+          ),
+        ],
       ),
     );
   }

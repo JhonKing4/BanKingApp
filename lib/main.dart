@@ -46,7 +46,6 @@ class MyApp extends StatelessWidget {
         '/beneficios': (context) => const BeneficiosPage(),
         '/mistarjetas': (context) => const MisTarjetas(),
         '/transferencia': (context) => const Transferencia(),
-        '/transferencia2': (context) => const Tranferencia2(),
         '/servicios': (context) => const ServiciosPage(),
         '/retiro': (context) => const RetiroPage(),
         '/registro': (context) =>  RegisterPage(),

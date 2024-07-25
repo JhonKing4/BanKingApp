@@ -14,7 +14,9 @@ AccountModel _$AccountModelFromJson(Map<String, dynamic> json) => AccountModel(
       card: (json['card'] as List<dynamic>)
           .map((e) => CardModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      user: UsuariosModel.fromJson(json['user'] as Map<String, dynamic>),
+      user: json['user'] == null
+          ? null
+          : UsuariosModel.fromJson(json['user'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$AccountModelToJson(AccountModel instance) =>

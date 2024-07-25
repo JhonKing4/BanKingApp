@@ -171,7 +171,12 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
       case 1:
         return {
           '/transferencia': (context) => Transferencia(),
-          '/transferencia2': (context) => Tranferencia2(),
+          '/transferencia2': (context) => Tranferencia2(
+      id: ModalRoute.of(context)!.settings.arguments as String,
+      idUser: ModalRoute.of(context)!.settings.arguments as String,
+      nickname: ModalRoute.of(context)!.settings.arguments as String,
+      account: ModalRoute.of(context)!.settings.arguments as String,
+    ),
         };
       case 2:
         return {
