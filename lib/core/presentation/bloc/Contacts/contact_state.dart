@@ -33,3 +33,28 @@ class ContactsState extends Equatable {
   @override
   List<Object?> get props => [contacts, errorMessage, isValid];
 }
+
+//REGISTRO DE CONTACTO
+
+
+abstract class RegisterContactState extends Equatable {
+  const RegisterContactState();
+
+  @override
+  List<Object> get props => [];
+}
+
+class RegisterInitial extends RegisterContactState {}
+
+class RegisterLoading extends RegisterContactState {}
+
+class RegisterSuccess extends RegisterContactState {}
+
+class RegisterError extends RegisterContactState {
+  final String message;
+
+  const RegisterError(this.message);
+
+  @override
+  List<Object> get props => [message];
+}

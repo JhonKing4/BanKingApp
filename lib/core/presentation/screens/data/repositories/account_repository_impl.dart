@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bankingapp/config/api_config.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_accounts/accountModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_contacts/contactsModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/repositories/account_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +16,27 @@ class AccountRepositoryImpl implements AccountRepository {
           connectTimeout: const Duration(seconds: 50),
           receiveTimeout: const Duration(seconds: 20),
         ));
+
+
+
+ @override
+  Future<void> submitContact(ContactsModel contact) async {
+    try {
+      print(contact.toJson());
+      await _dio.post('accounts/me', data: contact.toJson());
+    } on DioError catch (e) {
+      if (e.response != null) {
+        print('Error de servidor: ${e.response?.statusCode} - ${e.response?.data}');
+      } else {
+        print('Error de conexion: $e');
+      }
+      throw Exception('Error al hacer el registro');
+    } catch (e) {
+      print('Error inesperado: $e');
+      throw Exception('Error al hacer el registro');
+    }
+  }
+
 
 
  @override

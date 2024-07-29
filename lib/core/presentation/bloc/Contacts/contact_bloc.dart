@@ -22,3 +22,21 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
     // Aquí puedes agregar más eventos y sus manejadores si es necesario
   }
 }
+
+
+
+class RegisterContactBloc extends Bloc<RegisterContactEvent, RegisterContactState> {
+  final usecase.SubmitRegisterContact submitContact;
+
+  RegisterContactBloc(this.submitContact) : super(RegisterInitial()) {
+    on<SubmitRegisterContactEvent>((event, emit) async {
+      emit(RegisterLoading());
+      try {
+        await submitContact(event.register);
+        emit(RegisterSuccess());
+      } catch (e) {
+        emit(RegisterError('Error al enviar el formualrio'));
+      }
+    });
+  }
+}

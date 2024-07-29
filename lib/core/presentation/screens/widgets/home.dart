@@ -1,6 +1,7 @@
 import 'package:bankingapp/core/presentation/screens/configuracion.dart';
 import 'package:bankingapp/core/presentation/screens/auth/perfil.dart';
 import 'package:bankingapp/core/presentation/screens/retiro.dart';
+import 'package:bankingapp/core/presentation/screens/transferencias/agregar_contacto.dart';
 import 'package:bankingapp/core/presentation/screens/transferencias/transferencia2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -170,6 +171,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
         };
       case 1:
         return {
+          '/register_contact': (context) => RegisterContactPage(),
           '/transferencia': (context) => Transferencia(),
           '/transferencia2': (context) => Tranferencia2(
       id: ModalRoute.of(context)!.settings.arguments as String,

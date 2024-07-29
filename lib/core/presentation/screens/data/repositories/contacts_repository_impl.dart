@@ -18,8 +18,19 @@ class ContactRepositoryImpl implements ContactRepository {
   @override
   Future<void> submitContact(ContactsModel contact) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('authToken');
+
+      if (token == null) {
+        throw Exception('Token no encontrado');
+      }
+
       print(contact.toJson());
-      await _dio.post('contacts', data: contact.toJson());
+      await _dio.post('contacts', data: contact.toJson(), options: Options(
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      ) );
     } on DioError catch (e) {
       if (e.response != null) {
         print('Error de servidor: ${e.response?.statusCode} - ${e.response?.data}');

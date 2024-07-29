@@ -186,25 +186,29 @@ class TransferenciaWidget extends StatelessWidget {
                   }),
                 ),
               ),
-              SizedBox(
-                  width: 10),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/images/plus.png',
-                    width: 40,
-                    height: 40,
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    "Agregar",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
+              SizedBox(width: 10),
+              GestureDetector(
+                onTap: () {
+                   Navigator.pushNamed(context, "/register_contact");
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/plus.png',
+                      width: 40,
+                      height: 40,
                     ),
-                  ),
-                ],
+                    SizedBox(height: 4),
+                    Text(
+                      "Agregar",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(width: 30),
             ],

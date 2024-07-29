@@ -25,3 +25,17 @@ class LoadContactsData {
     }
   }
 }
+
+
+
+class SubmitRegisterContact {
+  final ContactRepository repository;
+
+  SubmitRegisterContact(this.repository);
+
+  Future<void> call(ContactsModel register) async {
+    await repository.submitContact(register);
+  }
+
+  
+}
