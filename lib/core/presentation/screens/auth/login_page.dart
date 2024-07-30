@@ -1,6 +1,7 @@
 import 'package:bankingapp/core/presentation/bloc/login/login_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/login/login_event.dart';
 import 'package:bankingapp/core/presentation/bloc/login/login_state.dart';
+import 'package:bankingapp/core/presentation/screens/casa.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/usuarios_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushReplacement<void, void>(
         context,
         MaterialPageRoute<void>(
-          builder: (BuildContext context) => HomeView(),
+          builder: (BuildContext context) => CasaView(),
         ),
       );
     } else {
@@ -53,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
           return Center(child: CircularProgressIndicator());
         } else if (state is UserSuccess) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.pushReplacementNamed(context, "/home");
+            Navigator.pushReplacementNamed(context, "/casa");
           });
           return Container(); // Retorna un contenedor vacío mientras se navega
         } else if (state is UserFailure) {

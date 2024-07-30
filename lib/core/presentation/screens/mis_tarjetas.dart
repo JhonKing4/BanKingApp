@@ -13,13 +13,20 @@ class MisTarjetas extends StatefulWidget {
 }
 
 class _MisTarjetasState extends State<MisTarjetas> {
-  int _currentIndex = 0;
+  int _currentIndex = 2;
+
+  void _onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-      appBar: CustomAppBar(),
+       appBar: CustomAppBar(),
+        drawer: CustomDrawer(),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -38,6 +45,7 @@ class _MisTarjetasState extends State<MisTarjetas> {
                   },
                 ),
                 items: [
+                  // Tarjeta 1
                   Container(
                     padding: EdgeInsets.all(20.0),
                     margin: EdgeInsets.all(5.0),
@@ -91,6 +99,7 @@ class _MisTarjetasState extends State<MisTarjetas> {
                       ],
                     ),
                   ),
+                  // Tarjeta 2
                   Container(
                     padding: EdgeInsets.all(20.0),
                     margin: EdgeInsets.all(5.0),
@@ -144,6 +153,7 @@ class _MisTarjetasState extends State<MisTarjetas> {
                       ],
                     ),
                   ),
+                  // Tarjeta 3
                   Container(
                     padding: EdgeInsets.all(20.0),
                     margin: EdgeInsets.all(5.0),
@@ -151,10 +161,8 @@ class _MisTarjetasState extends State<MisTarjetas> {
                       borderRadius: BorderRadius.circular(30.0),
                       gradient: LinearGradient(
                         colors: [
-                          Color.fromARGB(
-                              255, 205, 205, 205), // Color naranja más claro
-                          Color.fromARGB(
-                              255, 118, 118, 119), // Color naranja más oscuro
+                          Color.fromARGB(255, 205, 205, 205),
+                          Color.fromARGB(255, 118, 118, 119),
                         ],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
@@ -212,7 +220,7 @@ class _MisTarjetasState extends State<MisTarjetas> {
                   Icon(Icons.money, color: Color.fromARGB(255, 255, 255, 255)),
                   SizedBox(height: 5),
                   Text('RETIRAR EFECTIVO',
-                      style: TextStyle(fontSize: 10, color: Colors.white))
+                      style: TextStyle(fontSize: 10, color: Colors.white)),
                 ],
               ),
               style: ElevatedButton.styleFrom(
@@ -237,7 +245,7 @@ class _MisTarjetasState extends State<MisTarjetas> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            'ULTIMOS MOVIMIENTOS',
+                            'ÚLTIMOS MOVIMIENTOS',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -280,7 +288,7 @@ class _MisTarjetasState extends State<MisTarjetas> {
                     ),
                     _buildMovimientoItem2(
                       iconPath: 'assets/images/transferencia.png',
-                      titulo: 'Farmacias del ahorro',
+                      titulo: 'Farmacias del Ahorro',
                       hora: '10:30 am',
                       monto: '- \$745.00',
                     ),
@@ -290,7 +298,7 @@ class _MisTarjetasState extends State<MisTarjetas> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            'Ultima semana',
+                            'Última semana',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -310,7 +318,7 @@ class _MisTarjetasState extends State<MisTarjetas> {
                     ),
                     _buildMovimientoItem(
                       iconPath: 'assets/images/uptransferencia.png',
-                      titulo: 'Mercado libre',
+                      titulo: 'Mercado Libre',
                       hora: '16:12 pm',
                       monto: '+ \$150.00',
                     ),
@@ -321,8 +329,14 @@ class _MisTarjetasState extends State<MisTarjetas> {
           ],
         ),
       ),
+      bottomNavigationBar: CustomBottomNavBar(
+        currentIndex: _currentIndex,
+        onTap: _onTabTapped,
+      ),
     );
   }
+
+
 
   Widget _buildMovimientoItem({
     required String iconPath,

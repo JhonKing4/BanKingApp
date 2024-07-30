@@ -18,8 +18,6 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
         ));
       }
     });
-
-    // Aquí puedes agregar más eventos y sus manejadores si es necesario
   }
 }
 

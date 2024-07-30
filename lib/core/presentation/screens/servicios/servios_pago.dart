@@ -8,6 +8,7 @@ import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo
 import 'package:bankingapp/core/presentation/screens/data/domain/repositories/pagoServicio_repository.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_pagoservicio_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/pagoServicio_repository_impl.dart';
+import 'package:bankingapp/core/presentation/screens/widgets/home.dart';
 import 'package:bankingapp/core/presentation/screens/widgets/valuenotifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -91,8 +92,11 @@ class _ServicioModalState extends State<ServicioModal> {
             },
           ),
         ),
+        
       ),
+      
     );
+    
   }
 
 Widget buildForm(BuildContext context) {

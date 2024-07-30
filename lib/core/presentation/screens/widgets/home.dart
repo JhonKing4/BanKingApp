@@ -1,25 +1,16 @@
-import 'package:bankingapp/core/presentation/screens/configuracion.dart';
-import 'package:bankingapp/core/presentation/screens/auth/perfil.dart';
-import 'package:bankingapp/core/presentation/screens/retiro.dart';
-import 'package:bankingapp/core/presentation/screens/transferencias/agregar_contacto.dart';
-import 'package:bankingapp/core/presentation/screens/transferencias/transferencia2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:bankingapp/core/presentation/screens/servicios/beneficios.dart';
-import 'package:bankingapp/core/presentation/screens/casa.dart';
-import 'package:bankingapp/core/presentation/screens/mis_tarjetas.dart';
-import 'package:bankingapp/core/presentation/screens/tarjetas.dart';
-import 'package:bankingapp/core/presentation/screens/transferencias/transferencia.dart';
-import 'package:bankingapp/core/presentation/screens/servicios/servicios.dart';
-import 'package:bankingapp/core/presentation/screens/widgets/valuenotifier.dart';
 
-class HomeView extends StatefulWidget {
+class CustomBottomNavBar extends StatefulWidget {
+  final int currentIndex;
+  final Function(int) onTap;
+
+  CustomBottomNavBar({required this.currentIndex, required this.onTap});
+
   @override
-  _HomeViewState createState() => _HomeViewState();
+  _CustomBottomNavBarState createState() => _CustomBottomNavBarState();
 }
 
-class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
-  int _currentIndex = 0;
+class _CustomBottomNavBarState extends State<CustomBottomNavBar> with TickerProviderStateMixin {
   late List<AnimationController> _controllers;
   late List<Animation<double>> _animations;
 
@@ -43,160 +34,15 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
             ))
         .toList();
 
-    _controllers[_currentIndex].forward();
-  }
-
-  void _onTap(int index) {
-    setState(() {
-      _controllers[_currentIndex].reverse();
-      _currentIndex = index;
-      _controllers[_currentIndex].forward();
-    });
+    _controllers[widget.currentIndex].forward();
   }
 
   @override
-  Widget build(BuildContext context) {
-    return CupertinoTabScaffold(
-      tabBar: CupertinoTabBar(
-        backgroundColor: const Color.fromRGBO(30, 33, 33, 0.8), // Fondo semi-transparente
-        border: Border.all(style: BorderStyle.none), // Eliminar bordes
-        items: [
-          BottomNavigationBarItem(
-            icon: AnimatedBuilder(
-              animation: _animations[0],
-              builder: (context, child) {
-                return Transform.scale(
-                  scale: _animations[0].value,
-                  child: child,
-                );
-              },
-              child: Icon(Icons.home_outlined),
-            ),
-            label: "",
-          ),
-          BottomNavigationBarItem(
-            icon: AnimatedBuilder(
-              animation: _animations[1],
-              builder: (context, child) {
-                return Transform.scale(
-                  scale: _animations[1].value,
-                  child: child,
-                );
-              },
-              child: Icon(Icons.arrow_circle_up_outlined),
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: AnimatedBuilder(
-              animation: _animations[2],
-              builder: (context, child) {
-                return Transform.scale(
-                  scale: _animations[2].value,
-                  child: child,
-                );
-              },
-              child: Icon(Icons.handshake_outlined),
-            ),
-            label: "",
-          ),
-          BottomNavigationBarItem(
-            icon: AnimatedBuilder(
-              animation: _animations[3],
-              builder: (context, child) {
-                return Transform.scale(
-                  scale: _animations[3].value,
-                  child: child,
-                );
-              },
-              child: Icon(Icons.credit_card_outlined),
-            ),
-            label: "",
-          ),
-          BottomNavigationBarItem(
-            icon: AnimatedBuilder(
-              animation: _animations[4],
-              builder: (context, child) {
-                return Transform.scale(
-                  scale: _animations[4].value,
-                  child: child,
-                );
-              },
-              child: Icon(Icons.shopping_bag_outlined),
-            ),
-            label: "",
-          ),
-        ],
-        activeColor: Color.fromARGB(255, 255, 222, 37),
-        inactiveColor: Color.fromARGB(255, 255, 255, 255),
-        onTap: _onTap,
-      ),
-      tabBuilder: (BuildContext context, int index) {
-        return CupertinoTabView(
-          builder: (BuildContext context) {
-            return _getPageForIndex(index);
-          },
-          routes: _getRoutes(index),
-        );
-      },
-    );
-  }
-
-  Widget _getPageForIndex(int index) {
-    switch (index) {
-      case 0:
-        return CasaView();
-      case 1:
-        return Transferencia();
-      case 2:
-        return MisTarjetas();
-      case 3:
-        return TarjetasList();
-      case 4:
-        return ServiciosPage();
-      default:
-        return Transferencia();
-    }
-  }
-
-  Map<String, WidgetBuilder> _getRoutes(int index) {
-    switch (index) {
-      case 0:
-        return {
-          '/casa': (context) => CasaView(),
-          '/transferencia': (context) => Transferencia(),
-          '/mistarjetas': (context) => MisTarjetas(),
-          '/perfil': (context) => ProfilePage(),
-          '/config': (context) => Configuracion(),
-        };
-      case 1:
-        return {
-          '/register_contact': (context) => RegisterContactPage(),
-          '/transferencia': (context) => Transferencia(),
-          '/transferencia2': (context) => Tranferencia2(
-      id: ModalRoute.of(context)!.settings.arguments as String,
-      idUser: ModalRoute.of(context)!.settings.arguments as String,
-      nickname: ModalRoute.of(context)!.settings.arguments as String,
-      account: ModalRoute.of(context)!.settings.arguments as String,
-    ),
-        };
-      case 2:
-        return {
-          '/mistarjetas': (context) => MisTarjetas(),
-          '/retiro': (context) => RetiroPage(),
-        };
-      case 3:
-        return {
-          '/beneficios': (context) => BeneficiosPage(),
-        };
-      case 4:
-        return {
-          '/beneficios': (context) => BeneficiosPage(),
-        };
-      default:
-        return {
-          '/beneficios': (context) => BeneficiosPage(),
-        };
+  void didUpdateWidget(CustomBottomNavBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.currentIndex != widget.currentIndex) {
+      _controllers[oldWidget.currentIndex].reverse();
+      _controllers[widget.currentIndex].forward();
     }
   }
 
@@ -206,5 +52,62 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
       controller.dispose();
     }
     super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      data: Theme.of(context).copyWith(
+        canvasColor: const Color.fromRGBO(30, 33, 33, 0.8),
+      ),
+      child: BottomNavigationBar(
+        currentIndex: widget.currentIndex,
+        items: [
+          _buildBottomNavigationBarItem(Icons.home_outlined, 0),
+          _buildBottomNavigationBarItem(Icons.arrow_circle_up_outlined, 1),
+          _buildBottomNavigationBarItem(Icons.handshake_outlined, 2),
+          _buildBottomNavigationBarItem(Icons.credit_card_outlined, 3),
+          _buildBottomNavigationBarItem(Icons.shopping_bag_outlined, 4),
+        ],
+        onTap: (index) {
+          widget.onTap(index);
+          switch (index) {
+            case 0:
+              Navigator.pushNamed(context, '/casa');
+              break;
+            case 1:
+              Navigator.pushNamed(context, '/transferencia');
+              break;
+            case 2:
+              Navigator.pushNamed(context, '/mistarjetas');
+              break;
+            case 3:
+              Navigator.pushNamed(context, '/tarjetas');
+              break;
+            case 4:
+              Navigator.pushNamed(context, '/servicios');
+              break;
+          }
+        },
+      ),
+    );
+  }
+
+  BottomNavigationBarItem _buildBottomNavigationBarItem(IconData icon, int index) {
+    return BottomNavigationBarItem(
+      icon: AnimatedBuilder(
+        animation: _animations[index],
+        builder: (context, child) {
+          return Transform.scale(
+            scale: _animations[index].value,
+            child: Icon(
+              icon,
+              color: widget.currentIndex == index ? Colors.amber : Colors.white,
+            ),
+          );
+        },
+      ),
+      label: '',
+    );
   }
 }

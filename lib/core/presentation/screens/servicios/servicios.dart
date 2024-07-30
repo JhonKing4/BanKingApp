@@ -10,6 +10,7 @@ import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_h
 import 'package:bankingapp/core/presentation/screens/data/repositories/account_repository_impl.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/home_repository_impl.dart';
 import 'package:bankingapp/core/presentation/screens/servicios/servios_pago.dart';
+import 'package:bankingapp/core/presentation/screens/widgets/home.dart';
 import 'package:flutter/material.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_servicios/servicioModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_servicio_data.dart';
@@ -45,6 +46,7 @@ class ServiciosPage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
         appBar: CustomAppBar(),
+        drawer: CustomDrawer(),
         body: BlocBuilder<ServicioBloc, ServicioState>(
           builder: (context, servicioState) {
             if (servicioState.servicios.isNotEmpty) {
@@ -129,6 +131,12 @@ class ServiciosPage extends StatelessWidget {
             }
           },
         ),
+         bottomNavigationBar: CustomBottomNavBar(
+              currentIndex: 4, // Ajusta el índice actual según sea necesario
+              onTap: (index) {
+                // Maneja la navegación aquí
+              },
+            ),
       ),
     );
   }

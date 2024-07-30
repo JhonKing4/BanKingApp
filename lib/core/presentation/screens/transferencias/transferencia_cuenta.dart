@@ -1,42 +1,46 @@
-import 'package:bankingapp/core/presentation/bloc/Contacts/contact_bloc.dart';
-import 'package:bankingapp/core/presentation/bloc/Contacts/contact_event.dart';
 import 'package:bankingapp/core/presentation/bloc/Contacts/contact_state.dart';
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_contacts/contactsModel.dart';
-import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_contact_data.dart';
-import 'package:bankingapp/core/presentation/screens/data/repositories/contacts_repository_impl.dart';
+import 'package:bankingapp/core/presentation/bloc/transferencia_contacto/transferencia_account_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/transferencia_contacto/transferencia_account_event.dart';
+import 'package:bankingapp/core/presentation/bloc/transferencia_contacto/transferencia_account_state.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_transferencias/transferencia_accountModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_transferencia_account_data.dart';
+import 'package:bankingapp/core/presentation/screens/data/repositories/transferencia_account_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RegisterContactPage extends StatefulWidget {
+class Transferencia_cuenta extends StatefulWidget {
   @override
-  _RegisterContactPageState createState() => _RegisterContactPageState();
+  _Transferencia_cuentaPageState createState() =>
+      _Transferencia_cuentaPageState();
 }
 
-class _RegisterContactPageState extends State<RegisterContactPage> {
-  final TextEditingController nicknameController = TextEditingController();
-  final TextEditingController accountController = TextEditingController();
+class _Transferencia_cuentaPageState extends State<Transferencia_cuenta> {
+  final TextEditingController Receptor_accountController =
+      TextEditingController();
+  final TextEditingController amountController = TextEditingController();
 
-  bool isnicknameValid = true;
-  bool isaccountValid = true;
+  bool isReceptor_accountValid = true;
+  bool isamountValid = true;
 
   @override
   Widget build(BuildContext context) {
-    final userRepository = ContactRepositoryImpl();
-    final submitUser = SubmitRegisterContact(userRepository);
+    final userRepository = TransferenciaAccountRepositoryImpl();
+    final submitUser = SubmitRegisterTransfer(userRepository);
     return Scaffold(
       backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
       body: Center(
         child: BlocProvider(
-          create: (context) => RegisterContactBloc(submitUser),
-          child: BlocListener<RegisterContactBloc, RegisterContactState>(
+          create: (context) => TransferenciaAmountBloc(submitUser),
+          child:
+              BlocListener<TransferenciaAmountBloc, TransferenciaAmountState>(
             listener: (context, state) {
-              if (state is RegisterSuccess) {
+              if (state is TrasferenciaSuccess) {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
                       title: Text("Éxito"),
-                      content: Text("El contacto se agrego exitosamente"),
+                      content: Text("La transferencia se concreto con exito"),
                       actions: [
                         TextButton(
                           onPressed: () {
@@ -48,7 +52,7 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
                     );
                   },
                 );
-              } else if (state is RegisterError) {
+              } else if (state is TrasferenciaError) {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -68,7 +72,8 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
                 );
               }
             },
-            child: BlocBuilder<RegisterContactBloc, RegisterContactState>(
+            child:
+                BlocBuilder<TransferenciaAmountBloc, TransferenciaAmountState>(
               builder: (context, state) {
                 if (state is RegisterInitial) {
                   return buildForm(context);
@@ -128,7 +133,7 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
               ],
             ),
             Text(
-              "Registrar un contacto",
+              "Hacer una transferencia a una cuenta",
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.white,
@@ -136,40 +141,31 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
               ),
             ),
             const SizedBox(height: 80),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/users.png',
-                  width: 120,
-                  height: 120,
-                ),
-                SizedBox(height: 4),
-              ],
-            ),
             const SizedBox(height: 20),
-            buildTextField(context, "Nombre de usuario", nicknameController,
-                false, isnicknameValid),
+            buildTextField(context, "Cuenta del receptor",
+                Receptor_accountController, false, isReceptor_accountValid),
             const SizedBox(height: 20),
             buildTextField(
-                context, "Cuenta", accountController, false, isaccountValid),
+                context, "Cantidad", amountController, false, isamountValid),
             const SizedBox(height: 20),
             SizedBox(height: 60),
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  isnicknameValid = nicknameController.text.isNotEmpty;
-                  isaccountValid = accountController.text.isNotEmpty &&
-                      accountController.text.length > 8;
+                  isReceptor_accountValid =
+                      Receptor_accountController.text.isNotEmpty;
+                  isamountValid = amountController.text.isNotEmpty &&
+                      double.tryParse(amountController.text)! > 0;
                 });
 
-                if (isnicknameValid && isaccountValid) {
-                  final contact = ContactsModel(
-                    nickname: nicknameController.text,
-                    account: accountController.text,
+                if (isReceptor_accountValid && isamountValid) {
+                  final contact = transferencia_accountModel(
+                    user_account: '0117330545185950',
+                    receptor_account: Receptor_accountController.text,
+                    amount: double.tryParse(amountController.text),
                   );
-                  BlocProvider.of<RegisterContactBloc>(context)
-                      .add(SubmitRegisterContactEvent(contact));
+                  BlocProvider.of<TransferenciaAmountBloc>(context)
+                      .add(SubmitRegisterTransferEvent(contact));
                 }
               },
               style: ButtonStyle(

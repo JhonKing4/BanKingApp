@@ -24,15 +24,28 @@ import 'package:bankingapp/core/presentation/screens/data/repositories/home_repo
 import 'package:bankingapp/core/presentation/screens/data/repositories/tarjetas_repository_impl.dart';
 import 'package:bankingapp/core/presentation/screens/servicios/servicios.dart';
 import 'package:bankingapp/core/presentation/screens/transferencias/transferencia.dart';
+import 'package:bankingapp/core/presentation/screens/widgets/home.dart';
 import 'package:bankingapp/core/presentation/screens/widgets/valuenotifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CasaView extends StatelessWidget {
+class CasaView extends StatefulWidget {
   const CasaView({Key? key}) : super(key: key);
 
   @override
+  _CasaViewState createState() => _CasaViewState();
+}
+class _CasaViewState extends State<CasaView> {
+  int _currentIndex = 0;
+
+  void _onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+  @override
   Widget build(BuildContext context) {
+    
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -195,6 +208,7 @@ class CasaView extends StatelessWidget {
                             print("Transferencias button pressed " +
                                 tabIndexNotifier.value.toString());
                             tabIndexNotifier.value = 1;
+                             Navigator.pushNamed(context, "/transferencia");
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -241,7 +255,10 @@ class CasaView extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: ElevatedButton(
                           onPressed: () {
+                             print("Transferencias button pressed " +
+                                tabIndexNotifier.value.toString());
                             tabIndexNotifier.value = 2;
+                             Navigator.pushNamed(context, "/retiro");
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -287,7 +304,12 @@ class CasaView extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                             print("Transferencias button pressed " +
+                                tabIndexNotifier.value.toString());
+                            tabIndexNotifier.value = 3;
+                             Navigator.pushNamed(context, "/mistarjetas");
+                          },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -332,7 +354,12 @@ class CasaView extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                             print("Transferencias button pressed " +
+                                tabIndexNotifier.value.toString());
+                            tabIndexNotifier.value = 4;
+                            Navigator.pushNamed(context, "/tarjetas");
+                          },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -503,9 +530,16 @@ class CasaView extends StatelessWidget {
                     );
                   }
                 },
-              )
+              ),
+         
             ],
           ),
+        ),
+            bottomNavigationBar: CustomBottomNavBar(
+          currentIndex: _currentIndex,// Ajusta el índice actual según sea necesario
+          onTap: (index) {
+            // Maneja la navegación aquí
+          },
         ),
       ),
     );

@@ -5,11 +5,26 @@ import 'package:bankingapp/core/presentation/bloc/Account/account_state.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_account_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/account_repository_impl.dart';
 import 'package:bankingapp/core/presentation/screens/widgets/appbar.dart';
+import 'package:bankingapp/core/presentation/screens/widgets/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TarjetasList extends StatelessWidget {
+class TarjetasList extends StatefulWidget {
    const TarjetasList({Key? key}) : super(key: key);
+  @override
+  _TarjetasViewState createState() => _TarjetasViewState();
+}
+
+
+class _TarjetasViewState extends State<TarjetasList> {
+  int _currentIndex = 3;
+
+  void _onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +34,8 @@ class TarjetasList extends StatelessWidget {
             ..add(LoadAccountDataEvent()),
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-        appBar: CustomAppBar(),
+         appBar: CustomAppBar(),
+        drawer: CustomDrawer(),
         body: BlocBuilder<AccountBloc, AccountState>(
           builder: (context, state) {
             // Verificar si state.tarjetas es null o vacío
@@ -58,7 +74,7 @@ class TarjetasList extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Image.asset(
-                                   "assets/images/visapng.png",
+                                  "assets/images/visapng.png",
                                   width: 60,
                                   height: 60,
                                 ),
@@ -100,7 +116,14 @@ class TarjetasList extends StatelessWidget {
             );
           },
         ),
+        bottomNavigationBar: CustomBottomNavBar(
+          currentIndex: _currentIndex,// Ajusta el índice actual según sea necesario
+          onTap: (index) {
+            // Maneja la navegación aquí
+          },
+        ),
       ),
     );
   }
 }
+

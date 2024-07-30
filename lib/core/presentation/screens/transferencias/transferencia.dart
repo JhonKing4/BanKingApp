@@ -1,4 +1,5 @@
 import 'package:bankingapp/core/presentation/bloc/Contacts/contact_event.dart';
+import 'package:bankingapp/core/presentation/screens/widgets/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/Contacts/contact_bloc.dart';
@@ -22,6 +23,14 @@ class Transferencia extends StatefulWidget {
 }
 
 class _TransferenciaState extends State<Transferencia> {
+  int _currentIndex = 1;
+
+  void _onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -38,7 +47,8 @@ class _TransferenciaState extends State<Transferencia> {
       ],
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-        appBar: CustomAppBar(),
+         appBar: CustomAppBar(),
+        drawer: CustomDrawer(),
         body: BlocBuilder<ContactsBloc, ContactsState>(
           builder: (context, contactsState) => SingleChildScrollView(
             child: Center(
@@ -47,7 +57,7 @@ class _TransferenciaState extends State<Transferencia> {
                 child: BlocBuilder<HomeBloc, HomeState>(
                   builder: (context, homeState) => Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const Text(
                         'Transferencias',
@@ -74,7 +84,28 @@ class _TransferenciaState extends State<Transferencia> {
                         contacts: contactsState.contacts,
                         balance: homeState.balance_general.toString(),
                       ),
-                      SizedBox(height: 40),
+                      SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/transferencia_cuenta");
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Icons.account_balance_wallet, color: Color.fromARGB(255, 255, 255, 255)),
+                            SizedBox(height: 5),
+                            Text('TRANSFERIR A UNA CUENTA',
+                                style: TextStyle(fontSize: 10, color: Colors.white))
+                          ],
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
                       ContactsWidget(
                         contacts: contactsState.contacts,
                         onContactTap: (contact) {
@@ -97,6 +128,10 @@ class _TransferenciaState extends State<Transferencia> {
               ),
             ),
           ),
+        ),
+        bottomNavigationBar: CustomBottomNavBar(
+          currentIndex: _currentIndex,
+          onTap: _onTabTapped,
         ),
       ),
     );
@@ -213,6 +248,7 @@ class TransferenciaWidget extends StatelessWidget {
               SizedBox(width: 30),
             ],
           ),
+          
         ],
       ),
     );

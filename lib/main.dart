@@ -1,6 +1,10 @@
+import 'package:bankingapp/core/presentation/screens/configuracion.dart';
 import 'package:bankingapp/core/presentation/screens/servicios/beneficios.dart';
 import 'package:bankingapp/core/presentation/screens/casa.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/usuarios_repository_impl.dart';
+import 'package:bankingapp/core/presentation/screens/tarjetas.dart';
+import 'package:bankingapp/core/presentation/screens/transferencias/agregar_contacto.dart';
+import 'package:bankingapp/core/presentation/screens/transferencias/transferencia_cuenta.dart';
 import 'package:bankingapp/core/presentation/screens/widgets/home.dart';
 import 'package:bankingapp/core/presentation/screens/mis_tarjetas.dart';
 import 'package:bankingapp/core/presentation/screens/auth/perfil.dart';
@@ -41,15 +45,18 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => const MyHomePage(title: 'Banking-page'), 
-        '/home': (context) => HomeView(),
         '/casa': (context) => const CasaView(),
         '/beneficios': (context) => const BeneficiosPage(),
+        '/transferencia_cuenta': (context) => Transferencia_cuenta(),
         '/mistarjetas': (context) => const MisTarjetas(),
         '/transferencia': (context) => const Transferencia(),
         '/servicios': (context) => const ServiciosPage(),
+        '/tarjetas': (context) => const TarjetasList(),
         '/retiro': (context) => const RetiroPage(),
+        '/config': (context) => Configuracion(),
         '/registro': (context) =>  RegisterPage(),
-        '/perfil': (context) => ProfilePage()
+        '/perfil': (context) => ProfilePage(),
+        '/register_contact': (context) => RegisterContactPage()
         },
       ),
     );
