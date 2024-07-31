@@ -7,6 +7,9 @@ class ContactsModel{
   int? id;
   int? id_user;
   String nickname;
+  String email;
+  String phone;
+  String bankname;
   String account;
 
 
@@ -14,6 +17,9 @@ class ContactsModel{
   ContactsModel({
    this.id,
    this.id_user,
+   required this.email,
+   required this.phone,
+   required this.bankname,
    required this.nickname,
    required this.account,
   });

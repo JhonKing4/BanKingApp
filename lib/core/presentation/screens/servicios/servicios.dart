@@ -198,7 +198,7 @@ class ServicioButton extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
                       image: DecorationImage(
-                        image: AssetImage('assets/images/vertical.png'),
+                        image: AssetImage(servicio.icono),
                       ),
                     ),
                   ),

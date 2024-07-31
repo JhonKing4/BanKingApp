@@ -14,9 +14,15 @@ class RegisterContactPage extends StatefulWidget {
 
 class _RegisterContactPageState extends State<RegisterContactPage> {
   final TextEditingController nicknameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
   final TextEditingController accountController = TextEditingController();
+  final TextEditingController bankController = TextEditingController();
 
   bool isnicknameValid = true;
+  bool isEmailValid = true;
+  bool isPhoneValid = true;
+  bool isbankValid = true;
   bool isaccountValid = true;
 
   @override
@@ -135,14 +141,14 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 80),
+            const SizedBox(height: 20),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
                   'assets/images/users.png',
-                  width: 120,
-                  height: 120,
+                  width: 70,
+                  height: 70,
                 ),
                 SizedBox(height: 4),
               ],
@@ -151,14 +157,26 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
             buildTextField(context, "Nombre de usuario", nicknameController,
                 false, isnicknameValid),
             const SizedBox(height: 20),
+             buildTextField(context, "Email", emailController,
+                false, isEmailValid),
+            const SizedBox(height: 20),
+             buildTextField(context, "Telefono", phoneController,
+                false, isPhoneValid),
+            const SizedBox(height: 20),
+             buildTextField(context, "Nombre del banco", bankController,
+                false, isbankValid),
+            const SizedBox(height: 20),
             buildTextField(
                 context, "Cuenta", accountController, false, isaccountValid),
             const SizedBox(height: 20),
-            SizedBox(height: 60),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 setState(() {
                   isnicknameValid = nicknameController.text.isNotEmpty;
+                  isbankValid = bankController.text.isNotEmpty;
+                  isEmailValid = emailController.text.isNotEmpty;
+                  isPhoneValid = phoneController.text.isNotEmpty;
                   isaccountValid = accountController.text.isNotEmpty &&
                       accountController.text.length > 8;
                 });
@@ -166,6 +184,9 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
                 if (isnicknameValid && isaccountValid) {
                   final contact = ContactsModel(
                     nickname: nicknameController.text,
+                    email: emailController.text,
+                    phone: phoneController.text,
+                    bankname: bankController.text,
                     account: accountController.text,
                   );
                   BlocProvider.of<RegisterContactBloc>(context)

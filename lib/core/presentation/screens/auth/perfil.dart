@@ -2,11 +2,9 @@ import 'package:bankingapp/core/presentation/bloc/perfil/perfilUpdate_bloc.dart'
 import 'package:bankingapp/core/presentation/bloc/perfil/perfilUpdate_event.dart';
 import 'package:bankingapp/core/presentation/bloc/perfil/perfilUpdate_state.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_usuarios/usuariosModel.dart';
-import 'package:bankingapp/core/presentation/screens/data/domain/repositories/usuarios_repository.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_perfil_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:bankingapp/core/presentation/bloc/perfil/perfil_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/perfil/perfil_event.dart';

@@ -7,11 +7,13 @@ part 'servicioModel.g.dart';
 @JsonSerializable()
 class servicioModel {
   int?  id;
+  String icono;
   String name;
   bool status;
 
   servicioModel({
     this.id,
+    required this.icono,
     required this.name,
     required this.status,
   });
