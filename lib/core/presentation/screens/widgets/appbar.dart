@@ -1,6 +1,8 @@
 import 'package:bankingapp/core/presentation/bloc/home_blocs/home_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/home_blocs/home_event.dart';
 import 'package:bankingapp/core/presentation/bloc/home_blocs/home_state.dart';
+import 'package:bankingapp/core/presentation/bloc/login/login_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/login/login_event.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_home_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/home_repository_impl.dart';
 import 'package:flutter/material.dart';
@@ -93,7 +95,7 @@ class CustomDrawer extends StatelessWidget {
             _buildListTile(context, Icons.info, 'Acerca de', '/about'),
             _buildListTile(context, Icons.feedback, 'Enviar comentarios', '/feedback'),
             Divider(color: Colors.white.withOpacity(0.5)),
-            _buildListTile(context, Icons.exit_to_app, 'Cerrar sesión', '/'),
+            _buildListTile(context, Icons.exit_to_app, 'Cerrar sesión', '/login'),
             SizedBox(height: 20),
             _buildFooter(context),
           ],
@@ -113,7 +115,7 @@ class CustomDrawer extends StatelessWidget {
       ),
       child: Center(
         child: ClipOval(
-          child: BlocBuilder<HomeBloc, HomeState>( // Reemplaza con tu BLoC y estado adecuado
+          child: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
               return Image.asset(
                 state.usuario_pic,
@@ -128,22 +130,27 @@ class CustomDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildListTile(BuildContext context, IconData icon, String title, String route) {
-    return ListTile(
-      leading: Icon(
-        icon,
-        color: Colors.white,
-      ),
-      title: Text(
-        title,
-        style: TextStyle(color: Colors.white),
-      ),
-      onTap: () {
+Widget _buildListTile(BuildContext context, IconData icon, String title, String route) {
+  return ListTile(
+    leading: Icon(
+      icon,
+      color: Colors.white,
+    ),
+    title: Text(
+      title,
+      style: TextStyle(color: Colors.white),
+    ),
+    onTap: () {
+      if (title == 'Cerrar sesión') {
+        BlocProvider.of<UserBloc>(context).add(LogoutButtonPressed());
+         Navigator.pushNamedAndRemoveUntil(context, '/login', (Route<dynamic> route) => false); 
+      } else {
         Navigator.pushReplacementNamed(context, route);
-      },
-      // Agrega animaciones si es necesario
-    );
-  }
+      }
+    },
+  );
+}
+
 
   Widget _buildFooter(BuildContext context) {
     return Column(
@@ -167,3 +174,4 @@ class CustomDrawer extends StatelessWidget {
     );
   }
 }
+

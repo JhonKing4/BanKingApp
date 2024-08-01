@@ -6,7 +6,7 @@ class SubmitRegisterTransfer {
 
   SubmitRegisterTransfer(this.repository);
 
-  Future<void> call(transferencia_accountModel account) async {
+  Future<void> call(Transferencia_accountModel account) async {
     await repository.submitTransferencia(account);
   }
 

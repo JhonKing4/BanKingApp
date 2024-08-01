@@ -94,7 +94,7 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
 
   Widget buildForm(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(60.0),
+      padding: const EdgeInsets.all(40.0),
       child: SingleChildScrollView(
         child: Column(
           children: [

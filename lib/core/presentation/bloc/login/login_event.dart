@@ -17,3 +17,5 @@ class LoginButtonPressed extends UserEvent {
   @override
   List<Object> get props => [phone, password];
 }
+
+class LogoutButtonPressed extends UserEvent {}

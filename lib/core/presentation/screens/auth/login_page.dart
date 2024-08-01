@@ -75,6 +75,11 @@ class _LoginPageState extends State<LoginPage> {
               ),
             );
           });
+        } else if (state is UserLoggedOut) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+             Navigator.pushNamedAndRemoveUntil(context, '/login', (Route<dynamic> route) => false);
+          });
+          return Container(); // Retorna un contenedor vacío mientras se navega
         }
 
         return Column(
@@ -88,21 +93,17 @@ class _LoginPageState extends State<LoginPage> {
               decoration: InputDecoration(
                 hintText: "Phone number",
                 hintStyle: TextStyle(
-                  color: const Color.fromARGB(255, 207, 203, 203)
-                      .withOpacity(0.7),
+                  color: const Color.fromARGB(255, 207, 203, 203).withOpacity(0.7),
                 ),
                 filled: true,
                 fillColor: const Color.fromRGBO(30, 33, 33, 1),
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                      color: Color.fromRGBO(255, 223, 0, 1), width: 2.0),
+                  borderSide: const BorderSide(color: Color.fromRGBO(255, 223, 0, 1), width: 2.0),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                      color: Color.fromRGBO(255, 223, 0, 1), width: 2.0),
+                  borderSide: const BorderSide(color: Color.fromRGBO(255, 223, 0, 1), width: 2.0),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
@@ -114,21 +115,17 @@ class _LoginPageState extends State<LoginPage> {
               decoration: InputDecoration(
                 hintText: "Password",
                 hintStyle: TextStyle(
-                  color: const Color.fromARGB(255, 207, 203, 203)
-                      .withOpacity(0.7),
+                  color: const Color.fromARGB(255, 207, 203, 203).withOpacity(0.7),
                 ),
                 filled: true,
                 fillColor: const Color.fromRGBO(30, 33, 33, 1),
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                      color: Color.fromRGBO(255, 223, 0, 1), width: 2.0),
+                  borderSide: const BorderSide(color: Color.fromRGBO(255, 223, 0, 1), width: 2.0),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                      color: Color.fromRGBO(255, 223, 0, 1), width: 2.0),
+                  borderSide: const BorderSide(color: Color.fromRGBO(255, 223, 0, 1), width: 2.0),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
@@ -140,14 +137,11 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 Checkbox(
                   value: _isChecked,
-                  onChanged: (newValue) =>
-                      setState(() => _isChecked = newValue!),
+                  onChanged: (newValue) => setState(() => _isChecked = newValue!),
                   checkColor: const Color.fromRGBO(255, 223, 0, 1),
-                  fillColor: MaterialStateProperty.all(
-                      const Color.fromRGBO(30, 33, 33, 1)),
+                  fillColor: MaterialStateProperty.all(const Color.fromRGBO(30, 33, 33, 1)),
                   shape: RoundedRectangleBorder(
-                    side: const BorderSide(
-                        color: Color.fromRGBO(255, 223, 0, 1), width: 2.0),
+                    side: const BorderSide(color: Color.fromRGBO(255, 223, 0, 1), width: 2.0),
                     borderRadius: BorderRadius.circular(4.0),
                   ),
                 ),
@@ -159,8 +153,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             ElevatedButton(
               onPressed: () {
-                print(
-                    'Phone: ${_phoneController.text}, Password: ${_passwordController.text}');
+                print('Phone: ${_phoneController.text}, Password: ${_passwordController.text}');
                 BlocProvider.of<UserBloc>(context).add(LoginButtonPressed(
                   _phoneController.text,
                   _passwordController.text,
@@ -169,8 +162,7 @@ class _LoginPageState extends State<LoginPage> {
               style: ButtonStyle(
                 elevation: MaterialStateProperty.all(0),
                 overlayColor: MaterialStateProperty.all(Colors.transparent),
-                backgroundColor: MaterialStateProperty.all(
-                    const Color.fromRGBO(242, 254, 141, 1)),
+                backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(242, 254, 141, 1)),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -182,9 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
                 child: const Text(
                   "Login",
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 0, 0, 0),
-                  ),
+                  style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                 ),
               ),
             ),
@@ -195,8 +185,7 @@ class _LoginPageState extends State<LoginPage> {
               style: ButtonStyle(
                 elevation: MaterialStateProperty.all(0),
                 overlayColor: MaterialStateProperty.all(Colors.transparent),
-                backgroundColor: MaterialStateProperty.all(
-                    const Color.fromARGB(0, 37, 37, 37)),
+                backgroundColor: MaterialStateProperty.all(const Color.fromARGB(0, 37, 37, 37)),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -208,9 +197,7 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 0),
                 child: const Text(
                   "Register",
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                  ),
+                  style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
                 ),
               ),
             ),
@@ -228,3 +215,4 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+

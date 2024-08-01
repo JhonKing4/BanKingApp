@@ -30,9 +30,12 @@ class ContactsState extends Equatable {
     );
   }
 
+
   @override
   List<Object?> get props => [contacts, errorMessage, isValid];
 }
+
+
 
 //REGISTRO DE CONTACTO
 
@@ -43,6 +46,9 @@ abstract class RegisterContactState extends Equatable {
   @override
   List<Object> get props => [];
 }
+class ContactosLoading extends RegisterContactState {}
+
+class ContactosLoaded extends RegisterContactState {}
 
 class RegisterInitial extends RegisterContactState {}
 

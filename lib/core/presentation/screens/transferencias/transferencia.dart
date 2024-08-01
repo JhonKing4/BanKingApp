@@ -1,4 +1,10 @@
+import 'package:bankingapp/core/presentation/bloc/Account/account_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/Account/account_event.dart';
+import 'package:bankingapp/core/presentation/bloc/Account/account_state.dart';
 import 'package:bankingapp/core/presentation/bloc/Contacts/contact_event.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_account_data.dart';
+import 'package:bankingapp/core/presentation/screens/data/repositories/account_repository_impl.dart';
+import 'package:bankingapp/core/presentation/screens/transferencias/transferencia_cuenta.dart';
 import 'package:bankingapp/core/presentation/screens/widgets/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,7 +46,12 @@ class _TransferenciaState extends State<Transferencia> {
               ContactsBloc(LoadContactsData(ContactRepositoryImpl()))
                 ..add(LoadContactsDataEvent()),
         ),
-        BlocProvider(
+      BlocProvider(
+          create: (context) =>
+              AccountBloc(LoadAccountData(AccountRepositoryImpl()))
+                ..add(LoadAccountDataEvent()),
+        ),
+          BlocProvider(
           create: (context) => HomeBloc(LoadHomeData(HomeRepositoryImpl()))
             ..add(LoadHomeDataEvent()),
         ),
@@ -54,8 +65,8 @@ class _TransferenciaState extends State<Transferencia> {
             child: Center(
               child: Container(
                 padding: const EdgeInsets.all(0.0),
-                child: BlocBuilder<HomeBloc, HomeState>(
-                  builder: (context, homeState) => Column(
+                child: BlocBuilder<AccountBloc, AccountState>(
+                      builder: (context, Accountstate) => Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -73,21 +84,30 @@ class _TransferenciaState extends State<Transferencia> {
                         ),
                       ),
                       Text(
-                        homeState.balance_general.toString(),
+                      '\$ ${Accountstate.balance.toStringAsFixed(2)}',
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
+                            fontSize: 20,
+                            fontWeight: FontWeight.normal),
                       ),
                       SizedBox(height: 20),
                       TransferenciaWidget(
                         contacts: contactsState.contacts,
-                        balance: homeState.balance_general.toString(),
+                        balance: Accountstate.balance.toString(),
                       ),
                       SizedBox(height: 10),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, "/transferencia_cuenta");
+                          Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Transferencia_cuenta(
+                              user_account: Accountstate.card[0].card.toString(),
+                              balance: Accountstate.balance,
+                              ),
+
+                          ),
+                        );
                         },
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -117,6 +137,7 @@ class _TransferenciaState extends State<Transferencia> {
                                 idUser: contact.id_user.toString(),
                                 nickname: contact.nickname,
                                 account: contact.account,
+                                balance: Accountstate.balance.toString(),
                               ),
                             ),
                           );
@@ -195,6 +216,7 @@ class TransferenciaWidget extends StatelessWidget {
                               idUser: contact.id_user.toString(),
                               nickname: contact.nickname,
                               account: contact.account,
+                              balance: balance,
                             ),
                           ),
                         );

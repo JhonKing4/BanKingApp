@@ -51,3 +51,8 @@ class AccountState extends Equatable {
   @override
   List<Object?> get props => [id, id_user, balance, status, card, user];
 }
+
+
+class AccountLoading extends AccountState {}
+
+class AccountLoaded extends AccountState {}

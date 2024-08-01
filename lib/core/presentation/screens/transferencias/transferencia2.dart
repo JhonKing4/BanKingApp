@@ -43,6 +43,7 @@ class Tranferencia2 extends StatefulWidget {
   final String idUser;
   final String nickname;
   final String account;
+  final String balance;
 
   const Tranferencia2({
     Key? key,
@@ -50,6 +51,7 @@ class Tranferencia2 extends StatefulWidget {
     required this.idUser,
     required this.nickname,
     required this.account,
+    required this.balance,
   }) : super(key: key);
 
   @override
@@ -205,7 +207,7 @@ class _Tranferencia2State extends State<Tranferencia2> {
                         children: [
                           SizedBox(width: 5),
                           Text(
-                            "S 7,896.00",
+                            widget.balance,
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey,

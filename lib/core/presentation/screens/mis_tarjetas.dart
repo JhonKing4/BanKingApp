@@ -13,7 +13,7 @@ class MisTarjetas extends StatefulWidget {
 }
 
 class _MisTarjetasState extends State<MisTarjetas> {
-  int _currentIndex = 2;
+  int _currentIndex = 0;
 
   void _onTabTapped(int index) {
     setState(() {
@@ -330,7 +330,7 @@ class _MisTarjetasState extends State<MisTarjetas> {
         ),
       ),
       bottomNavigationBar: CustomBottomNavBar(
-        currentIndex: _currentIndex,
+        currentIndex: 2,
         onTap: _onTabTapped,
       ),
     );

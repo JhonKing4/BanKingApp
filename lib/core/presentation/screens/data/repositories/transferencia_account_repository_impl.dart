@@ -7,10 +7,11 @@ import 'package:bankingapp/core/presentation/screens/data/domain/repositories/tr
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class TransferenciaAccountRepositoryImpl implements TransferenciaAccountRepository {
+class TransferenciaAccountRepositoryImpl
+    implements TransferenciaAccountRepository {
   final Dio _dio;
 
- TransferenciaAccountRepositoryImpl()
+  TransferenciaAccountRepositoryImpl()
       : _dio = Dio(BaseOptions(
           baseUrl: ApiConfig.Url,
           connectTimeout: const Duration(seconds: 50),
@@ -18,7 +19,7 @@ class TransferenciaAccountRepositoryImpl implements TransferenciaAccountReposito
         ));
 
   @override
-  Future<void> submitTransferencia(transferencia_accountModel account) async {
+  Future<void> submitTransferencia(Transferencia_accountModel account) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('authToken');
@@ -27,23 +28,32 @@ class TransferenciaAccountRepositoryImpl implements TransferenciaAccountReposito
         throw Exception('Token no encontrado');
       }
 
-      print(account.toJson());
-      await _dio.post('transferences', data: account.toJson(), options: Options(
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
-      ) );
+      await _dio.post(
+        'transferences',
+        data: account.toJson(),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
     } on DioError catch (e) {
-      if (e.response != null) {
-        print('Error de servidor: ${e.response?.statusCode} - ${e.response?.data}');
+      String errorMessage = 'Error al hacer la transferencia';
+
+      if (e.response != null && e.response?.data != null) {
+        errorMessage = e.response!.data['message'] ?? errorMessage;
+        if (errorMessage == 'No account associated to receptor') {
+          errorMessage = 'La cuenta del asociado no existe';
+        }
       } else {
         print('Error de conexión: $e');
       }
-      throw Exception('Error al hacer el registro');
+
+      print('Error de servidor: ${e.response?.statusCode} - $errorMessage');
+      throw Exception(errorMessage);
     } catch (e) {
       print('Error inesperado: $e');
-      throw Exception('Error al hacer el registro');
+      throw Exception('Error al hacer la transferencia');
     }
   }
-
 }

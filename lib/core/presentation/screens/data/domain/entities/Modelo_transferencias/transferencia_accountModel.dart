@@ -3,14 +3,14 @@ import 'package:json_annotation/json_annotation.dart';
 part 'transferencia_contactoModel.g.dart';
 
 @JsonSerializable()
-class transferencia_accountModel{
+class Transferencia_accountModel{
   String user_account;
   String receptor_account;
   double? amount;
 
 
 
-  transferencia_accountModel({
+  Transferencia_accountModel({
 
    required this.user_account,
    required this.receptor_account,
@@ -19,8 +19,8 @@ class transferencia_accountModel{
 
 
 
-factory transferencia_accountModel.fromJson(Map<String, dynamic> json) => _$transferencia_accountModelFromJson(json);
+factory Transferencia_accountModel.fromJson(Map<String, dynamic> json) => _$Transferencia_accountModelFromJson(json);
 
-Map<String, dynamic> toJson() => _$transferencia_accountModelToJson(this);
+Map<String, dynamic> toJson() => _$Transferencia_accountModelToJson(this);
 
 }

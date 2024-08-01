@@ -38,7 +38,7 @@ class AmountChanged extends TransferenciaAmountEvent {
 }
 
 class SubmitRegisterTransferEvent extends TransferenciaAmountEvent  {
-  final transferencia_accountModel register;
+  final Transferencia_accountModel register;
 
   const SubmitRegisterTransferEvent (this.register);
 
