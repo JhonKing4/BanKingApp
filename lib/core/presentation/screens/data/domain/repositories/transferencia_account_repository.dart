@@ -2,6 +2,7 @@ import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo
 
 abstract class TransferenciaAccountRepository {
   Future<void> submitTransferencia(Transferencia_accountModel account);
+  Future<List<Transferencia_accountModel>> loadmovimientosData();
 }
 
 

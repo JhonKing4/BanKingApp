@@ -264,7 +264,7 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: buildTextField(
                     context,
-                    "Cuenta del receptor",
+                    "Cuenta del receptor (16)caracteres",
                     Receptor_accountController,
                     false,
                     isReceptor_accountValid,
@@ -290,7 +290,7 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
                         final contact = Transferencia_accountModel(
                           user_account: widget.user_account,
                           receptor_account: Receptor_accountController.text,
-                          amount: double.tryParse(amountController.text),
+                          amount: int.tryParse(amountController.text),
                         );
                         BlocProvider.of<TransferenciaAmountBloc>(context)
                             .add(SubmitRegisterTransferEvent(contact));

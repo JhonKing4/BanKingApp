@@ -26,6 +26,7 @@ import 'package:bankingapp/core/presentation/screens/servicios/servicios.dart';
 import 'package:bankingapp/core/presentation/screens/transferencias/transferencia.dart';
 import 'package:bankingapp/core/presentation/screens/widgets/home.dart';
 import 'package:bankingapp/core/presentation/screens/widgets/valuenotifier.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,6 +36,7 @@ class CasaView extends StatefulWidget {
   @override
   _CasaViewState createState() => _CasaViewState();
 }
+
 class _CasaViewState extends State<CasaView> {
   int _currentIndex = 0;
 
@@ -43,9 +45,9 @@ class _CasaViewState extends State<CasaView> {
       _currentIndex = index;
     });
   }
+
   @override
   Widget build(BuildContext context) {
-    
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -208,7 +210,7 @@ class _CasaViewState extends State<CasaView> {
                             print("Transferencias button pressed " +
                                 tabIndexNotifier.value.toString());
                             tabIndexNotifier.value = 1;
-                             Navigator.pushNamed(context, "/transferencia");
+                            Navigator.pushNamed(context, "/transferencia");
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -255,10 +257,10 @@ class _CasaViewState extends State<CasaView> {
                         padding: const EdgeInsets.all(8.0),
                         child: ElevatedButton(
                           onPressed: () {
-                             print("Transferencias button pressed " +
+                            print("Transferencias button pressed " +
                                 tabIndexNotifier.value.toString());
                             tabIndexNotifier.value = 2;
-                             Navigator.pushNamed(context, "/retiro");
+                            Navigator.pushNamed(context, "/retiro");
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -305,10 +307,10 @@ class _CasaViewState extends State<CasaView> {
                         padding: const EdgeInsets.all(8.0),
                         child: ElevatedButton(
                           onPressed: () {
-                             print("Transferencias button pressed " +
+                            print("Transferencias button pressed " +
                                 tabIndexNotifier.value.toString());
                             tabIndexNotifier.value = 3;
-                             Navigator.pushNamed(context, "/mistarjetas");
+                            Navigator.pushNamed(context, "/mistarjetas");
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -355,7 +357,7 @@ class _CasaViewState extends State<CasaView> {
                         padding: const EdgeInsets.all(8.0),
                         child: ElevatedButton(
                           onPressed: () {
-                             print("Transferencias button pressed " +
+                            print("Transferencias button pressed " +
                                 tabIndexNotifier.value.toString());
                             tabIndexNotifier.value = 4;
                             Navigator.pushNamed(context, "/tarjetas");
@@ -483,10 +485,16 @@ class _CasaViewState extends State<CasaView> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              Image.asset(
-                                                "assets/images/Logo_Izzi.png",
-                                                height: 20,
+                                              CachedNetworkImage(
+                                                imageUrl:
+                                                    servicio.icono.toString(),
+                                                placeholder: (context, url) =>
+                                                    CircularProgressIndicator(),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        Icon(Icons.error),
                                               ),
+
                                             ],
                                           ),
                                         ),
@@ -531,12 +539,12 @@ class _CasaViewState extends State<CasaView> {
                   }
                 },
               ),
-         
             ],
           ),
         ),
-            bottomNavigationBar: CustomBottomNavBar(
-          currentIndex: _currentIndex,// Ajusta el índice actual según sea necesario
+        bottomNavigationBar: CustomBottomNavBar(
+          currentIndex:
+              _currentIndex, // Ajusta el índice actual según sea necesario
           onTap: (index) {
             // Maneja la navegación aquí
           },

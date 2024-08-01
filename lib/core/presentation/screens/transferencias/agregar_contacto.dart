@@ -25,6 +25,10 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
   bool isbankValid = true;
   bool isaccountValid = true;
 
+  String? emailError;
+  String? phoneError;
+  String? accountError;
+
   @override
   Widget build(BuildContext context) {
     final userRepository = ContactRepositoryImpl();
@@ -157,17 +161,17 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
             buildTextField(context, "Nombre de usuario", nicknameController,
                 false, isnicknameValid),
             const SizedBox(height: 20),
-             buildTextField(context, "Email", emailController,
-                false, isEmailValid),
+            buildTextField(
+                context, "Email", emailController, false, isEmailValid, emailError),
             const SizedBox(height: 20),
-             buildTextField(context, "Telefono", phoneController,
-                false, isPhoneValid),
+            buildTextField(
+                context, "Teléfono", phoneController, false, isPhoneValid, phoneError),
             const SizedBox(height: 20),
-             buildTextField(context, "Nombre del banco", bankController,
+            buildTextField(context, "Nombre del banco", bankController,
                 false, isbankValid),
             const SizedBox(height: 20),
             buildTextField(
-                context, "Cuenta", accountController, false, isaccountValid),
+                context, "Cuenta", accountController, false, isaccountValid, accountError),
             const SizedBox(height: 20),
             SizedBox(height: 20),
             ElevatedButton(
@@ -175,13 +179,15 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
                 setState(() {
                   isnicknameValid = nicknameController.text.isNotEmpty;
                   isbankValid = bankController.text.isNotEmpty;
-                  isEmailValid = emailController.text.isNotEmpty;
-                  isPhoneValid = phoneController.text.isNotEmpty;
-                  isaccountValid = accountController.text.isNotEmpty &&
-                      accountController.text.length > 8;
+                  isEmailValid = emailController.text.isNotEmpty && isValidEmail(emailController.text);
+                  emailError = isEmailValid ? null : 'No es un email válido';
+                  isPhoneValid = phoneController.text.isNotEmpty && phoneController.text.length >= 8;
+                  phoneError = isPhoneValid ? null : 'El teléfono debe tener al menos 8 dígitos';
+                  isaccountValid = accountController.text.isNotEmpty && accountController.text.length >= 16;
+                  accountError = isaccountValid ? null : 'La cuenta debe tener al menos 16 dígitos';
                 });
 
-                if (isnicknameValid && isaccountValid) {
+                if (isnicknameValid && isbankValid && isEmailValid && isPhoneValid && isaccountValid) {
                   final contact = ContactsModel(
                     nickname: nicknameController.text,
                     email: emailController.text,
@@ -224,7 +230,7 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
 
   Widget buildTextField(BuildContext context, String hintText,
       TextEditingController controller, bool obscureText, bool isValid,
-      [TextInputType keyboardType = TextInputType.text]) {
+      [String? errorText, TextInputType keyboardType = TextInputType.text]) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
@@ -245,11 +251,16 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
               color: isValid ? Color.fromRGBO(255, 223, 0, 1) : Colors.red),
           borderRadius: BorderRadius.circular(10.0),
         ),
-        errorText: isValid ? null : 'Este campo es obligatorio',
+        errorText: isValid ? null : errorText,
       ),
       style: const TextStyle(color: Color.fromRGBO(255, 223, 0, 1)),
       obscureText: obscureText,
       keyboardType: keyboardType,
     );
+  }
+
+  bool isValidEmail(String email) {
+    final emailRegExp = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    return emailRegExp.hasMatch(email);
   }
 }

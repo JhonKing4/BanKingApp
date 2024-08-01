@@ -40,6 +40,7 @@ dependencies:
   dio: ^5.0.3
   shared_preferences: ^2.0.15
   animations: ^2.0.0
+  cached_network_image: ^3.0.0
   
 
   # The following adds the Cupertino Icons font to your application.

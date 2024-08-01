@@ -30,6 +30,8 @@ class Transferencia extends StatefulWidget {
 
 class _TransferenciaState extends State<Transferencia> {
   int _currentIndex = 1;
+  late AnimationController _controller;
+  late Animation<double> _animation;
 
   void _onTabTapped(int index) {
     setState(() {
@@ -46,19 +48,19 @@ class _TransferenciaState extends State<Transferencia> {
               ContactsBloc(LoadContactsData(ContactRepositoryImpl()))
                 ..add(LoadContactsDataEvent()),
         ),
-      BlocProvider(
+        BlocProvider(
           create: (context) =>
               AccountBloc(LoadAccountData(AccountRepositoryImpl()))
                 ..add(LoadAccountDataEvent()),
         ),
-          BlocProvider(
+        BlocProvider(
           create: (context) => HomeBloc(LoadHomeData(HomeRepositoryImpl()))
             ..add(LoadHomeDataEvent()),
         ),
       ],
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-         appBar: CustomAppBar(),
+        appBar: CustomAppBar(),
         drawer: CustomDrawer(),
         body: BlocBuilder<ContactsBloc, ContactsState>(
           builder: (context, contactsState) => SingleChildScrollView(
@@ -66,7 +68,7 @@ class _TransferenciaState extends State<Transferencia> {
               child: Container(
                 padding: const EdgeInsets.all(0.0),
                 child: BlocBuilder<AccountBloc, AccountState>(
-                      builder: (context, Accountstate) => Column(
+                  builder: (context, Accountstate) => Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -84,7 +86,7 @@ class _TransferenciaState extends State<Transferencia> {
                         ),
                       ),
                       Text(
-                      '\$ ${Accountstate.balance.toStringAsFixed(2)}',
+                        '\$ ${Accountstate.balance.toStringAsFixed(2)}',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
@@ -99,23 +101,25 @@ class _TransferenciaState extends State<Transferencia> {
                       ElevatedButton(
                         onPressed: () {
                           Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Transferencia_cuenta(
-                              user_account: Accountstate.card[0].card.toString(),
-                              balance: Accountstate.balance,
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Transferencia_cuenta(
+                                user_account:
+                                    Accountstate.card[0].card.toString(),
+                                balance: Accountstate.balance,
                               ),
-
-                          ),
-                        );
+                            ),
+                          );
                         },
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Icon(Icons.account_balance_wallet, color: Color.fromARGB(255, 255, 255, 255)),
+                            Icon(Icons.account_balance_wallet,
+                                color: Color.fromARGB(255, 255, 255, 255)),
                             SizedBox(height: 5),
                             Text('TRANSFERIR A UNA CUENTA',
-                                style: TextStyle(fontSize: 10, color: Colors.white))
+                                style: TextStyle(
+                                    fontSize: 10, color: Colors.white))
                           ],
                         ),
                         style: ElevatedButton.styleFrom(
@@ -246,7 +250,7 @@ class TransferenciaWidget extends StatelessWidget {
               SizedBox(width: 10),
               GestureDetector(
                 onTap: () {
-                   Navigator.pushNamed(context, "/register_contact");
+                  Navigator.pushNamed(context, "/register_contact");
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -270,14 +274,13 @@ class TransferenciaWidget extends StatelessWidget {
               SizedBox(width: 30),
             ],
           ),
-          
         ],
       ),
     );
   }
 }
 
-class ContactsWidget extends StatelessWidget {
+class ContactsWidget extends StatefulWidget {
   final List<ContactsModel> contacts;
   final void Function(ContactsModel) onContactTap;
 
@@ -286,6 +289,30 @@ class ContactsWidget extends StatelessWidget {
     required this.contacts,
     required this.onContactTap,
   }) : super(key: key);
+
+  @override
+  _ContactsWidgetState createState() => _ContactsWidgetState();
+}
+
+class _ContactsWidgetState extends State<ContactsWidget>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 900));
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -309,66 +336,104 @@ class ContactsWidget extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20),
-          Column(
-            children: List.generate(contacts.length, (index) {
-              final contact = contacts[index];
-              return GestureDetector(
-                onTap: () => onContactTap(contact),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 60),
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Image.asset(
-                        'assets/images/users.png',
-                        width: 30,
-                        height: 30,
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+          widget.contacts.length > 0
+              ? Column(
+                  children: List.generate(widget.contacts.length, (index) {
+                    final contact = widget.contacts[index];
+                    return GestureDetector(
+                      onTap: () => widget.onContactTap(contact),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            contact.nickname,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                          
+                          SizedBox(height: 60),
+                          Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Image.asset(
+                              'assets/images/users.png',
+                              width: 30,
+                              height: 30,
                             ),
                           ),
-                          SizedBox(height: 5),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.verified,
-                                color: Colors.green,
-                                size: 16,
-                              ),
-                              SizedBox(width: 5),
-                              Text(
-                                contact.account,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey,
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  contact.nickname,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                            ],
+                                SizedBox(height: 5),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.verified,
+                                      color: Colors.green,
+                                      size: 16,
+                                    ),
+                                    SizedBox(width: 5),
+                                    Text(
+                                      contact.account,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
+                    );
+                  }),
+                )
+              : Column(
+                  children: [
+                    SizedBox(height: 10),
+                    Container(
+                      padding: const EdgeInsets.all(0.0),
+                      child: FadeTransition(
+                        opacity: _animation,
+                        child: Text(
+                          textAlign: TextAlign.center,
+                          'Agrega nuevos contactos',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: const Color.fromARGB(255, 184, 184, 184),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, "/register_contact");
+                      },
+                      child: FadeTransition(
+                        opacity: _animation,
+                        child: Icon(
+                          Icons.add,
+                          color: const Color.fromARGB(255, 184, 184, 184),
+                          size: 50,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 300,
                     ),
                   ],
                 ),
-              );
-            }),
-          ),
         ],
       ),
     );

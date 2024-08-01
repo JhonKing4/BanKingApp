@@ -20,6 +20,7 @@ import 'package:bankingapp/core/presentation/bloc/servicios/servicio_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/servicios/servicio_event.dart';
 import 'package:bankingapp/core/presentation/bloc/servicios/servicio_state.dart';
 import 'package:bankingapp/core/presentation/screens/widgets/appbar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ServiciosPage extends StatelessWidget {
   const ServiciosPage({Key? key}) : super(key: key);
@@ -194,13 +195,10 @@ class ServicioButton extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      image: DecorationImage(
-                        image: AssetImage(servicio.icono),
-                      ),
-                    ),
+                  child: CachedNetworkImage(
+                    imageUrl: servicio.icono.toString(),
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
                 ),
               ),

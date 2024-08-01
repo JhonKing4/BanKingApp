@@ -110,7 +110,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: Text("Error"),
-                    content: Text('Ocurrió un error inesperado: ' + state.message),
+                    content:
+                        Text('Ocurrió un error inesperado: ' + state.message),
                     actions: [
                       TextButton(
                         onPressed: () {
@@ -147,108 +148,127 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: CircleAvatar(
-                radius: 40,
-                backgroundImage: AssetImage("assets/images/esca.jpg"),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Mis datos:',
-              style: TextStyle(
-                color: Color.fromARGB(255, 229, 201, 74),
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 10),
-            buildEditableTextField(
-              context,
-              "Nombre",
-              nameController,
-              isEditing,
-              icon: Icons.person,
-            ),
-            const SizedBox(height: 10),
-            buildEditableTextField(
-              context,
-              "Apellido",
-              lastnameController,
-              isEditing,
-              icon: Icons.person_outline,
-            ),
-            const SizedBox(height: 10),
-            buildEditableTextField(
-              context,
-              "Email",
-              emailController,
-              isEditing,
-              icon: Icons.email,
-              keyboardType: TextInputType.emailAddress,
-            ),
-            const SizedBox(height: 10),
-            buildEditableTextField(
-              context,
-              "RFC",
-              rfcController,
-              isEditing,
-              icon: Icons.badge,
-            ),
-            const SizedBox(height: 10),
-            buildEditableTextField(
-              context,
-              "Teléfono",
-              phoneController,
-              isEditing,
-              icon: Icons.phone,
-              keyboardType: TextInputType.phone,
-            ),
-            const SizedBox(height: 10),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButton(
-                  onPressed: isEditing
-                      ? () {
-                          final user = UsuariosModel(
-                            id: userId,
-                            name: nameController.text,
-                            lastname: lastnameController.text,
-                            email: emailController.text,
-                            rfc: rfcController.text,
-                            phone: phoneController.text,
-                            password: "pass",
-                            id_bank: 1,
-                          );
-                          BlocProvider.of<PerfilUBloc>(context).add(UpdateUserEvent(user));
-                        }
-                      : null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromRGBO(242, 254, 141, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+            userId > 0
+                ? Column(
+                    children: [
+                      Center(
+                        child: CircleAvatar(
+                          radius: 40,
+                          backgroundImage: AssetImage("assets/images/esca.jpg"),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        'Mis datos:',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 229, 201, 74),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      buildEditableTextField(
+                        context,
+                        "Nombre",
+                        nameController,
+                        isEditing,
+                        icon: Icons.person,
+                      ),
+                      const SizedBox(height: 10),
+                      buildEditableTextField(
+                        context,
+                        "Apellido",
+                        lastnameController,
+                        isEditing,
+                        icon: Icons.person_outline,
+                      ),
+                      const SizedBox(height: 10),
+                      buildEditableTextField(
+                        context,
+                        "Email",
+                        emailController,
+                        isEditing,
+                        icon: Icons.email,
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                      const SizedBox(height: 10),
+                      buildEditableTextField(
+                        context,
+                        "RFC",
+                        rfcController,
+                        isEditing,
+                        icon: Icons.badge,
+                      ),
+                      const SizedBox(height: 10),
+                      buildEditableTextField(
+                        context,
+                        "Teléfono",
+                        phoneController,
+                        isEditing,
+                        icon: Icons.phone,
+                        keyboardType: TextInputType.phone,
+                      ),
+                      const SizedBox(height: 10),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton(
+                            onPressed: isEditing
+                                ? () {
+                                    final user = UsuariosModel(
+                                      id: userId,
+                                      name: nameController.text,
+                                      lastname: lastnameController.text,
+                                      email: emailController.text,
+                                      rfc: rfcController.text,
+                                      phone: phoneController.text,
+                                      password: "pass",
+                                      id_bank: 1,
+                                    );
+                                    BlocProvider.of<PerfilUBloc>(context)
+                                        .add(UpdateUserEvent(user));
+                                  }
+                                : null,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromRGBO(242, 254, 141, 1),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                            child: Text(isEditing ? "Guardar" : "Editar"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                isEditing = !isEditing;
+                              });
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromRGBO(254, 154, 141, 1),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                            child: Text(isEditing ? "Cancelar" : "Editar"),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                : SingleChildScrollView(
+                    child: Container(
+                      width: double.infinity,
+                      height: MediaQuery.of(context)
+                          .size
+                          .height, // Ocupa todo el alto disponible
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
                     ),
-                  ),
-                  child: Text(isEditing ? "Guardar" : "Editar"),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      isEditing = !isEditing;
-                    });
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromRGBO(254, 154, 141, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                  child: Text(isEditing ? "Cancelar" : "Editar"),
-                ),
-              ],
-            ),
+                  )
           ],
         ),
       ),
@@ -280,7 +300,8 @@ class _ProfilePageState extends State<ProfilePage> {
               hintStyle: TextStyle(color: Colors.white),
               filled: true,
               fillColor: const Color.fromRGBO(30, 33, 33, 1),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
                   color: isEditing ? Colors.yellow : Colors.transparent,
