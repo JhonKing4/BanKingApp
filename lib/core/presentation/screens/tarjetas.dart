@@ -1,29 +1,45 @@
 
-import 'package:bankingapp/core/presentation/bloc/tarjetas/tarjetas_bloc.dart';
-import 'package:bankingapp/core/presentation/bloc/tarjetas/tarjetas_event.dart';
-import 'package:bankingapp/core/presentation/bloc/tarjetas/tarjetas_state.dart';
-import 'package:bankingapp/core/presentation/screens/appbar.dart';
-import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_tarjetas_data.dart';
-import 'package:bankingapp/core/presentation/screens/data/repositories/tarjetas_repository_impl.dart';
+import 'package:bankingapp/core/presentation/bloc/Account/account_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/Account/account_event.dart';
+import 'package:bankingapp/core/presentation/bloc/Account/account_state.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_account_data.dart';
+import 'package:bankingapp/core/presentation/screens/data/repositories/account_repository_impl.dart';
+import 'package:bankingapp/core/presentation/screens/widgets/appbar.dart';
+import 'package:bankingapp/core/presentation/screens/widgets/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TarjetasList extends StatelessWidget {
+class TarjetasList extends StatefulWidget {
    const TarjetasList({Key? key}) : super(key: key);
+  @override
+  _TarjetasViewState createState() => _TarjetasViewState();
+}
+
+
+class _TarjetasViewState extends State<TarjetasList> {
+  int _currentIndex = 3;
+
+  void _onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          TarjetasBloc(LoadTarjetaData(TarjetaRepositoryImpl()))
-            ..add(LoadTarjetasDataEvent()),
+          AccountBloc(LoadAccountData(AccountRepositoryImpl()))
+            ..add(LoadAccountDataEvent()),
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-        appBar: CustomAppBar(),
-        body: BlocBuilder<TarjetasBloc, TarjetasState>(
+         appBar: CustomAppBar(),
+        drawer: CustomDrawer(),
+        body: BlocBuilder<AccountBloc, AccountState>(
           builder: (context, state) {
             // Verificar si state.tarjetas es null o vacío
-            if (state.tarjetas == null || state.tarjetas.isEmpty) {
+            if (state.card == null || state.card.isEmpty) {
               return Center(
                 child: CircularProgressIndicator(), // Puedes mostrar un indicador de carga o un mensaje de que no hay datos
               );
@@ -33,8 +49,8 @@ class TarjetasList extends StatelessWidget {
               padding: EdgeInsets.all(20.0),
               child: Center(
                 child: Column(
-                  children: List.generate(state.tarjetas.length, (index) {
-                    final tarjeta = state.tarjetas[index];
+                  children: List.generate(state.card.length, (index) {
+                    final tarjeta = state.card[index];
                     return Container(
                       padding: EdgeInsets.all(20.0),
                       margin: EdgeInsets.all(5.0),
@@ -58,7 +74,7 @@ class TarjetasList extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Image.asset(
-                                  tarjeta.tarjeta_pic,
+                                  "assets/images/visapng.png",
                                   width: 60,
                                   height: 60,
                                 ),
@@ -69,7 +85,7 @@ class TarjetasList extends StatelessWidget {
                                 ),
                                 SizedBox(height: 10),
                                 Text(
-                                  tarjeta.numero_tarjeta,
+                                  tarjeta.card,
                                   style: TextStyle(color: Colors.black),
                                 ),
                               ],
@@ -81,7 +97,7 @@ class TarjetasList extends StatelessWidget {
                               children: [
                                 SizedBox(height: 20),
                                 Text(
-                                  '\$${tarjeta.saldo_tarjeta.toStringAsFixed(2)}',
+                                  '\$${state.balance}',
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: const Color.fromARGB(255, 0, 0, 0),
@@ -100,7 +116,14 @@ class TarjetasList extends StatelessWidget {
             );
           },
         ),
+        bottomNavigationBar: CustomBottomNavBar(
+          currentIndex: _currentIndex,// Ajusta el índice actual según sea necesario
+          onTap: (index) {
+            // Maneja la navegación aquí
+          },
+        ),
       ),
     );
   }
 }
+

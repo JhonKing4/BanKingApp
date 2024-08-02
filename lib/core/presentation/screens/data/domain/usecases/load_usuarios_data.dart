@@ -1,4 +1,4 @@
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/usuariosModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_usuarios/usuariosModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/repositories/usuarios_repository.dart';
 
 

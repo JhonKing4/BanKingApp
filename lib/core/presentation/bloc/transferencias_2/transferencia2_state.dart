@@ -1,5 +1,5 @@
 
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/transferencia2Model.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_transferencias/transferencia2Model.dart';
 import 'package:equatable/equatable.dart';
 
 class Transferencia2State extends Equatable {

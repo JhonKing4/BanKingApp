@@ -3,7 +3,7 @@ import 'package:bankingapp/core/presentation/bloc/home_blocs/home_event.dart';
 import 'package:bankingapp/core/presentation/bloc/home_blocs/home_state.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_home_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/home_repository_impl.dart';
-import 'package:bankingapp/core/presentation/screens/login_page.dart';
+import 'package:bankingapp/core/presentation/screens/auth/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

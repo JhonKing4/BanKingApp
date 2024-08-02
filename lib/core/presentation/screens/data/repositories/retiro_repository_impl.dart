@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/retiroModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_retiros/retiroModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/repositories/retiro_repository.dart';
 import 'package:flutter/services.dart';
 

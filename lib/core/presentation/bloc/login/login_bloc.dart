@@ -17,5 +17,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         emit(UserFailure(error: error.toString())); // Emitir UserFailure en caso de error
       }
     });
+      on<LogoutButtonPressed>((event, emit) async {
+      emit(UserLoggedOut());
+    });
   }
 }

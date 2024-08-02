@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/usuariosModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_usuarios/usuariosModel.dart';
 
 abstract class UserEvent extends Equatable {
   const UserEvent();
@@ -17,3 +17,5 @@ class LoginButtonPressed extends UserEvent {
   @override
   List<Object> get props => [phone, password];
 }
+
+class LogoutButtonPressed extends UserEvent {}

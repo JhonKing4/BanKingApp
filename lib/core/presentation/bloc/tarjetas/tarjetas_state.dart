@@ -1,5 +1,5 @@
 
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/tarjetasModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_tarjetas/tarjetasModel.dart';
 import 'package:equatable/equatable.dart';
 
 class TarjetasState extends Equatable {

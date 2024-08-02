@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/usuariosModel.dart';
+import 'package:bankingapp/config/api_config.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_usuarios/usuariosModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/repositories/usuarios_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,7 +11,7 @@ class RegisterRepositoryImpl implements RegisterRepository {
 
   RegisterRepositoryImpl()
       : _dio = Dio(BaseOptions(
-          baseUrl: 'https://apimoviles-production.up.railway.app/',
+          baseUrl: ApiConfig.Url,
           connectTimeout: const Duration(seconds: 50),
           receiveTimeout: const Duration(seconds: 20),
         ));
@@ -70,7 +71,7 @@ Future<UsuariosModel> getUserData() async {
     String? token = prefs.getString('authToken');
 
     if (token == null) {
-      throw Exception('Token not found');
+      throw Exception('Token no encontrado');
     }
 
     final response = await _dio.get('users', options: Options(

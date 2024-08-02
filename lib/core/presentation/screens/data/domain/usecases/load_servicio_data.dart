@@ -1,4 +1,4 @@
-import 'package:bankingapp/core/presentation/screens/data/domain/entities/servicioModel.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_servicios/servicioModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/repositories/servicio_repository.dart';
 
 class LoadServicioData {
@@ -11,15 +11,15 @@ class LoadServicioData {
       final List<servicioModel> servicioData = await repository.loadservicioData();
 
       for (var servicio in servicioData) {
-        if (servicio.nombre_servicio.isEmpty) {
+        if (servicio.id == 0) {
           throw Exception("nombre_servicio no puede estar vacío");
         }
 
-        if (!esServicioValido(servicio.nombre_servicio)) {
+        if (servicio.name.isEmpty) {
           throw Exception("nombre_servicio debe ser un servicio válido");
         }
 
-        if (servicio.servicio_pic.isNotEmpty && !esImagenValida(servicio.servicio_pic)) {
+        if (servicio.status == false) {
           throw Exception("servicio_pic debe ser una imagen válida");
         }
       }
@@ -36,11 +36,5 @@ class LoadServicioData {
       'NETFLIX', 'TELMEX', 'MAX', 'DISH', 'TOTALPLAY', 'AXTEL', 'STAR +'
     ];
     return serviciosValidos.contains(nombreServicio);
-  }
-
-  bool esImagenValida(String url) {
-    final extensionesValidas = ['jpg', 'jpeg', 'png'];
-    final extension = url.split('.').last.toLowerCase();
-    return extensionesValidas.contains(extension);
   }
 }
