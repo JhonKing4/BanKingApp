@@ -4,7 +4,7 @@ import 'package:bankingapp/core/presentation/screens/casa.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/usuarios_repository_impl.dart';
 import 'package:bankingapp/core/presentation/screens/tarjetas.dart';
 import 'package:bankingapp/core/presentation/screens/transferencias/agregar_contacto.dart';
-import 'package:bankingapp/core/presentation/screens/transferencias/transferencia2.dart';
+import 'package:bankingapp/core/presentation/screens/transferencias/transferencia_contacto.dart';
 import 'package:bankingapp/core/presentation/screens/transferencias/transferencia_cuenta.dart';
 import 'package:bankingapp/core/presentation/screens/mis_tarjetas.dart';
 import 'package:bankingapp/core/presentation/screens/auth/perfil.dart';
@@ -64,7 +64,8 @@ class MyApp extends StatelessWidget {
                 id: ModalRoute.of(context)!.settings.arguments as String,
                 idUser: ModalRoute.of(context)!.settings.arguments as String,
                 nickname: ModalRoute.of(context)!.settings.arguments as String,
-                account: ModalRoute.of(context)!.settings.arguments as String,
+                receptor_account: ModalRoute.of(context)!.settings.arguments as String,
+                sende_account: ModalRoute.of(context)!.settings.arguments as String,
                 balance: ModalRoute.of(context)!.settings.arguments as String,
               ),
         },

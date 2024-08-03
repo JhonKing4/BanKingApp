@@ -6,25 +6,17 @@ import 'package:bankingapp/core/presentation/bloc/home_blocs/home_event.dart';
 import 'package:bankingapp/core/presentation/bloc/movimientos/movimientos_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/movimientos/movimientos_event.dart';
 import 'package:bankingapp/core/presentation/bloc/movimientos/movimientos_state.dart';
-import 'package:bankingapp/core/presentation/bloc/servicios/servicio_bloc.dart';
-import 'package:bankingapp/core/presentation/bloc/servicios/servicio_event.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_account_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_home_data.dart';
-import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_servicio_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_transferencia_account_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/account_repository_impl.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/home_repository_impl.dart';
-import 'package:bankingapp/core/presentation/screens/data/repositories/servicio_repository_impl.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/transferencia_account_repository_impl.dart';
 import 'package:bankingapp/core/presentation/screens/widgets/appbar.dart';
-import 'package:bankingapp/core/presentation/screens/casa.dart';
 import 'package:bankingapp/core/presentation/screens/widgets/home.dart';
 import 'package:bankingapp/core/presentation/screens/retiro.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MisTarjetas extends StatefulWidget {
@@ -47,7 +39,7 @@ class _MisTarjetasState extends State<MisTarjetas> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-         BlocProvider(
+        BlocProvider(
           create: (context) => HomeBloc(LoadHomeData(HomeRepositoryImpl()))
             ..add(LoadHomeDataEvent()),
         ),
@@ -202,7 +194,7 @@ class _MisTarjetasState extends State<MisTarjetas> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                'Ultima semana',
+                                'Última semana',
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
@@ -215,20 +207,33 @@ class _MisTarjetasState extends State<MisTarjetas> {
                             itemBuilder: (context, index) {
                               final movimiento =
                                   movimientoState.movimientos[index];
-                              if (movimiento.id_receptor == state.id_user ||
-                                  movimiento.id_sender == state.id_user) {
-                                final isReceptor = movimiento.id_receptor == state.id_user;
+                              final currentCard =
+                                  '4007159312517947'; // Asume que esta es tu currentCard
+
+                              // Filtrar los movimientos relevantes
+                              if (movimiento.sender_account == currentCard ||
+                                  movimiento.receptor_account == currentCard) {
+                                final isReceptor =
+                                    movimiento.receptor_account == currentCard;
                                 final iconPath = isReceptor
                                     ? 'assets/images/transferencia.png'
                                     : 'assets/images/uptransferencia.png';
+
+                                final amountSign = isReceptor ? '+' : '-';
+                                final monto =
+                                    '$amountSign\$${movimiento.amount}';
+
                                 return _buildMovimientoItem(
                                   iconPath: iconPath,
                                   titulo: 'Transferencia',
-                                  responsable: isReceptor ? '' : 'cuenta: ${movimiento.receptor_account.toString()}',
-                                  monto: '${isReceptor ? '+' : '-'}\$${movimiento.amount.toString()}',
+                                  responsable: isReceptor
+                                      ? ''
+                                      : 'Cuenta: ${movimiento.receptor_account}',
+                                  monto: monto,
                                   isReceptor: isReceptor,
                                 );
                               }
+
                               return SizedBox.shrink();
                             },
                           ),
@@ -287,4 +292,3 @@ class _MisTarjetasState extends State<MisTarjetas> {
     );
   }
 }
-

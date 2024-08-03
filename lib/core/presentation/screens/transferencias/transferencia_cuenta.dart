@@ -25,14 +25,17 @@ class Transferencia_cuenta extends StatefulWidget {
 
 class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
     with SingleTickerProviderStateMixin {
-  final TextEditingController Receptor_accountController =
-      TextEditingController();
+  final TextEditingController Receptor_accountController = TextEditingController();
   final TextEditingController amountController = TextEditingController();
+  final TextEditingController conceptController = TextEditingController();
+  final TextEditingController ownerController = TextEditingController();
   late AnimationController _controller;
   late Animation<double> _animation;
 
   bool isReceptor_accountValid = true;
   bool isamountValid = true;
+  bool isconceptValid = true;
+  bool isownerValid = true;
 
   @override
   void initState() {
@@ -259,7 +262,7 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
                     ],
                   ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: buildTextField(
@@ -270,6 +273,28 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
                     isReceptor_accountValid,
                   ),
                 ),
+                const SizedBox(height: 20),
+                 Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: buildTextFieldConcept(
+                    context,
+                    "Concepto",
+                    conceptController,
+                    false,
+                    isconceptValid,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                    Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: buildTextFieldOwner(
+                    context,
+                    "Dueño de la cuenta",
+                    ownerController,
+                    false,
+                    isownerValid,
+                  ),
+                ),
                 const SizedBox(height: 90),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -278,19 +303,23 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
                       setState(() {
                         isReceptor_accountValid =
                             Receptor_accountController.text.isNotEmpty &&
-                                Receptor_accountController.text.length > 8;
+                                Receptor_accountController.text.length > 8 && Receptor_accountController.text != widget.user_account;
                         isamountValid = amountController.text.isNotEmpty &&
                             double.tryParse(amountController.text) != null &&
                             double.parse(amountController.text) > 0 &&
                             double.parse(amountController.text) <=
                                 widget.balance;
+                      isconceptValid = conceptController.text.isNotEmpty &&  conceptController.text.length > 5;
+                      isownerValid = ownerController.text.isNotEmpty &&  ownerController.text.length > 3;
                       });
 
-                      if (isReceptor_accountValid && isamountValid) {
+                      if (isReceptor_accountValid && isamountValid && isconceptValid && isownerValid) {
                         final contact = Transferencia_accountModel(
                           user_account: widget.user_account,
                           receptor_account: Receptor_accountController.text,
                           amount: int.tryParse(amountController.text),
+                          concept: conceptController.text,
+                          owner: ownerController.text,
                         );
                         BlocProvider.of<TransferenciaAmountBloc>(context)
                             .add(SubmitRegisterTransferEvent(contact));
@@ -322,7 +351,7 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
                   ),
                 ),
                 const SizedBox(
-                    height: 230), // Ajustar este tamaño según necesidad
+                    height: 30), // Ajustar este tamaño según necesidad
               ],
             ),
           ),
@@ -344,7 +373,7 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
       onChanged: (value) {
         setState(() {
           isReceptor_accountValid = value.isNotEmpty &&
-          Receptor_accountController.text.length > 15;
+          Receptor_accountController.text.length > 15 && Receptor_accountController.text != widget.user_account;
         });
       },
       decoration: InputDecoration(
@@ -369,4 +398,88 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
       keyboardType: TextInputType.number,
     );
   }
+
+
+ Widget buildTextFieldConcept(
+    BuildContext context,
+    String hintText,
+    TextEditingController controller,
+    bool obscureText,
+    bool isValid, [
+    TextInputType keyboardType = TextInputType.text,
+  ]) {
+    return TextField(
+      controller: controller,
+      onChanged: (value) {
+        setState(() {
+           isconceptValid = conceptController.text.isNotEmpty &&  conceptController.text.length > 5;
+        });
+      },
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: TextStyle(
+          color: const Color.fromARGB(255, 207, 203, 203).withOpacity(0.7),
+        ),
+        filled: true,
+        fillColor: Color.fromARGB(255, 37, 39, 39),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: isValid ? Colors.yellow : Colors.red),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: isValid ? Colors.yellow : Colors.red),
+        ),
+        errorText: isValid ? null : 'El campo no es valido',
+      ),
+      style: const TextStyle(color: Colors.white),
+      obscureText: obscureText,
+      keyboardType: TextInputType.text,
+    );
+  }
+
+
+   Widget buildTextFieldOwner(
+    BuildContext context,
+    String hintText,
+    TextEditingController controller,
+    bool obscureText,
+    bool isValid, [
+    TextInputType keyboardType = TextInputType.text,
+  ]) {
+    return TextField(
+      controller: controller,
+      onChanged: (value) {
+        setState(() {
+           isownerValid = ownerController.text.isNotEmpty &&  ownerController.text.length > 3;
+        });
+      },
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: TextStyle(
+          color: const Color.fromARGB(255, 207, 203, 203).withOpacity(0.7),
+        ),
+        filled: true,
+        fillColor: Color.fromARGB(255, 37, 39, 39),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: isValid ? Colors.yellow : Colors.red),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: isValid ? Colors.yellow : Colors.red),
+        ),
+        errorText: isValid ? null : 'El campo no es valido',
+      ),
+      style: const TextStyle(color: Colors.white),
+      obscureText: obscureText,
+      keyboardType: TextInputType.text,
+    );
+  }
 }
+
+
+
+
+
+ 
