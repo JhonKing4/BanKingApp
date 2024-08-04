@@ -1,8 +1,12 @@
 import 'package:bankingapp/core/presentation/bloc/Account/account_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/Account/account_event.dart';
 import 'package:bankingapp/core/presentation/bloc/Account/account_state.dart';
+import 'package:bankingapp/core/presentation/bloc/home_blocs/home_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/home_blocs/home_event.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_account_data.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_home_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/account_repository_impl.dart';
+import 'package:bankingapp/core/presentation/screens/data/repositories/home_repository_impl.dart';
 import 'package:bankingapp/core/presentation/screens/widgets/appbar.dart';
 import 'package:bankingapp/core/presentation/screens/widgets/home.dart';
 import 'package:flip_card/flip_card.dart';
@@ -26,10 +30,18 @@ class _TarjetasViewState extends State<TarjetasList> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          AccountBloc(LoadAccountData(AccountRepositoryImpl()))
-            ..add(LoadAccountDataEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => HomeBloc(LoadHomeData(HomeRepositoryImpl()))
+            ..add(LoadHomeDataEvent()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              AccountBloc(LoadAccountData(AccountRepositoryImpl()))
+                ..add(LoadAccountDataEvent()),
+        )
+      ],
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
          appBar: CustomAppBar(),
@@ -218,7 +230,7 @@ Widget buildCardBack(tarjeta) {
                 ],
               ),
               Container(
-                width: 60,
+                width: 50,
                 height: 40,
                 decoration: BoxDecoration(
                   color: Colors.grey[300],

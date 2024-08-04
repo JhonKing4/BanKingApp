@@ -137,7 +137,15 @@ class _MisTarjetasState extends State<MisTarjetas> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, "/retiro");
+                     Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RetiroPage(
+                                  my_account: state.card[0].card,
+                                  balance: state.balance.toString(),
+                                ),
+                              ),
+                            );
                   },
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,

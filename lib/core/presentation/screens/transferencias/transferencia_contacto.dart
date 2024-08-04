@@ -9,27 +9,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 void initializedNotifications() async {
-  const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('launch_background');
-  final InitializationSettings initializationSettings = InitializationSettings(android: initializationSettingsAndroid);
+  const AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings('launch_background');
+  final InitializationSettings initializationSettings =
+      InitializationSettings(android: initializationSettingsAndroid);
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 }
 
 Future<void> _showNotification(String amount) async {
   flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
       ?.requestExactAlarmsPermission();
 
-  const AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
+  const AndroidNotificationDetails androidPlatformChannelSpecifics =
+      AndroidNotificationDetails(
     '1',
     'NopalBank',
     importance: Importance.max,
     priority: Priority.high,
   );
 
-  const NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
+  const NotificationDetails platformChannelSpecifics =
+      NotificationDetails(android: androidPlatformChannelSpecifics);
 
   await flutterLocalNotificationsPlugin.show(
     0,
@@ -81,19 +87,19 @@ class _Tranferencia2State extends State<Tranferencia2> {
         child: BlocListener<TransferenciaAmountBloc, TransferenciaAmountState>(
           listener: (context, state) {
             if (state is TrasferenciaSuccess) {
-             WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => TransferSuccessView(
-                                  amount: amountController.text,
-                                  nickname: widget.nickname,
-                                  receptor_account: widget.receptor_account,
-                                  concepto: conceptController.text,
-                                ),
-                              ),
-                            );
-          });
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TransferSuccessView(
+                      amount: amountController.text,
+                      nickname: widget.nickname,
+                      receptor_account: widget.receptor_account,
+                      concepto: conceptController.text,
+                    ),
+                  ),
+                );
+              });
             } else if (state is TrasferenciaError) {
               showDialog(
                 context: context,
@@ -129,22 +135,24 @@ class _Tranferencia2State extends State<Tranferencia2> {
   }
 
   Widget buildForm(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-      body: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Color.fromARGB(255, 37, 39, 39),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
+    return SingleChildScrollView(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          minHeight: MediaQuery.of(context).size.height,
         ),
-        padding: EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+        child: IntrinsicHeight(
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 37, 39, 39),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+            ),
+            padding: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
@@ -175,138 +183,154 @@ class _Tranferencia2State extends State<Tranferencia2> {
                     ),
                   ],
                 ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Image.asset(
-              "assets/images/users.png",
-              width: 60,
-              height: 60,
-            ),
-            Text(
-              widget.receptor_account,
-              style: TextStyle(
-                color: Color.fromARGB(255, 173, 173, 173),
-                fontSize: 16,
-              ),
-            ),
-            Text(
-              widget.nickname,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 60),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 30,
-                    alignment: Alignment.bottomCenter,
-                    child: Text(
-                      "\$",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: 150,
-                    child: TextField(
-                      controller: amountController,
-                      onChanged: (value) {
-                        setState(() {
-                          isamountValid = value.isNotEmpty &&
-                              double.tryParse(value) != null &&
-                              double.parse(value) > 0 &&
-                              double.parse(value) <= double.parse(widget.balance);
-                        });
-                      },
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Color.fromARGB(255, 37, 39, 39),
-                        hintText: "Cantidad",
-                        hintStyle: TextStyle(
-                          color: const Color.fromARGB(255, 207, 203, 203).withOpacity(0.7),
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: isamountValid ? Colors.yellow : Colors.red),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: isamountValid ? Colors.yellow : Colors.red),
-                        ),
-                        errorText: isamountValid ? null : 'Monto no válido',
-                      ),
-                      keyboardType: TextInputType.number,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: buildTextFieldConcept(
-                context,
-                "Concepto",
-                conceptController,
-                false,
-                isconceptValid,
-              ),
-            ),
-            SizedBox(height: 60),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Image.asset(
-                    "assets/images/visa.png",
-                    width: 60,
-                    height: 60,
-                  ),
-                ),
-                SizedBox(width: 10),
-                Expanded(
+                SizedBox(height: 10),
+                Center(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Image.asset(
+                        "assets/images/users.png",
+                        width: 60,
+                        height: 60,
+                      ),
                       Text(
-                        widget.sende_account,
+                        widget.receptor_account,
                         style: TextStyle(
+                          color: Color.fromARGB(255, 173, 173, 173),
                           fontSize: 16,
-                          color: Color.fromARGB(255, 221, 221, 221),
                         ),
                       ),
-                      SizedBox(height: 5),
                       Text(
-                        "Saldo disponible: \$${widget.balance}",
+                        widget.nickname,
                         style: TextStyle(
-                          fontSize: 14,
-                          color: Color.fromARGB(255, 187, 187, 187),
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
                   ),
                 ),
+                SizedBox(height: 60),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 30,
+                        alignment: Alignment.bottomCenter,
+                        child: Text(
+                          "\$",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 150,
+                        child: TextField(
+                          controller: amountController,
+                          onChanged: (value) {
+                            setState(() {
+                              isamountValid = value.isNotEmpty &&
+                                  double.tryParse(value) != null &&
+                                  double.parse(value) > 0 &&
+                                  double.parse(value) <=
+                                      double.parse(widget.balance);
+                            });
+                          },
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Color.fromARGB(255, 37, 39, 39),
+                            hintText: "Cantidad",
+                            hintStyle: TextStyle(
+                              color: const Color.fromARGB(255, 207, 203, 203)
+                                  .withOpacity(0.7),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: isamountValid
+                                      ? Colors.yellow
+                                      : Colors.red),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: isamountValid
+                                      ? Colors.yellow
+                                      : Colors.red),
+                            ),
+                            errorText: isamountValid ? null : 'Monto no válido',
+                          ),
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: buildTextFieldConcept(
+                    context,
+                    "Concepto",
+                    conceptController,
+                    false,
+                    isconceptValid,
+                  ),
+                ),
+                SizedBox(height: 60),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Image.asset(
+                        "assets/images/visa.png",
+                        width: 60,
+                        height: 60,
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.sende_account,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Color.fromARGB(255, 221, 221, 221),
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            "Saldo disponible: \$${widget.balance}",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Color.fromARGB(255, 187, 187, 187),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 40),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [buildButtonContinue(context)]),
               ],
             ),
-            SizedBox(height: 40),
-            buildButtonContinue(context),
-          ],
+          ),
         ),
       ),
     );
@@ -319,20 +343,22 @@ class _Tranferencia2State extends State<Tranferencia2> {
           isamountValid = amountController.text.isNotEmpty &&
               double.tryParse(amountController.text) != null &&
               double.parse(amountController.text) > 0 &&
-              double.parse(amountController.text) <= double.parse(widget.balance);
+              double.parse(amountController.text) <=
+                  double.parse(widget.balance);
           isconceptValid = conceptController.text.isNotEmpty;
         });
 
         if (isamountValid && isconceptValid) {
-          Transferencia_accountModel newTransferencia = Transferencia_accountModel(
-            user_account: widget.sende_account,
-            receptor_account: widget.receptor_account,
-            amount: int.parse(amountController.text),
-            concept: conceptController.text,
-            owner: widget.nickname
-          );
+          Transferencia_accountModel newTransferencia =
+              Transferencia_accountModel(
+                  user_account: widget.sende_account,
+                  receptor_account: widget.receptor_account,
+                  amount: int.parse(amountController.text),
+                  concept: conceptController.text,
+                  owner: widget.nickname);
 
-          BlocProvider.of<TransferenciaAmountBloc>(context).add(SubmitRegisterTransferEvent(newTransferencia));
+          BlocProvider.of<TransferenciaAmountBloc>(context)
+              .add(SubmitRegisterTransferEvent(newTransferencia));
         }
       },
       child: Container(

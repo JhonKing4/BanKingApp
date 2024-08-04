@@ -84,7 +84,8 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
-    - assets/images/esca.jpg
+    - assets/images/avatar.jpeg
+    - assets/images/horizontal.png
     - assets/images/vertical.png
     - assets/json_data/beneficios.json
     - assets/json_data/home.json

@@ -57,7 +57,10 @@ class MyApp extends StatelessWidget {
           '/transferencia': (context) => const Transferencia(),
           '/servicios': (context) => const ServiciosPage(),
           '/tarjetas': (context) => const TarjetasList(),
-          '/retiro': (context) => const RetiroPage(),
+          '/retiro': (context) => RetiroPage(
+            my_account: ModalRoute.of(context)!.settings.arguments as String,
+            balance: ModalRoute.of(context)!.settings.arguments as String,
+          ),
           '/config': (context) => Configuracion(),
           '/registro': (context) => RegisterPage(),
           '/perfil': (context) => ProfilePage(),

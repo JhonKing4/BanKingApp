@@ -162,16 +162,16 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
                 false, isnicknameValid),
             const SizedBox(height: 20),
             buildTextField(
-                context, "Email", emailController, false, isEmailValid, emailError),
+                context, "Email", emailController, false, isEmailValid, emailError, TextInputType.emailAddress),
             const SizedBox(height: 20),
             buildTextField(
-                context, "Teléfono", phoneController, false, isPhoneValid, phoneError),
+                context, "Teléfono", phoneController, false, isPhoneValid, phoneError, TextInputType.phone),
             const SizedBox(height: 20),
             buildTextField(context, "Nombre del banco", bankController,
                 false, isbankValid),
             const SizedBox(height: 20),
             buildTextField(
-                context, "Cuenta", accountController, false, isaccountValid, accountError),
+                context, "Cuenta", accountController, false, isaccountValid, accountError, TextInputType.number),
             const SizedBox(height: 20),
             SizedBox(height: 20),
             ElevatedButton(
@@ -230,7 +230,7 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
 
   Widget buildTextField(BuildContext context, String hintText,
       TextEditingController controller, bool obscureText, bool isValid,
-      [String? errorText, TextInputType keyboardType = TextInputType.text]) {
+      [String? errorText, TextInputType? keyboardType]) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
@@ -255,7 +255,7 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
       ),
       style: const TextStyle(color: Color.fromRGBO(255, 223, 0, 1)),
       obscureText: obscureText,
-      keyboardType: keyboardType,
+      keyboardType: keyboardType
     );
   }
 
