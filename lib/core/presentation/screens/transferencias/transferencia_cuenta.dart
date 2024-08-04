@@ -7,9 +7,11 @@ import 'package:bankingapp/core/presentation/bloc/transferencia_contacto/transfe
 import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_transferencias/transferencia_accountModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_transferencia_account_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/transferencia_account_repository_impl.dart';
+import 'package:bankingapp/core/presentation/screens/retiro.dart';
 import 'package:bankingapp/core/presentation/screens/transferencias/transferencia_vista.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class Transferencia_cuenta extends StatefulWidget {
   final String user_account;
@@ -305,7 +307,7 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
                             double.parse(amountController.text) > 0 &&
                             double.parse(amountController.text) <=
                                 widget.balance;
-                      isconceptValid = conceptController.text.isNotEmpty &&  conceptController.text.length > 5;
+                      isconceptValid = conceptController.text.isNotEmpty &&  conceptController.text.length > 1;
                       isownerValid = ownerController.text.isNotEmpty &&  ownerController.text.length > 3;
                       });
 
@@ -320,6 +322,7 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
                         BlocProvider.of<TransferenciaAmountBloc>(context)
                             .add(SubmitRegisterTransferEvent(contact));
                       }
+                      _showNotification(amountController.text.toString());
                     },
                     style: ButtonStyle(
                       elevation: MaterialStateProperty.all(0),
@@ -408,7 +411,7 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
       controller: controller,
       onChanged: (value) {
         setState(() {
-           isconceptValid = conceptController.text.isNotEmpty &&  conceptController.text.length > 5;
+           isconceptValid = conceptController.text.isNotEmpty &&  conceptController.text.length > 1;
         });
       },
       decoration: InputDecoration(
@@ -477,5 +480,29 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
 
 
 
+Future<void> _showNotification(String amount) async {
+  flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.requestExactAlarmsPermission();
 
+  const AndroidNotificationDetails androidPlatformChannelSpecifics =
+      AndroidNotificationDetails(
+    '1',
+    'NopalBank',
+    importance: Importance.max,
+    priority: Priority.high,
+  );
+
+  const NotificationDetails platformChannelSpecifics =
+      NotificationDetails(android: androidPlatformChannelSpecifics);
+
+  await flutterLocalNotificationsPlugin.show(
+    0,
+    'BANKING',
+    'Enviaste un total de $amount',
+    platformChannelSpecifics,
+    payload: 'payload',
+  );
+}
  

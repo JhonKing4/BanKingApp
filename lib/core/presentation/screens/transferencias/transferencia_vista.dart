@@ -184,6 +184,7 @@ SizedBox(
                         child: Text(
                           "Volver",
                           style: TextStyle(
+                            color: Colors.black,
                             fontSize: 16,
                           ),
                         ),

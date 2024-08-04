@@ -71,88 +71,99 @@ class _TransferenciaState extends State<Transferencia> {
                         hasCard ? accountState.card[0].card.toString() : '';
                     final balance = accountState.balance.toString();
 
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Transferencias',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: 30),
-                        Text(
-                          "Balance",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
+                    if (hasCard) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Transferencias',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
                           ),
-                        ),
-                        Text(
-                          '\$ ${balance}',
-                          style: TextStyle(
+                          SizedBox(height: 30),
+                          Text(
+                            "Balance",
+                            style: TextStyle(
                               color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal),
-                        ),
-                        SizedBox(height: 20),
-                        TransferenciaWidget(
-                          contacts: contactsState.contacts,
-                          myaccount: myAccount,
-                          balance: balance,
-                        ),
-                        SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed: () {
-                            if (hasCard) {
+                              fontSize: 14,
+                            ),
+                          ),
+                          Text(
+                            '\$ ${balance}',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.normal),
+                          ),
+                          SizedBox(height: 20),
+                          TransferenciaWidget(
+                            contacts: contactsState.contacts,
+                            myaccount: myAccount,
+                            balance: balance,
+                          ),
+                          SizedBox(height: 10),
+                          ElevatedButton(
+                            onPressed: () {
+                              if (hasCard) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Transferencia_cuenta(
+                                      user_account: myAccount,
+                                      balance: accountState.balance,
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(Icons.account_balance_wallet,
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                                SizedBox(height: 5),
+                                Text('TRANSFERIR A UNA CUENTA',
+                                    style: TextStyle(
+                                        fontSize: 10, color: Colors.white))
+                              ],
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color.fromARGB(255, 52, 52, 52),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          ContactsWidget(
+                            contacts: contactsState.contacts,
+                            onContactTap: (contact) {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => Transferencia_cuenta(
-                                    user_account: myAccount,
-                                    balance: accountState.balance,
+                                  builder: (context) => Tranferencia2(
+                                    id: contact.id.toString(),
+                                    idUser: contact.id_user.toString(),
+                                    nickname: contact.nickname,
+                                    receptor_account: contact.account,
+                                    sende_account: myAccount,
+                                    balance: balance,
                                   ),
                                 ),
                               );
-                            }
-                          },
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(Icons.account_balance_wallet,
-                                  color: Color.fromARGB(255, 255, 255, 255)),
-                              SizedBox(height: 5),
-                              Text('TRANSFERIR A UNA CUENTA',
-                                  style: TextStyle(
-                                      fontSize: 10, color: Colors.white))
-                            ],
+                            },
                           ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 52, 52, 52),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        ContactsWidget(
-                          contacts: contactsState.contacts,
-                          onContactTap: (contact) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Tranferencia2(
-                                  id: contact.id.toString(),
-                                  idUser: contact.id_user.toString(),
-                                  nickname: contact.nickname,
-                                  receptor_account: contact.account,
-                                  sende_account: myAccount,
-                                  balance: balance,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                        ],
+                      );
+                    }
+                    return const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(height: 500),
+                        CircularProgressIndicator()
                       ],
                     );
                   },
@@ -194,7 +205,7 @@ class TransferenciaWidget extends StatelessWidget {
           end: Alignment.bottomCenter,
           colors: [
             Color.fromARGB(255, 204, 239, 255),
-            Color.fromARGB(255, 162, 234, 229)
+            Color.fromARGB(255, 59, 172, 164)
           ],
           stops: [0.0, 1.0],
           tileMode: TileMode.clamp,

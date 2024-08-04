@@ -123,67 +123,65 @@ class _RetiroPage extends State<RetiroPage> {
               ),
             ),
             SizedBox(height: 30),
-           Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 30,
-                        alignment: Alignment.bottomCenter,
-                        child: Text(
-                          "\$",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                          ),
-                        ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 30,
+                    alignment: Alignment.bottomCenter,
+                    child: Text(
+                      "\$",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
                       ),
-                      Container(
-                        width: 150,
-                        child: TextField(
-                          controller: amountController,
-                          onChanged: (value) {
-                            setState(() {
-                              isamountValid = value.isNotEmpty &&
-                                  double.tryParse(value) != null &&
-                                  double.parse(value) > 0 &&
-                                  double.parse(value) <=
-                                      double.parse(widget.balance);
-                            });
-                          },
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Color.fromARGB(255, 37, 39, 39),
-                            hintText: "Cantidad",
-                            hintStyle: TextStyle(
-                              color: const Color.fromARGB(255, 207, 203, 203)
-                                  .withOpacity(0.7),
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: isamountValid
-                                      ? Colors.yellow
-                                      : Colors.red),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: isamountValid
-                                      ? Colors.yellow
-                                      : Colors.red),
-                            ),
-                            errorText: isamountValid ? null : 'Monto no válido',
-                          ),
-                          keyboardType: TextInputType.number,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                  Container(
+                    width: 150,
+                    child: TextField(
+                      controller: amountController,
+                      onChanged: (value) {
+                        setState(() {
+                          isamountValid = value.isNotEmpty &&
+                              double.tryParse(value) != null &&
+                              double.parse(value) > 0 &&
+                              double.parse(value) <=
+                                  double.parse(widget.balance);
+                        });
+                      },
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color.fromARGB(255, 37, 39, 39),
+                        hintText: "Cantidad",
+                        hintStyle: TextStyle(
+                          color: const Color.fromARGB(255, 207, 203, 203)
+                              .withOpacity(0.7),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color:
+                                  isamountValid ? Colors.yellow : Colors.red),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color:
+                                  isamountValid ? Colors.yellow : Colors.red),
+                        ),
+                        errorText: isamountValid ? null : 'Monto no válido',
+                      ),
+                      keyboardType: TextInputType.number,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
 
             SizedBox(height: 60),
             Row(
@@ -229,73 +227,82 @@ class _RetiroPage extends State<RetiroPage> {
             SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
-                showModalBottomSheet(
-                  backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-                  context: context,
-                  builder: (context) {
-                    return Container(
-                      height: MediaQuery.of(context).size.height * 0.4,
-                      child: Column(
-                        children: [
-                          ListTile(
-                            title: Text('RETIRO DE EFECTIVO',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            onTap: () {},
-                          ),
-                          ListTile(
-                            title: Text(
-                                '¿ Esta seguro que desea retirar esta cantidad de: ',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            onTap: () {},
-                          ),
-                          ListTile(
-                            title: Text('VISA **** 7312 ?',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            onTap: () {},
-                          ),
-                          ElevatedButton(
-                            onPressed: () => _showNotification(),
-                            style: ButtonStyle(
-                              elevation: MaterialStateProperty.all(0),
-                              overlayColor:
-                                  MaterialStateProperty.all(Colors.transparent),
-                              backgroundColor: MaterialStateProperty.all(
-                                  const Color.fromRGBO(242, 254, 141, 1)),
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
+                setState(() {
+                  isamountValid = amountController.text.isNotEmpty &&
+                      double.tryParse(amountController.text) != null &&
+                      double.parse(amountController.text) > 0 &&
+                      double.parse(amountController.text) <=
+                          double.parse(widget.balance);
+                });
+                if (isamountValid) {
+                  showModalBottomSheet(
+                    backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                        height: MediaQuery.of(context).size.height * 0.4,
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title: Text('RETIRO DE EFECTIVO',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              onTap: () {},
+                            ),
+                            ListTile(
+                              title: Text(
+                                  '¿ Esta seguro que desea retirar esta cantidad de: ',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              onTap: () {},
+                            ),
+                            ListTile(
+                              title: Text('VISA **** 7312 ?',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              onTap: () {},
+                            ),
+                            ElevatedButton(
+                              onPressed: () => _showNotification(),
+                              style: ButtonStyle(
+                                elevation: MaterialStateProperty.all(0),
+                                overlayColor: MaterialStateProperty.all(
+                                    Colors.transparent),
+                                backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromRGBO(242, 254, 141, 1)),
+                                shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                              child: Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 12, horizontal: 0),
+                                child: const Text(
+                                  "Aceptar",
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                  ),
                                 ),
                               ),
                             ),
-                            child: Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 12, horizontal: 0),
-                              child: const Text(
-                                "Aceptar",
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 0, 0, 0),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                );
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                }
               },
               style: ButtonStyle(
                 elevation: MaterialStateProperty.all(0),

@@ -336,48 +336,123 @@ class _Tranferencia2State extends State<Tranferencia2> {
     );
   }
 
-  Widget buildButtonContinue(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        setState(() {
-          isamountValid = amountController.text.isNotEmpty &&
-              double.tryParse(amountController.text) != null &&
-              double.parse(amountController.text) > 0 &&
-              double.parse(amountController.text) <=
-                  double.parse(widget.balance);
-          isconceptValid = conceptController.text.isNotEmpty;
-        });
+ Widget buildButtonContinue(BuildContext bloc) {
+  return InkWell(
+    onTap: () {
+      bool isAmountValid = amountController.text.isNotEmpty &&
+          double.tryParse(amountController.text) != null &&
+          double.parse(amountController.text) > 0 &&
+          double.parse(amountController.text) <= double.parse(widget.balance);
+      bool isConceptValid = conceptController.text.isNotEmpty;
 
-        if (isamountValid && isconceptValid) {
-          Transferencia_accountModel newTransferencia =
-              Transferencia_accountModel(
-                  user_account: widget.sende_account,
-                  receptor_account: widget.receptor_account,
-                  amount: int.parse(amountController.text),
-                  concept: conceptController.text,
-                  owner: widget.nickname);
+      setState(() {
+        isamountValid = isAmountValid;
+        isconceptValid = isConceptValid;
+      });
 
-          BlocProvider.of<TransferenciaAmountBloc>(context)
-              .add(SubmitRegisterTransferEvent(newTransferencia));
-        }
-      },
-      child: Container(
-        height: 50,
-        width: 300,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: const Color.fromRGBO(242, 254, 141, 1),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: const Text(
-          "Continuar",
-          style: TextStyle(
-            color: Colors.black,
-          ),
+      if (isAmountValid && isConceptValid) {
+        showModalBottomSheet(
+          backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
+          context: context,
+          builder: (context) {
+            return Container(
+              height: MediaQuery.of(context).size.height * 0.4,
+              child: Column(
+                children: [
+                  ListTile(
+                    title: const Text(
+                      'TRANSFERENCIA',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onTap: () {},
+                  ),
+                  ListTile(
+                    title: Text(
+                      '¿ Estas seguro que deseas transferir la cantidad de: \$${amountController.text}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onTap: () {},
+                  ),
+                  ListTile(
+                    title: Text(
+                      'a la cuenta de ${widget.nickname}',
+                      style: const TextStyle(
+                        color: Color.fromARGB(255, 201, 201, 201),
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onTap: () {},
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Transferencia_accountModel newTransferencia =
+                          Transferencia_accountModel(
+                        user_account: widget.sende_account,
+                        receptor_account: widget.receptor_account,
+                        amount: int.parse(amountController.text),
+                        concept: conceptController.text,
+                        owner: widget.nickname,
+                      );
+
+                      BlocProvider.of<TransferenciaAmountBloc>(bloc)
+                          .add(SubmitRegisterTransferEvent(newTransferencia));
+                    },
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(0),
+                      overlayColor: MaterialStateProperty.all(Colors.transparent),
+                      backgroundColor: MaterialStateProperty.all(
+                          const Color.fromRGBO(242, 254, 141, 1)),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                    ),
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 0),
+                      child: const Text(
+                        "Aceptar",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      }
+    },
+    child: Container(
+      height: 50,
+      width: 300,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: const Color.fromRGBO(242, 254, 141, 1),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: const Text(
+        "Continuar",
+        style: TextStyle(
+          color: Colors.black,
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget buildTextFieldConcept(
     BuildContext context,

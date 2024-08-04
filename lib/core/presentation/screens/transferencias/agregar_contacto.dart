@@ -50,7 +50,9 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
                       actions: [
                         TextButton(
                           onPressed: () {
-                            Navigator.of(context).pop();
+                                            WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushReplacementNamed(context, "/transferencia");
+          });
                           },
                           child: Text("Aceptar"),
                         ),
@@ -58,6 +60,7 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
                     );
                   },
                 );
+
               } else if (state is RegisterError) {
                 showDialog(
                   context: context,
