@@ -15,11 +15,8 @@ class TransferenciaAmountBloc extends Bloc<TransferenciaAmountEvent, Transferenc
         await submitContact(event.register);
         emit(TrasferenciaSuccess());
       } catch (e) {
-        // Supongamos que `e` es una excepción que contiene información detallada sobre el error
-        // Puedes personalizar este catch para adaptarse a cómo tu API maneja y devuelve errores
         String errorMessage;
         if (e is DioError) {
-          // Si estás usando Dio, puedes acceder a la respuesta del servidor
           errorMessage = e.response?.data['message'] ?? 'Error al hacer la transferencia';
         } else {
           errorMessage = e.toString();

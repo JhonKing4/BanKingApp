@@ -13,7 +13,7 @@ import 'package:bankingapp/core/presentation/screens/data/repositories/usuarios_
 
 class ProfilePage extends StatefulWidget {
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+_ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
@@ -29,6 +29,12 @@ class _ProfilePageState extends State<ProfilePage> {
   bool isRfcValid = true;
   bool isPhoneValid = true;
   bool isEditing = false;
+
+  String? nameError;
+  String? lastnameError;
+  String? emailError;
+  String? rfcError;
+  String? phoneError;
 
   @override
   Widget build(BuildContext context) {
@@ -127,11 +133,13 @@ class _ProfilePageState extends State<ProfilePage> {
           },
           child: BlocBuilder<PerfilBloc, PerfilState>(
             builder: (context, state) {
-              nameController.text = state.name ?? '';
-              lastnameController.text = state.lastname ?? '';
-              emailController.text = state.email ?? '';
-              rfcController.text = state.rfc ?? '';
-              phoneController.text = state.phone ?? '';
+              if (!isEditing) {
+                nameController.text = state.name ?? '';
+                lastnameController.text = state.lastname ?? '';
+                emailController.text = state.email ?? '';
+                rfcController.text = state.rfc ?? '';
+                phoneController.text = state.phone ?? '';
+              }
 
               return buildProfileForm(context, state.id ?? 0);
             },
@@ -167,48 +175,15 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      buildEditableTextField(
-                        context,
-                        "Nombre",
-                        nameController,
-                        isEditing,
-                        icon: Icons.person,
-                      ),
+                      buildNameField(),
                       const SizedBox(height: 10),
-                      buildEditableTextField(
-                        context,
-                        "Apellido",
-                        lastnameController,
-                        isEditing,
-                        icon: Icons.person_outline,
-                      ),
+                      buildLastnameField(),
                       const SizedBox(height: 10),
-                      buildEditableTextField(
-                        context,
-                        "Email",
-                        emailController,
-                        isEditing,
-                        icon: Icons.email,
-                        keyboardType: TextInputType.emailAddress,
-                      ),
+                      buildEmailField(),
                       const SizedBox(height: 10),
-                      buildEditableTextField(
-                        context,
-                        "RFC",
-                        rfcController,
-                        isEditing,
-                        icon: Icons.badge,
-                      ),
+                      buildRfcField(),
                       const SizedBox(height: 10),
-                      buildEditableTextField(
-                        context,
-                        "Teléfono",
-                        phoneController,
-                        isEditing,
-                        icon: Icons.phone,
-                        keyboardType: TextInputType.phone,
-                      ),
-                      const SizedBox(height: 10),
+                      buildPhoneField(),
                       const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -216,18 +191,31 @@ class _ProfilePageState extends State<ProfilePage> {
                           ElevatedButton(
                             onPressed: isEditing
                                 ? () {
-                                    final user = UsuariosModel(
-                                      id: userId,
-                                      name: nameController.text,
-                                      lastname: lastnameController.text,
-                                      email: emailController.text,
-                                      rfc: rfcController.text,
-                                      phone: phoneController.text,
-                                      password: "pass",
-                                      id_bank: 1,
-                                    );
-                                    BlocProvider.of<PerfilUBloc>(context)
-                                        .add(UpdateUserEvent(user));
+                                    setState(() {
+                                      isNameValid = nameController.text.isNotEmpty;
+                                      isLastnameValid = lastnameController.text.isNotEmpty;
+                                      isEmailValid = emailController.text.isNotEmpty && isValidEmail(emailController.text);
+                                      isPhoneValid = phoneController.text.isNotEmpty && phoneController.text.length > 8;
+                                      isRfcValid = rfcController.text.isNotEmpty && rfcController.text.length > 12;
+                                    });
+                                    if (isNameValid &&
+                                        isLastnameValid &&
+                                        isEmailValid &&
+                                        isPhoneValid &&
+                                        isRfcValid) {
+                                      final user = UsuariosModel(
+                                        id: userId,
+                                        name: nameController.text,
+                                        lastname: lastnameController.text,
+                                        email: emailController.text,
+                                        rfc: rfcController.text,
+                                        phone: phoneController.text,
+                                        password: "pass",
+                                        id_bank: 1,
+                                      );
+                                      BlocProvider.of<PerfilUBloc>(context)
+                                          .add(UpdateUserEvent(user));
+                                    }
                                   }
                                 : null,
                             style: ElevatedButton.styleFrom(
@@ -237,7 +225,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
-                            child: Text(isEditing ? "Guardar" : "Editar"),
+                            child: Text("Guardar"),
                           ),
                           ElevatedButton(
                             onPressed: () {
@@ -275,49 +263,155 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget buildEditableTextField(
-    BuildContext context,
-    String hintText,
-    TextEditingController controller,
-    bool isEditing, {
+  Widget buildNameField() {
+    return buildEditableTextField(
+      hintText: "Nombre",
+      controller: nameController,
+      isEditing: isEditing,
+      isValid: isNameValid,
+      errorText: nameError,
+      onChanged: (value) {
+        setState(() {
+          isNameValid = value.isNotEmpty;
+          nameError = isNameValid ? null : 'El nombre es requerido';
+        });
+      },
+      icon: Icons.person,
+    );
+  }
+
+  Widget buildLastnameField() {
+    return buildEditableTextField(
+      hintText: "Apellido",
+      controller: lastnameController,
+      isEditing: isEditing,
+      isValid: isLastnameValid,
+      errorText: lastnameError,
+      onChanged: (value) {
+        setState(() {
+          isLastnameValid = value.isNotEmpty;
+          lastnameError = isLastnameValid ? null : 'El apellido es requerido';
+        });
+      },
+      icon: Icons.person_outline,
+    );
+  }
+
+  Widget buildEmailField() {
+    return buildEditableTextField(
+      hintText: "Email",
+      controller: emailController,
+      isEditing: isEditing,
+      isValid: isEmailValid,
+      errorText: emailError,
+      onChanged: (value) {
+        setState(() {
+          isEmailValid = value.isNotEmpty && isValidEmail(value);
+          emailError = isEmailValid ? null : 'Email inválido';
+        });
+      },
+      icon: Icons.email,
+      keyboardType: TextInputType.emailAddress,
+    );
+  }
+
+  Widget buildRfcField() {
+    return buildEditableTextField(
+      hintText: "RFC",
+      controller: rfcController,
+      isEditing: isEditing,
+      isValid: isRfcValid,
+      errorText: rfcError,
+      onChanged: (value) {
+        setState(() {
+          isRfcValid = value.isNotEmpty && value.length > 12;
+          rfcError = isRfcValid ? null : 'RFC inválido';
+        });
+      },
+      icon: Icons.badge,
+    );
+  }
+
+  Widget buildPhoneField() {
+    return buildEditableTextField(
+      hintText: "Teléfono",
+      controller: phoneController,
+      isEditing: isEditing,
+      isValid: isPhoneValid,
+      errorText: phoneError,
+      onChanged: (value) {
+        setState(() {
+          isPhoneValid = value.isNotEmpty && value.length > 8;
+          phoneError = isPhoneValid ? null : 'Teléfono inválido';
+        });
+      },
+      icon: Icons.phone,
+      keyboardType: TextInputType.phone,
+    );
+  }
+
+  Widget buildEditableTextField({
+    required String hintText,
+    required TextEditingController controller,
+    required bool isEditing,
+    required bool isValid,
+    String? errorText,
+    required Function(String) onChanged,
     bool obscureText = false,
     TextInputType? keyboardType,
     IconData? icon,
   }) {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(isEditing ? Icons.edit : icon, color: Colors.white),
-        const SizedBox(width: 10),
-        Expanded(
-          child: TextFormField(
-            controller: controller,
-            readOnly: !isEditing,
-            obscureText: obscureText,
-            keyboardType: keyboardType,
-            style: const TextStyle(color: Colors.white, fontSize: 16.0),
-            decoration: InputDecoration(
-              hintText: hintText,
-              hintStyle: TextStyle(color: Colors.white),
-              filled: true,
-              fillColor: const Color.fromRGBO(30, 33, 33, 1),
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: isEditing ? Colors.yellow : Colors.transparent,
-                  width: 2.0,
-                ),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: isEditing ? Colors.yellow : Colors.transparent,
-                  width: 2.0,
+        Row(
+          children: [
+            Icon(isEditing ? Icons.edit : icon, color: Colors.white),
+            const SizedBox(width: 10),
+            Expanded(
+              child: TextFormField(
+                controller: controller,
+                readOnly: !isEditing,
+                obscureText: obscureText,
+                keyboardType: keyboardType,
+                style: const TextStyle(color: Colors.white, fontSize: 16.0),
+                onChanged: isEditing ? onChanged : null,
+                decoration: InputDecoration(
+                  hintText: hintText,
+                  hintStyle: TextStyle(color: Colors.white),
+                  filled: true,
+                  fillColor: const Color.fromRGBO(30, 33, 33, 1),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: isEditing ? (isValid ? Colors.yellow : Colors.red) : Colors.transparent,
+                      width: 2.0,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: isEditing ? (isValid ? Colors.yellow : Colors.red) : Colors.transparent,
+                      width: 2.0,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
+          ],
         ),
+        if (errorText != null) Text(errorText, style: TextStyle(color: Colors.red)),
       ],
     );
   }
+
+  bool isValidEmail(String email) {
+    final emailRegExp = RegExp(
+      r'^[^@]+@[^@]+\.[^@]+',
+    );
+    return emailRegExp.hasMatch(email);
+  }
 }
+
+
+

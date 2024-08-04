@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bankingapp/core/presentation/bloc/Contacts/contact_state.dart';
 import 'package:bankingapp/core/presentation/bloc/transferencia_contacto/transferencia_account_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/transferencia_contacto/transferencia_account_event.dart';
@@ -5,6 +7,7 @@ import 'package:bankingapp/core/presentation/bloc/transferencia_contacto/transfe
 import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_transferencias/transferencia_accountModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_transferencia_account_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/transferencia_account_repository_impl.dart';
+import 'package:bankingapp/core/presentation/screens/transferencias/transferencia_vista.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,6 +26,8 @@ class Transferencia_cuenta extends StatefulWidget {
       _Transferencia_cuentaPageState();
 }
 
+
+
 class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
     with SingleTickerProviderStateMixin {
   final TextEditingController Receptor_accountController = TextEditingController();
@@ -31,7 +36,7 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
   final TextEditingController ownerController = TextEditingController();
   late AnimationController _controller;
   late Animation<double> _animation;
-
+  
   bool isReceptor_accountValid = true;
   bool isamountValid = true;
   bool isconceptValid = true;
@@ -64,27 +69,18 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
         child: BlocListener<TransferenciaAmountBloc, TransferenciaAmountState>(
           listener: (context, state) {
             if (state is TrasferenciaSuccess) {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text("Éxito"),
-                    content: Text("La transferencia se concretó con éxito"),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            Navigator.pushReplacementNamed(
-                                context, "/transferencia");
-                          });
-                        },
-                        child: Text("Aceptar"),
-                      ),
-                    ],
-                  );
-                },
-              );
+
+            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TransferSuccessView(
+                                  amount: amountController.text,
+                                  nickname: ownerController.text,
+                                  receptor_account: Receptor_accountController.text,
+                                  concepto: conceptController.text,
+                                ),
+                              ),
+                            );
             } else if (state is TrasferenciaError) {
               showDialog(
                 context: context,

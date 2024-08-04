@@ -163,7 +163,14 @@ class _MisTarjetasState extends State<MisTarjetas> {
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   child: BlocBuilder<MovimientosBloc, MovimientosState>(
-                    builder: (context, movimientoState) => Column(
+                      builder: (context, movimientoState) {
+                    if (movimientoState.movimientos.isEmpty) {
+                      return Container(
+                        padding: const EdgeInsets.all(20.0),
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return Column(
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -223,14 +230,18 @@ class _MisTarjetasState extends State<MisTarjetas> {
                                 final monto =
                                     '$amountSign\$${movimiento.amount}';
 
-                                return _buildMovimientoItem(
-                                  iconPath: iconPath,
-                                  titulo: 'Transferencia',
-                                  responsable: isReceptor
-                                      ? ''
-                                      : 'Cuenta: ${movimiento.receptor_account}',
-                                  monto: monto,
-                                  isReceptor: isReceptor,
+                                return GestureDetector(
+                                  onTap: () {
+                                  },
+                                  child: _buildMovimientoItem(
+                                    iconPath: iconPath,
+                                    titulo: 'Transferencia',
+                                    responsable: isReceptor
+                                        ? ''
+                                        : 'Cuenta: ${movimiento.receptor_account}',
+                                    monto: monto,
+                                    isReceptor: isReceptor,
+                                  ),
                                 );
                               }
 
@@ -239,8 +250,8 @@ class _MisTarjetasState extends State<MisTarjetas> {
                           ),
                         ),
                       ],
-                    ),
-                  ),
+                    );
+                  }),
                 ),
               ],
             ),

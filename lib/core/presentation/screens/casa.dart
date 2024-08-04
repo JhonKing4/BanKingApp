@@ -148,7 +148,9 @@ class _CasaViewState extends State<CasaView> {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/tarjetas");
+                        },
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -221,13 +223,13 @@ class _CasaViewState extends State<CasaView> {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.rectangle,
                                   color: Color.fromARGB(255, 234, 255,
-                                      142), // Color del fondo rosa claro
+                                      142),
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 child: Icon(
                                   Icons.star_border_outlined,
                                   color: const Color.fromARGB(255, 32, 32,
-                                      32), // Color del icono blanco
+                                      32),
                                 ),
                               ),
                               SizedBox(height: 5),

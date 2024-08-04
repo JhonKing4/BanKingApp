@@ -181,7 +181,7 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
                   isbankValid = bankController.text.isNotEmpty;
                   isEmailValid = emailController.text.isNotEmpty && isValidEmail(emailController.text);
                   emailError = isEmailValid ? null : 'No es un email válido';
-                  isPhoneValid = phoneController.text.isNotEmpty && phoneController.text.length >= 8;
+                  isPhoneValid = phoneController.text.isNotEmpty && phoneController.text.length > 8;
                   phoneError = isPhoneValid ? null : 'El teléfono debe tener al menos 8 dígitos';
                   isaccountValid = accountController.text.isNotEmpty && accountController.text.length >= 16;
                   accountError = isaccountValid ? null : 'La cuenta debe tener al menos 16 dígitos';

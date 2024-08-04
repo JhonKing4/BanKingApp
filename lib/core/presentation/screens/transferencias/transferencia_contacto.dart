@@ -4,6 +4,7 @@ import 'package:bankingapp/core/presentation/bloc/transferencia_contacto/transfe
 import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_transferencias/transferencia_accountModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_transferencia_account_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/transferencia_account_repository_impl.dart';
+import 'package:bankingapp/core/presentation/screens/transferencias/transferencia_vista.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -80,27 +81,19 @@ class _Tranferencia2State extends State<Tranferencia2> {
         child: BlocListener<TransferenciaAmountBloc, TransferenciaAmountState>(
           listener: (context, state) {
             if (state is TrasferenciaSuccess) {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text("Éxito"),
-                    content: Text("La transferencia se concretó con éxito"),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            Navigator.pushReplacementNamed(context, "/transferencia");
-                          });
-                        },
-                        child: Text("Aceptar"),
-                      ),
-                    ],
-                  );
-                },
-              );
-              _showNotification(amountController.text); // Mostrar notificación
+             WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TransferSuccessView(
+                                  amount: amountController.text,
+                                  nickname: widget.nickname,
+                                  receptor_account: widget.receptor_account,
+                                  concepto: conceptController.text,
+                                ),
+                              ),
+                            );
+          });
             } else if (state is TrasferenciaError) {
               showDialog(
                 context: context,

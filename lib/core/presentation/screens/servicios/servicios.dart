@@ -193,10 +193,11 @@ class ServicioButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   color: Color.fromARGB(137, 222, 255, 251),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
                   child: CachedNetworkImage(
                     imageUrl: servicio.icono.toString(),
+                    fit: BoxFit.cover,
                     placeholder: (context, url) => CircularProgressIndicator(),
                     errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
