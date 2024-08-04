@@ -36,10 +36,12 @@ dependencies:
   json_annotation: ^4.0.1 #2
   provider: ^6.0.0
   local_auth: ^2.1.3
+  flip_card: ^0.6.0
   carousel_slider: ^4.0.0
   dio: ^5.0.3
   shared_preferences: ^2.0.15
   animations: ^2.0.0
+  intl: ^0.17.0
   cached_network_image: ^3.0.0
   
 
@@ -82,7 +84,8 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
-    - assets/images/esca.jpg
+    - assets/images/avatar.jpeg
+    - assets/images/horizontal.png
     - assets/images/vertical.png
     - assets/json_data/beneficios.json
     - assets/json_data/home.json

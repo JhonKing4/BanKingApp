@@ -50,7 +50,9 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
                       actions: [
                         TextButton(
                           onPressed: () {
-                            Navigator.of(context).pop();
+                                            WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushReplacementNamed(context, "/transferencia");
+          });
                           },
                           child: Text("Aceptar"),
                         ),
@@ -58,6 +60,7 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
                     );
                   },
                 );
+
               } else if (state is RegisterError) {
                 showDialog(
                   context: context,
@@ -162,16 +165,16 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
                 false, isnicknameValid),
             const SizedBox(height: 20),
             buildTextField(
-                context, "Email", emailController, false, isEmailValid, emailError),
+                context, "Email", emailController, false, isEmailValid, emailError, TextInputType.emailAddress),
             const SizedBox(height: 20),
             buildTextField(
-                context, "Teléfono", phoneController, false, isPhoneValid, phoneError),
+                context, "Teléfono", phoneController, false, isPhoneValid, phoneError, TextInputType.phone),
             const SizedBox(height: 20),
             buildTextField(context, "Nombre del banco", bankController,
                 false, isbankValid),
             const SizedBox(height: 20),
             buildTextField(
-                context, "Cuenta", accountController, false, isaccountValid, accountError),
+                context, "Cuenta", accountController, false, isaccountValid, accountError, TextInputType.number),
             const SizedBox(height: 20),
             SizedBox(height: 20),
             ElevatedButton(
@@ -181,7 +184,7 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
                   isbankValid = bankController.text.isNotEmpty;
                   isEmailValid = emailController.text.isNotEmpty && isValidEmail(emailController.text);
                   emailError = isEmailValid ? null : 'No es un email válido';
-                  isPhoneValid = phoneController.text.isNotEmpty && phoneController.text.length >= 8;
+                  isPhoneValid = phoneController.text.isNotEmpty && phoneController.text.length > 8;
                   phoneError = isPhoneValid ? null : 'El teléfono debe tener al menos 8 dígitos';
                   isaccountValid = accountController.text.isNotEmpty && accountController.text.length >= 16;
                   accountError = isaccountValid ? null : 'La cuenta debe tener al menos 16 dígitos';
@@ -230,7 +233,7 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
 
   Widget buildTextField(BuildContext context, String hintText,
       TextEditingController controller, bool obscureText, bool isValid,
-      [String? errorText, TextInputType keyboardType = TextInputType.text]) {
+      [String? errorText, TextInputType? keyboardType]) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
@@ -255,7 +258,7 @@ class _RegisterContactPageState extends State<RegisterContactPage> {
       ),
       style: const TextStyle(color: Color.fromRGBO(255, 223, 0, 1)),
       obscureText: obscureText,
-      keyboardType: keyboardType,
+      keyboardType: keyboardType
     );
   }
 

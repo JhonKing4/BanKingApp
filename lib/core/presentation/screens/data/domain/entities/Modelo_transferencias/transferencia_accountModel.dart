@@ -9,6 +9,8 @@ class Transferencia_accountModel {
   String? sender_account;
   String? user_account;
   String? receptor_account;
+  String? concept;
+  String? owner;
   int? amount;
 
   Transferencia_accountModel({
@@ -17,6 +19,8 @@ class Transferencia_accountModel {
     this.user_account,
     this.sender_account,
     required this.receptor_account,
+    this.concept,
+    this.owner,
     required this.amount,
   });
 
@@ -33,6 +37,8 @@ class Transferencia_accountModel {
     int? id_receptor,
     String? user_account,
     String? sender_account,
+    String? concept,
+    String? owner,
     String? receptor_account,
     int? amount,
   }) {
@@ -42,6 +48,8 @@ class Transferencia_accountModel {
       user_account: user_account ?? this.user_account,
       sender_account: sender_account ?? this.sender_account,
       receptor_account: receptor_account ?? this.receptor_account,
+      concept: concept ?? this.concept,
+      owner: owner ?? this.owner,
       amount: amount ?? this.amount,
     );
   }

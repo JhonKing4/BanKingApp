@@ -3,8 +3,13 @@ import 'package:bankingapp/core/presentation/bloc/home_blocs/home_event.dart';
 import 'package:bankingapp/core/presentation/bloc/home_blocs/home_state.dart';
 import 'package:bankingapp/core/presentation/bloc/login/login_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/login/login_event.dart';
+import 'package:bankingapp/core/presentation/bloc/perfil/perfil_bloc.dart';
+import 'package:bankingapp/core/presentation/bloc/perfil/perfil_event.dart';
+import 'package:bankingapp/core/presentation/bloc/perfil/perfil_state.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_home_data.dart';
+import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_perfil_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/home_repository_impl.dart';
+import 'package:bankingapp/core/presentation/screens/data/repositories/usuarios_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,9 +18,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => HomeBloc(LoadHomeData(HomeRepositoryImpl()))
-        ..add(LoadHomeDataEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => HomeBloc(LoadHomeData(HomeRepositoryImpl()))
+            ..add(LoadHomeDataEvent()),
+        ),
+        BlocProvider(
+          create: (context) => PerfilBloc(
+            LoadPerfilData(RegisterRepositoryImpl()),
+          )..add(LoadPerfilDataEvent()),
+        )
+      ],
       child: Builder(
         builder: (context) {
           return AppBar(
@@ -42,10 +56,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: BlocBuilder<HomeBloc, HomeState>(
-                    builder: (context, state) {
+                  child: BlocBuilder<PerfilBloc, PerfilState>(
+                    builder: (context, statename) {
                       return Text(
-                        state.usuario_name,
+                        statename.name,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 12,
@@ -78,7 +92,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
 
-
 class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -93,9 +106,11 @@ class CustomDrawer extends StatelessWidget {
             _buildListTile(context, Icons.settings, 'Configuración', '/config'),
             Divider(color: Colors.white.withOpacity(0.5)),
             _buildListTile(context, Icons.info, 'Acerca de', '/about'),
-            _buildListTile(context, Icons.feedback, 'Enviar comentarios', '/feedback'),
+            _buildListTile(
+                context, Icons.feedback, 'Enviar comentarios', '/feedback'),
             Divider(color: Colors.white.withOpacity(0.5)),
-            _buildListTile(context, Icons.exit_to_app, 'Cerrar sesión', '/login'),
+            _buildListTile(
+                context, Icons.exit_to_app, 'Cerrar sesión', '/login'),
             SizedBox(height: 20),
             _buildFooter(context),
           ],
@@ -106,13 +121,6 @@ class CustomDrawer extends StatelessWidget {
 
   Widget _buildDrawerHeader(BuildContext context) {
     return DrawerHeader(
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-        image: DecorationImage(
-          image: AssetImage('assets/images/background.jpg'), // Reemplaza con tu imagen de fondo
-          fit: BoxFit.cover,
-        ),
-      ),
       child: Center(
         child: ClipOval(
           child: BlocBuilder<HomeBloc, HomeState>(
@@ -130,27 +138,28 @@ class CustomDrawer extends StatelessWidget {
     );
   }
 
-Widget _buildListTile(BuildContext context, IconData icon, String title, String route) {
-  return ListTile(
-    leading: Icon(
-      icon,
-      color: Colors.white,
-    ),
-    title: Text(
-      title,
-      style: TextStyle(color: Colors.white),
-    ),
-    onTap: () {
-      if (title == 'Cerrar sesión') {
-        BlocProvider.of<UserBloc>(context).add(LogoutButtonPressed());
-         Navigator.pushNamedAndRemoveUntil(context, '/login', (Route<dynamic> route) => false); 
-      } else {
-        Navigator.pushReplacementNamed(context, route);
-      }
-    },
-  );
-}
-
+  Widget _buildListTile(
+      BuildContext context, IconData icon, String title, String route) {
+    return ListTile(
+      leading: Icon(
+        icon,
+        color: Colors.white,
+      ),
+      title: Text(
+        title,
+        style: TextStyle(color: Colors.white),
+      ),
+      onTap: () {
+        if (title == 'Cerrar sesión') {
+          BlocProvider.of<UserBloc>(context).add(LogoutButtonPressed());
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/login', (Route<dynamic> route) => false);
+        } else {
+          Navigator.pushReplacementNamed(context, route);
+        }
+      },
+    );
+  }
 
   Widget _buildFooter(BuildContext context) {
     return Column(
@@ -167,11 +176,12 @@ Widget _buildListTile(BuildContext context, IconData icon, String title, String 
         SizedBox(height: 10),
         Text(
           '© 2024 Banking. Todos los derechos reservados.',
-          style: TextStyle(color: Color.fromARGB(255, 255, 192, 18).withOpacity(0.8), fontSize: 12),
+          style: TextStyle(
+              color: Color.fromARGB(255, 255, 192, 18).withOpacity(0.8),
+              fontSize: 12),
           textAlign: TextAlign.center,
         ),
       ],
     );
   }
 }
-

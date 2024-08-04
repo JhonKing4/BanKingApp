@@ -23,7 +23,8 @@ class RegisterRepositoryImpl implements RegisterRepository {
       await _dio.post('users', data: register.toJson());
     } on DioError catch (e) {
       if (e.response != null) {
-        print('Error de servidor: ${e.response?.statusCode} - ${e.response?.data}');
+        print(
+            'Error de servidor: ${e.response?.statusCode} - ${e.response?.data}');
       } else {
         print('Error de conexion: $e');
       }
@@ -53,7 +54,8 @@ class RegisterRepositoryImpl implements RegisterRepository {
       }
     } on DioError catch (e) {
       if (e.response != null) {
-        print('Error de servidor: ${e.response?.statusCode} - ${e.response?.data}');
+        print(
+            'Error de servidor: ${e.response?.statusCode} - ${e.response?.data}');
       } else {
         print('Error de conexion: $e');
       }
@@ -64,58 +66,65 @@ class RegisterRepositoryImpl implements RegisterRepository {
     }
   }
 
- @override
-Future<UsuariosModel> getUserData() async {
-  try {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('authToken');
+  @override
+  Future<UsuariosModel> getUserData() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('authToken');
 
-    if (token == null) {
-      throw Exception('Token no encontrado');
-    }
+      if (token == null) {
+        throw Exception('Token no encontrado');
+      }
 
-    final response = await _dio.get('users', options: Options(
-      headers: {
-        'Authorization': 'Bearer $token',
-      },
-    ));
+      final response = await _dio.get(
+        'users',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
 
-    if (response.statusCode == 200) {
-      dynamic responseData = response.data;
+      if (response.statusCode == 200) {
+        dynamic responseData = response.data;
 
-      if (responseData is String) {
-        try {
-          Map<String, dynamic> jsonMap = jsonDecode(responseData);
-          responseData = jsonMap;
-        } catch (e) {
-          throw Exception('Error al convertir el JSON');
+        if (responseData is String) {
+          try {
+            Map<String, dynamic> jsonMap = jsonDecode(responseData);
+            responseData = jsonMap;
+          } catch (e) {
+            throw Exception('Error al convertir el JSON: ${e.toString()}');
+          }
         }
-      }
 
-      print('Consulta correcta, datos del usuario: $responseData');
-      final userDataJson = responseData['data'];
-      if (userDataJson == null) {
-        throw Exception('La petición no trajo la informacion del usuario');
-      }
+        final userDataJson = responseData['data'];
+        if (userDataJson == null) {
+          throw Exception('La petición no trajo la información del usuario');
+        }
 
-      UsuariosModel userData = UsuariosModel.fromJson(userDataJson);
-      return userData;
-    } else {
-      throw Exception('Error al trar los datos de usuario: ${response.statusMessage}');
+        UsuariosModel userData = UsuariosModel.fromJson(userDataJson);
+        return userData;
+      } else {
+        throw Exception(
+            'Error al traer los datos de usuario: ${response.statusMessage}');
+      }
+    } on DioError catch (e) {
+      String errorMessage;
+      if (e.response != null) {
+        errorMessage =
+            'Error de servidor: ${e.response?.statusCode} - ${e.response?.data}';
+        print(errorMessage);
+      } else {
+        errorMessage = 'Error de conexión: ${e.message}';
+        print(errorMessage);
+      }
+      throw Exception(errorMessage);
+    } catch (e) {
+      String errorMessage = 'Error inesperado: ${e.toString()}';
+      print(errorMessage);
+      throw Exception(errorMessage);
     }
-  } on DioError catch (e) {
-    if (e.response != null) {
-      print('Error de servidor: ${e.response?.statusCode} - ${e.response?.data}');
-    } else {
-      print('Error de conexión: $e');
-    }
-    throw Exception('Error al trar los datos de usuario');
-  } catch (e) {
-    print('Error inesperado: $e');
-    throw Exception('Error al trar los datos de usuario');
   }
-}
-
 
   @override
   Future<void> updateUser(UsuariosModel user) async {
@@ -127,7 +136,8 @@ Future<UsuariosModel> getUserData() async {
         throw Exception('El token no existe');
       }
 
-      final response = await _dio.patch('users', 
+      final response = await _dio.patch(
+        'users',
         data: user.toJson(),
         options: Options(
           headers: {
@@ -139,11 +149,13 @@ Future<UsuariosModel> getUserData() async {
       if (response.statusCode == 200) {
         print('Usuario actualizado correctamente: ${response.data}');
       } else {
-        throw Exception('Error al actualizar los datos del usuario: ${response.statusMessage}');
+        throw Exception(
+            'Error al actualizar los datos del usuario: ${response.statusMessage}');
       }
     } on DioError catch (e) {
       if (e.response != null) {
-        print('Error de servidor: ${e.response?.statusCode} - ${e.response?.data}');
+        print(
+            'Error de servidor: ${e.response?.statusCode} - ${e.response?.data}');
       } else {
         print('Error de conexión: $e');
       }

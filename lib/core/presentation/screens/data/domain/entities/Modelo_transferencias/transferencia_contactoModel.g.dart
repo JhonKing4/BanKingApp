@@ -14,6 +14,8 @@ Transferencia_accountModel _$Transferencia_accountModelFromJson(
       user_account: json['user_account'] as String?,
       sender_account: json['sender_account'] as String?,
       receptor_account: json['receptor_account'] as String?,
+      concept: json['concept'] as String?,
+      owner: json['concept'] as String?,
       amount: json['amount'] as int,
     );
 
@@ -25,5 +27,7 @@ Map<String, dynamic> _$Transferencia_accountModelToJson(
       'user_account': instance.user_account,
       'sender_account': instance.user_account,
       'receptor_account': instance.receptor_account,
+      'concept': instance.concept,
+      'owner': instance.owner,
       'amount': instance.amount,
     };

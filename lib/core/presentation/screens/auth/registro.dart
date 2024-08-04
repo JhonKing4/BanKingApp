@@ -135,27 +135,27 @@ class _RegisterPageState extends State<RegisterPage> {
               ],
             ),
             const SizedBox(height: 20),
-            buildTextField(context, "Name", nameController, false, isNameValid),
+            buildTextField(context, "Name", nameController, false, isNameValid, TextInputType.text),
             const SizedBox(height: 20),
-            buildTextField(context, "Lastname", lastnameController, false, isLastnameValid),
+            buildTextField(context, "Lastname", lastnameController, false, isLastnameValid, TextInputType.text),
             const SizedBox(height: 20),
-            buildTextField(context, "Email", emailController, false, isEmailValid),
+            buildTextField(context, "Email", emailController, false, isEmailValid, TextInputType.emailAddress),
             const SizedBox(height: 20),
-            buildTextField(context, "RFC", rfcController, false, isRfcValid),
+            buildTextField(context, "RFC", rfcController, false, isRfcValid, TextInputType.text),
             const SizedBox(height: 20),
-            buildTextField(context, "Phone number", phoneController, false, isPhoneValid),
+            buildTextField(context, "Phone number", phoneController, false, isPhoneValid, TextInputType.phone),
             const SizedBox(height: 20),
-            buildTextField(context, "Password", passwordController, true, isPasswordValid),
+            buildTextField(context, "Password", passwordController, true, isPasswordValid,TextInputType.text),
             const SizedBox(height: 20),
             SizedBox(height: 60),
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  isNameValid = nameController.text.isNotEmpty;
-                  isLastnameValid = lastnameController.text.isNotEmpty;
-                  isEmailValid = emailController.text.isNotEmpty;
-                  isRfcValid = rfcController.text.isNotEmpty;
-                  isPhoneValid = phoneController.text.isNotEmpty;
+                  isNameValid = nameController.text.isNotEmpty && passwordController.text.length > 3;
+                  isLastnameValid = lastnameController.text.isNotEmpty && passwordController.text.length > 3;
+                  isEmailValid = emailController.text.isNotEmpty && isValidEmail(emailController.text);
+                  isRfcValid = rfcController.text.isNotEmpty && passwordController.text.length > 12;
+                  isPhoneValid = phoneController.text.isNotEmpty && passwordController.text.length > 8;
                   isPasswordValid = passwordController.text.isNotEmpty && passwordController.text.length > 8;
                 });
 
@@ -204,7 +204,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Widget buildTextField(BuildContext context, String hintText, TextEditingController controller, bool obscureText, bool isValid, [TextInputType keyboardType = TextInputType.text]) {
+  Widget buildTextField(BuildContext context, String hintText, TextEditingController controller, bool obscureText, bool isValid, TextInputType keyboardType) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
@@ -227,5 +227,10 @@ class _RegisterPageState extends State<RegisterPage> {
       obscureText: obscureText,
       keyboardType: keyboardType,
     );
+  }
+
+    bool isValidEmail(String email) {
+    final emailRegExp = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    return emailRegExp.hasMatch(email);
   }
 }

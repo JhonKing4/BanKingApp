@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bankingapp/core/presentation/bloc/Contacts/contact_state.dart';
 import 'package:bankingapp/core/presentation/bloc/transferencia_contacto/transferencia_account_bloc.dart';
 import 'package:bankingapp/core/presentation/bloc/transferencia_contacto/transferencia_account_event.dart';
@@ -5,8 +7,11 @@ import 'package:bankingapp/core/presentation/bloc/transferencia_contacto/transfe
 import 'package:bankingapp/core/presentation/screens/data/domain/entities/Modelo_transferencias/transferencia_accountModel.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_transferencia_account_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/transferencia_account_repository_impl.dart';
+import 'package:bankingapp/core/presentation/screens/retiro.dart';
+import 'package:bankingapp/core/presentation/screens/transferencias/transferencia_vista.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class Transferencia_cuenta extends StatefulWidget {
   final String user_account;
@@ -23,16 +28,21 @@ class Transferencia_cuenta extends StatefulWidget {
       _Transferencia_cuentaPageState();
 }
 
+
+
 class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
     with SingleTickerProviderStateMixin {
-  final TextEditingController Receptor_accountController =
-      TextEditingController();
+  final TextEditingController Receptor_accountController = TextEditingController();
   final TextEditingController amountController = TextEditingController();
+  final TextEditingController conceptController = TextEditingController();
+  final TextEditingController ownerController = TextEditingController();
   late AnimationController _controller;
   late Animation<double> _animation;
-
+  
   bool isReceptor_accountValid = true;
   bool isamountValid = true;
+  bool isconceptValid = true;
+  bool isownerValid = true;
 
   @override
   void initState() {
@@ -61,27 +71,18 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
         child: BlocListener<TransferenciaAmountBloc, TransferenciaAmountState>(
           listener: (context, state) {
             if (state is TrasferenciaSuccess) {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text("Éxito"),
-                    content: Text("La transferencia se concretó con éxito"),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            Navigator.pushReplacementNamed(
-                                context, "/transferencia");
-                          });
-                        },
-                        child: Text("Aceptar"),
-                      ),
-                    ],
-                  );
-                },
-              );
+
+            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TransferSuccessView(
+                                  amount: amountController.text,
+                                  nickname: ownerController.text,
+                                  receptor_account: Receptor_accountController.text,
+                                  concepto: conceptController.text,
+                                ),
+                              ),
+                            );
             } else if (state is TrasferenciaError) {
               showDialog(
                 context: context,
@@ -259,7 +260,7 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
                     ],
                   ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: buildTextField(
@@ -270,6 +271,28 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
                     isReceptor_accountValid,
                   ),
                 ),
+                const SizedBox(height: 20),
+                 Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: buildTextFieldConcept(
+                    context,
+                    "Concepto",
+                    conceptController,
+                    false,
+                    isconceptValid,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                    Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: buildTextFieldOwner(
+                    context,
+                    "Dueño de la cuenta",
+                    ownerController,
+                    false,
+                    isownerValid,
+                  ),
+                ),
                 const SizedBox(height: 90),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -278,23 +301,28 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
                       setState(() {
                         isReceptor_accountValid =
                             Receptor_accountController.text.isNotEmpty &&
-                                Receptor_accountController.text.length > 8;
+                                Receptor_accountController.text.length > 8 && Receptor_accountController.text != widget.user_account;
                         isamountValid = amountController.text.isNotEmpty &&
                             double.tryParse(amountController.text) != null &&
                             double.parse(amountController.text) > 0 &&
                             double.parse(amountController.text) <=
                                 widget.balance;
+                      isconceptValid = conceptController.text.isNotEmpty &&  conceptController.text.length > 1;
+                      isownerValid = ownerController.text.isNotEmpty &&  ownerController.text.length > 3;
                       });
 
-                      if (isReceptor_accountValid && isamountValid) {
+                      if (isReceptor_accountValid && isamountValid && isconceptValid && isownerValid) {
                         final contact = Transferencia_accountModel(
                           user_account: widget.user_account,
                           receptor_account: Receptor_accountController.text,
                           amount: int.tryParse(amountController.text),
+                          concept: conceptController.text,
+                          owner: ownerController.text,
                         );
                         BlocProvider.of<TransferenciaAmountBloc>(context)
                             .add(SubmitRegisterTransferEvent(contact));
                       }
+                      _showNotification(amountController.text.toString());
                     },
                     style: ButtonStyle(
                       elevation: MaterialStateProperty.all(0),
@@ -322,7 +350,7 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
                   ),
                 ),
                 const SizedBox(
-                    height: 230), // Ajustar este tamaño según necesidad
+                    height: 30), // Ajustar este tamaño según necesidad
               ],
             ),
           ),
@@ -344,7 +372,7 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
       onChanged: (value) {
         setState(() {
           isReceptor_accountValid = value.isNotEmpty &&
-          Receptor_accountController.text.length > 15;
+          Receptor_accountController.text.length > 15 && Receptor_accountController.text != widget.user_account;
         });
       },
       decoration: InputDecoration(
@@ -369,4 +397,112 @@ class _Transferencia_cuentaPageState extends State<Transferencia_cuenta>
       keyboardType: TextInputType.number,
     );
   }
+
+
+ Widget buildTextFieldConcept(
+    BuildContext context,
+    String hintText,
+    TextEditingController controller,
+    bool obscureText,
+    bool isValid, [
+    TextInputType keyboardType = TextInputType.text,
+  ]) {
+    return TextField(
+      controller: controller,
+      onChanged: (value) {
+        setState(() {
+           isconceptValid = conceptController.text.isNotEmpty &&  conceptController.text.length > 1;
+        });
+      },
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: TextStyle(
+          color: const Color.fromARGB(255, 207, 203, 203).withOpacity(0.7),
+        ),
+        filled: true,
+        fillColor: Color.fromARGB(255, 37, 39, 39),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: isValid ? Colors.yellow : Colors.red),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: isValid ? Colors.yellow : Colors.red),
+        ),
+        errorText: isValid ? null : 'El campo no es valido',
+      ),
+      style: const TextStyle(color: Colors.white),
+      obscureText: obscureText,
+      keyboardType: TextInputType.text,
+    );
+  }
+
+
+   Widget buildTextFieldOwner(
+    BuildContext context,
+    String hintText,
+    TextEditingController controller,
+    bool obscureText,
+    bool isValid, [
+    TextInputType keyboardType = TextInputType.text,
+  ]) {
+    return TextField(
+      controller: controller,
+      onChanged: (value) {
+        setState(() {
+           isownerValid = ownerController.text.isNotEmpty &&  ownerController.text.length > 3;
+        });
+      },
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: TextStyle(
+          color: const Color.fromARGB(255, 207, 203, 203).withOpacity(0.7),
+        ),
+        filled: true,
+        fillColor: Color.fromARGB(255, 37, 39, 39),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: isValid ? Colors.yellow : Colors.red),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: isValid ? Colors.yellow : Colors.red),
+        ),
+        errorText: isValid ? null : 'El campo no es valido',
+      ),
+      style: const TextStyle(color: Colors.white),
+      obscureText: obscureText,
+      keyboardType: TextInputType.text,
+    );
+  }
 }
+
+
+
+
+Future<void> _showNotification(String amount) async {
+  flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.requestExactAlarmsPermission();
+
+  const AndroidNotificationDetails androidPlatformChannelSpecifics =
+      AndroidNotificationDetails(
+    '1',
+    'NopalBank',
+    importance: Importance.max,
+    priority: Priority.high,
+  );
+
+  const NotificationDetails platformChannelSpecifics =
+      NotificationDetails(android: androidPlatformChannelSpecifics);
+
+  await flutterLocalNotificationsPlugin.show(
+    0,
+    'BANKING',
+    'Enviaste un total de $amount',
+    platformChannelSpecifics,
+    payload: 'payload',
+  );
+}
+ 

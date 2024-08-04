@@ -23,3 +23,4 @@ class UserFailure extends UserState {
   @override
   List<Object> get props => [error];
 }
+class UserFailureHandled extends UserState {}

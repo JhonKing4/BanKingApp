@@ -24,11 +24,11 @@ class LoadMovimientosData {
       final List<Transferencia_accountModel> movimientosData = await repository.loadmovimientosData();
 
       for (var movimiento in movimientosData) {
-        if (movimiento.id_sender == null) {
+        if (movimiento.sender_account == null) {
           throw Exception("Se necesita un enviador");
         }
 
-        if (movimiento.id_receptor == null) {
+        if (movimiento.receptor_account== null) {
           throw Exception("Se necesita un receptor");
         }
 

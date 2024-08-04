@@ -19,3 +19,5 @@ class LoginButtonPressed extends UserEvent {
 }
 
 class LogoutButtonPressed extends UserEvent {}
+
+class UserFailureHandledEvent extends UserEvent{}

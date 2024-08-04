@@ -4,9 +4,6 @@ import 'package:bankingapp/core/presentation/screens/mis_tarjetas.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-
-
-
 //Inicializo mi variable global de notificaciones
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -45,16 +42,24 @@ Future<void> _showNotification() async {
   );
 }
 
-
-
 class RetiroPage extends StatefulWidget {
-  const RetiroPage({Key? key}) : super(key: key);
+  final String my_account;
+  final String balance;
+
+  const RetiroPage({
+    Key? key,
+    required this.my_account,
+    required this.balance,
+  }) : super(key: key);
 
   @override
   _RetiroPage createState() => _RetiroPage();
 }
 
 class _RetiroPage extends State<RetiroPage> {
+  final TextEditingController amountController = TextEditingController();
+  bool isamountValid = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +92,8 @@ class _RetiroPage extends State<RetiroPage> {
                             height: 40,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Color.fromARGB(255, 44, 44, 44), // Color del círculo más claro
+                              color: Color.fromARGB(255, 44, 44,
+                                  44), // Color del círculo más claro
                             ),
                           ),
                           Positioned(
@@ -97,7 +103,8 @@ class _RetiroPage extends State<RetiroPage> {
                                 9, // Ajusta la posición de la flecha según sea necesario
                             child: Icon(
                               Icons.arrow_back_ios_new_rounded,
-                              color: Color.fromARGB(255, 255, 255, 255), // Color de la flecha
+                              color: Color.fromARGB(
+                                  255, 255, 255, 255), // Color de la flecha
                             ),
                           ),
                         ],
@@ -116,70 +123,80 @@ class _RetiroPage extends State<RetiroPage> {
               ),
             ),
             SizedBox(height: 30),
-            Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 90,
-                        ),
-                        Container(
-                          width: 30,
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            "\$",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 120, // Ancho deseado del TextField
-                        child: TextField(
-                          keyboardType: TextInputType.number,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                          ),
-                          autofocus: true,
-                        ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 30,
+                    alignment: Alignment.bottomCenter,
+                    child: Text(
+                      "\$",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
                       ),
-                    ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 120,
-                ),
-              ],
+                  Container(
+                    width: 150,
+                    child: TextField(
+                      controller: amountController,
+                      onChanged: (value) {
+                        setState(() {
+                          isamountValid = value.isNotEmpty &&
+                              double.tryParse(value) != null &&
+                              double.parse(value) > 0 &&
+                              double.parse(value) <=
+                                  double.parse(widget.balance);
+                        });
+                      },
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color.fromARGB(255, 37, 39, 39),
+                        hintText: "Cantidad",
+                        hintStyle: TextStyle(
+                          color: const Color.fromARGB(255, 207, 203, 203)
+                              .withOpacity(0.7),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color:
+                                  isamountValid ? Colors.yellow : Colors.red),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color:
+                                  isamountValid ? Colors.yellow : Colors.red),
+                        ),
+                        errorText: isamountValid ? null : 'Monto no válido',
+                      ),
+                      keyboardType: TextInputType.number,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
 
-            SizedBox(height: 20),
+            SizedBox(height: 60),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  width: 60,
-                  height: 60,
+                  width: 50,
+                  height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    // Color de fondo de la imagen
                   ),
-                  // Imagen a la derecha
                   child: Image.asset(
                     "assets/images/visa.png",
-                    width: 40,
-                    height: 40,
+                    width: 60,
+                    height: 60,
                   ),
                 ),
                 SizedBox(width: 10),
@@ -187,28 +204,20 @@ class _RetiroPage extends State<RetiroPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Texto en el medio
                       Text(
-                        "VISA **** 7312",
+                        widget.my_account,
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 221, 221, 221),
                         ),
                       ),
-                      SizedBox(height: 5), // Espacio entre el texto y la fecha
-                      // Fecha a la izquierda
-                      Row(
-                        children: [
-                          SizedBox(width: 5),
-                          Text(
-                            "\$ 7,896.00",
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
+                      SizedBox(height: 5),
+                      Text(
+                        "Saldo disponible: \$${widget.balance}",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color.fromARGB(255, 187, 187, 187),
+                        ),
                       ),
                     ],
                   ),
@@ -218,73 +227,82 @@ class _RetiroPage extends State<RetiroPage> {
             SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
-                showModalBottomSheet(
-                  backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
-                  context: context,
-                  builder: (context) {
-                    return Container(
-                      height: MediaQuery.of(context).size.height * 0.4,
-                      child: Column(
-                        children: [
-                          ListTile(
-                            title: Text('RETIRO DE EFECTIVO',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            onTap: () {},
-                          ),
-                          ListTile(
-                            title: Text(
-                                '¿ Esta seguro que desea retirar esta cantidad de: ',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            onTap: () {},
-                          ),
-                          ListTile(
-                            title: Text('VISA **** 7312 ?',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            onTap: () {},
-                          ),
-                          ElevatedButton(
-                            onPressed: () => _showNotification(),
-                            style: ButtonStyle(
-                              elevation: MaterialStateProperty.all(0),
-                              overlayColor:
-                                  MaterialStateProperty.all(Colors.transparent),
-                              backgroundColor: MaterialStateProperty.all(
-                                  const Color.fromRGBO(242, 254, 141, 1)),
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
+                setState(() {
+                  isamountValid = amountController.text.isNotEmpty &&
+                      double.tryParse(amountController.text) != null &&
+                      double.parse(amountController.text) > 0 &&
+                      double.parse(amountController.text) <=
+                          double.parse(widget.balance);
+                });
+                if (isamountValid) {
+                  showModalBottomSheet(
+                    backgroundColor: const Color.fromRGBO(30, 33, 33, 1),
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                        height: MediaQuery.of(context).size.height * 0.4,
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title: Text('RETIRO DE EFECTIVO',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              onTap: () {},
+                            ),
+                            ListTile(
+                              title: Text(
+                                  '¿ Esta seguro que desea retirar esta cantidad de: ',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              onTap: () {},
+                            ),
+                            ListTile(
+                              title: Text('VISA **** 7312 ?',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              onTap: () {},
+                            ),
+                            ElevatedButton(
+                              onPressed: () => _showNotification(),
+                              style: ButtonStyle(
+                                elevation: MaterialStateProperty.all(0),
+                                overlayColor: MaterialStateProperty.all(
+                                    Colors.transparent),
+                                backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromRGBO(242, 254, 141, 1)),
+                                shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                              child: Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 12, horizontal: 0),
+                                child: const Text(
+                                  "Aceptar",
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                  ),
                                 ),
                               ),
                             ),
-                            child: Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 12, horizontal: 0),
-                              child: const Text(
-                                "Aceptar",
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 0, 0, 0),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                );
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                }
               },
               style: ButtonStyle(
                 elevation: MaterialStateProperty.all(0),

@@ -289,6 +289,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  flip_card:
+    dependency: "direct main"
+    description:
+      name: flip_card
+      sha256: ac079be6474e7005c1ea770a168194d207d5a24c88a463a0eb9fe838846fc517
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -425,7 +433,7 @@ packages:
     source: hosted
     version: "3.3.0"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       sha256: "910f85bce16fb5c6f614e117efa303e85a1731bb0081edf3604a2ae6e9a3cc91"

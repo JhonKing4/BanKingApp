@@ -16,6 +16,7 @@ import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_a
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_servicio_data.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/account_repository_impl.dart';
 import 'package:bankingapp/core/presentation/screens/data/repositories/servicio_repository_impl.dart';
+import 'package:bankingapp/core/presentation/screens/retiro.dart';
 import 'package:bankingapp/core/presentation/screens/servicios/servios_pago.dart';
 import 'package:bankingapp/core/presentation/screens/widgets/appbar.dart';
 import 'package:bankingapp/core/presentation/screens/data/domain/usecases/load_home_data.dart';
@@ -79,7 +80,7 @@ class _CasaViewState extends State<CasaView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 40),
+              SizedBox(height: 30),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -112,8 +113,8 @@ class _CasaViewState extends State<CasaView> {
                                   ),
                                 ],
                               ),
-                              SizedBox(width: 220),
-                              Column(
+                              SizedBox(width: 250),
+                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Container(
@@ -145,38 +146,55 @@ class _CasaViewState extends State<CasaView> {
                   builder: (context, state) => Row(
                       children: List.generate(state.card.length, (index) {
                     final tarjeta = state.card[index];
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.asset(
-                              'assets/images/visapng.png',
-                              width: 40,
-                              height: 40,
-                            ),
-                            SizedBox(height: 10),
-                            Text('saldo',
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 50, 50, 50))),
-                            Text('\$ ${state.balance.toString()}',
-                                style: TextStyle(
-                                    color:
-                                        const Color.fromARGB(255, 24, 24, 24))),
-                            SizedBox(height: 20),
-                            Text(tarjeta.card.toString(),
-                                style: TextStyle(
-                                    color: const Color.fromARGB(
-                                        255, 120, 120, 120))),
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30.0),
+                        gradient: LinearGradient(
+                          colors: [
+                            Color.fromARGB(255, 255, 237, 176),
+                            Color.fromARGB(255, 254, 187, 32),
                           ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
                         ),
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.all(40),
-                          backgroundColor: Color.fromARGB(255, 251, 242, 106),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      padding: const EdgeInsets.all(8.0),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(30.0),
+                          onTap: () {
+                            Navigator.pushNamed(context, "/tarjetas");
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(30),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Image.asset(
+                                  'assets/images/visapng.png',
+                                  width: 40,
+                                  height: 40,
+                                ),
+                                SizedBox(height: 10),
+                                Text('saldo',
+                                    style: TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 50, 50, 50))),
+                                Text('\$ ${state.balance.toString()}',
+                                    style: TextStyle(
+                                        color: const Color.fromARGB(
+                                            255, 24, 24, 24))),
+                                SizedBox(height: 20),
+                                Text(tarjeta.card.toString(),
+                                    style: TextStyle(
+                                        color: const Color.fromARGB(
+                                            255, 120, 120, 120))),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -220,14 +238,12 @@ class _CasaViewState extends State<CasaView> {
                                 height: 40,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.rectangle,
-                                  color: Color.fromARGB(255, 234, 255,
-                                      142), // Color del fondo rosa claro
+                                  color: Color.fromARGB(255, 234, 255, 142),
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 child: Icon(
                                   Icons.star_border_outlined,
-                                  color: const Color.fromARGB(255, 32, 32,
-                                      32), // Color del icono blanco
+                                  color: const Color.fromARGB(255, 32, 32, 32),
                                 ),
                               ),
                               SizedBox(height: 5),
@@ -253,47 +269,57 @@ class _CasaViewState extends State<CasaView> {
                     Container(
                       width: 120,
                       height: 120,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            print("Transferencias button pressed " +
-                                tabIndexNotifier.value.toString());
-                            tabIndexNotifier.value = 2;
-                            Navigator.pushNamed(context, "/retiro");
-                          },
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  color: Color.fromARGB(255, 142, 191,
-                                      255), // Color del fondo rosa claro
-                                  borderRadius: BorderRadius.circular(10.0),
+                      child: BlocBuilder<AccountBloc, AccountState>(
+                        builder: (context, state) => Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              print("Transferencias button pressed " +
+                                  tabIndexNotifier.value.toString());
+                              tabIndexNotifier.value = 2;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RetiroPage(
+                                    my_account: state.card[0].card,
+                                    balance: state.balance.toString(),
+                                  ),
                                 ),
-                                child: Icon(
-                                  Icons.money_outlined,
-                                  color: const Color.fromARGB(255, 32, 32,
-                                      32), // Color del icono blanco
+                              );
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    color: Color.fromARGB(255, 142, 191,
+                                        255), // Color del fondo rosa claro
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: Icon(
+                                    Icons.money_outlined,
+                                    color: const Color.fromARGB(255, 32, 32,
+                                        32), // Color del icono blanco
+                                  ),
                                 ),
+                                SizedBox(height: 5),
+                                Text(
+                                  'RETIRAR',
+                                  style: TextStyle(
+                                      fontSize: 10, color: Colors.white),
+                                ),
+                              ],
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 20, horizontal: 10),
+                              backgroundColor: Color.fromARGB(255, 41, 41, 41),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
                               ),
-                              SizedBox(height: 5),
-                              Text(
-                                'RETIRAR',
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.white),
-                              ),
-                            ],
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 10),
-                            backgroundColor: Color.fromARGB(255, 41, 41, 41),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0),
                             ),
                           ),
                         ),
@@ -494,7 +520,6 @@ class _CasaViewState extends State<CasaView> {
                                                     (context, url, error) =>
                                                         Icon(Icons.error),
                                               ),
-
                                             ],
                                           ),
                                         ),
